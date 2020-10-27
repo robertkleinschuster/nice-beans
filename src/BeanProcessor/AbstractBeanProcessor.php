@@ -73,8 +73,16 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface
      */
     public function delete(): int
     {
-        $this->getSaver()->setBeanList($this->getBeanListForDelete());
-        return $this->getSaver()->delete();
+        $beanList = $this->getBeanListForDelete();
+        foreach ($beanList as $bean) {
+            $this->beforeDelete($bean);
+        }
+        $this->getSaver()->setBeanList($beanList);
+        $result = $this->getSaver()->delete();
+        foreach ($beanList as $bean) {
+            $this->afterDelete($bean);
+        }
+        return $result;
     }
 
     protected function beforeSave(BeanInterface $bean)
@@ -85,6 +93,15 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface
     protected function afterSave(BeanInterface $bean) {
 
     }
+
+    protected function beforeDelete(BeanInterface $bean) {
+
+    }
+
+    protected function afterDelete(BeanInterface $bean) {
+
+    }
+
 
     /**
      * Returns a filtered copy of the source bean list.
