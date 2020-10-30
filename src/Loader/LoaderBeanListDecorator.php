@@ -1,45 +1,72 @@
 <?php
 declare(strict_types=1);
 
-
-namespace Niceshops\Bean\Finder;
-
-
+namespace Niceshops\Bean\Loader;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
+use Niceshops\Bean\Finder\BeanFinderAwareInterface;
+use Niceshops\Bean\Finder\BeanFinderAwareTrait;
+use Niceshops\Bean\Finder\BeanFinderInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareTrait;
 use Niceshops\Bean\Type\Base\BeanListInterface;
 
-class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countable, ArrayAccess, BeanListAwareInterface
+/**
+ * Class BeanLoaderDecorator
+ * @package Niceshops\Bean\Finder
+ */
+class LoaderBeanListDecorator implements BeanListInterface, IteratorAggregate, Countable, ArrayAccess, BeanListAwareInterface, BeanLoaderAwareInterface, BeanFinderAwareInterface
 {
     use BeanListAwareTrait;
+    use BeanLoaderAwareTrait;
+    use BeanFinderAwareTrait;
 
     /**
-     * @var \Generator
+     * @var string
      */
-    private $generator;
+    private $filterField = null;
+
+    /**
+     * @var string
+     */
+    private $filterValue = null;
+
 
     /**
      * BeanGenerator constructor.
-     * @param callable $generateFunction
+     * @param BeanLoaderInterface $loader
+     * @param BeanFinderInterface $finder
      * @param BeanListInterface $emptyBeanList
      */
-    public function __construct(callable $generateFunction, BeanListInterface $emptyBeanList)
+    public function __construct(BeanLoaderInterface $loader, BeanFinderInterface $finder, BeanListInterface $emptyBeanList)
     {
-        $this->beanList = $emptyBeanList;
-        $this->generator = $generateFunction();
+        $this->setBeanLoader($loader);
+        $this->setBeanList($emptyBeanList);
+        $this->setBeanFinder($finder);
+    }
+
+
+    /**
+     * @param string $field
+     * @param $value
+     * @return LoaderBeanListDecorator
+     */
+    public function setFilter(string $field, $value): self
+    {
+        $this->filterField = $field;
+        $this->filterValue = $value;
+        return $this;
     }
 
     /**
-     * @return \Generator
+     * @return bool
      */
-    protected function getGenerator(): \Generator
+    public function hasFilter(): bool
     {
-        return $this->generator;
+        return !($this->filterField === null && $this->filterValue === null);
     }
 
 
@@ -48,14 +75,15 @@ class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countab
      *
      * @param bool $recursive
      * @return BeanListInterface
+     * @throws \Exception
      */
     public function toBeanList(bool $recursive = false): BeanListInterface
     {
-        if ($this->getBeanList()->count() == 0 && $this->getGenerator()->valid()) {
-            foreach ($this->getGenerator() as $bean) {
+        if ($this->getBeanList()->count() == 0 && $this->getBeanLoader()->valid()) {
+            foreach ($this->getIterator() as $bean) {
                 if ($recursive) {
                     foreach ($bean as $key => $item) {
-                        if ($item instanceof BeanListDecorator) {
+                        if ($item instanceof LoaderBeanListDecorator) {
                             $bean->setData($key, $item->toBeanList($recursive));
                         }
                     }
@@ -65,6 +93,31 @@ class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countab
         }
         return $this->getBeanList();
     }
+
+    /**
+     * @return \Generator|\Traversable
+     */
+    public function getIterator()
+    {
+        foreach ($this->getBeanLoader() as $data) {
+            $bean = $this->getBeanLoader()->initializeBeanWithData($this->getBeanFinder()->getFactory()->createBean(), $data);
+            if (!$this->hasFilter() || $bean->getData($this->filterField) == $this->filterValue) {
+                $this->getBeanFinder()->initializeBeanWithAdditionlData($bean);
+                if ($this->getBeanFinder()->hasLinkedFinder()) {
+                    foreach ($this->getBeanFinder()->getLinkedFinderList() as $link) {
+                        /**
+                         * @var $finder BeanFinderInterface
+                         */
+                        $finder = $link->getBeanFinder();
+                        $decorator = $finder->getLoaderBeanListDecorator()->setFilter($link->getLinkFieldRemote(), $bean->getData($link->getLinkFieldSelf()));
+                        $bean->setData($link->getField(), $decorator);
+                    }
+                }
+                yield $bean;
+            }
+        }
+    }
+
 
     public function setData($name, $value)
     {
@@ -236,13 +289,6 @@ class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countab
         return $this->toBeanList()->pop();
     }
 
-    /**
-     * @return $this|\Traversable
-     */
-    public function getIterator()
-    {
-        return $this->getGenerator();
-    }
 
     public function offsetExists($offset)
     {
@@ -268,6 +314,4 @@ class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countab
     {
         return $this->toBeanList()->count();
     }
-
-
 }

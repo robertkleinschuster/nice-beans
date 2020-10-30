@@ -72,7 +72,7 @@ class AbstractBeanConverterTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     public function testConvert()
     {
-        $this->assertInstanceOf(BeanDecorator::class, $this->object->convert($this->createMockBean()));
+        $this->assertInstanceOf(ConverterBeanDecorator::class, $this->object->convert($this->createMockBean()));
     }
 
 }

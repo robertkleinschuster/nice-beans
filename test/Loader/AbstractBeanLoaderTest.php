@@ -30,7 +30,9 @@ class AbstractBeanLoaderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockBuilder(AbstractBeanLoader::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object = $this->getMockBuilder(AbstractBeanLoader::class)->setMethods(['load', 'init'])->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object->method('init')->willReturn(3);
+        $this->object->method('load')->willReturnOnConsecutiveCalls(['foo' => 'bar'], ['foo' => 'baz'], ['foo' => 'bam'], null);
     }
 
 
@@ -52,4 +54,50 @@ class AbstractBeanLoaderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
         $this->assertTrue(class_exists(AbstractBeanLoader::class), "Class Exists");
         $this->assertTrue(is_a($this->object, AbstractBeanLoader::class), "Mock Object is set");
     }
+
+    /**
+     * @group unit
+     * @small
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::execute
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::valid
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::next
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::current
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::key
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::rewind
+     */
+    public function testIterator()
+    {
+        $this->object->execute();
+        $data = [];
+        foreach ($this->object as $item) {
+            $data[] = $item;
+        }
+        $this->assertSame([['foo' => 'bar'], ['foo' => 'baz'], ['foo' => 'bam']], $data);
+        // Iterate again
+        $data = [];
+        foreach ($this->object as $item) {
+            $data[] = $item;
+        }
+        $this->assertSame([['foo' => 'bar'], ['foo' => 'baz'], ['foo' => 'bam']], $data);
+        // Iterate again, execute call is ignored and just rewinds the iterator
+        $this->object->execute();
+        $data = [];
+        foreach ($this->object as $item) {
+            $data[] = $item;
+        }
+        $this->assertSame([['foo' => 'bar'], ['foo' => 'baz'], ['foo' => 'bam']], $data);
+    }
+
+    /**
+     * @group unit
+     * @small
+     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::execute
+     */
+    public function testExecuteException()
+    {
+        $this->expectException(\LogicException::class);
+        $this->object->execute();
+        $this->object->execute();
+    }
+
 }

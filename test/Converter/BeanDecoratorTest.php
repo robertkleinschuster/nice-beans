@@ -23,7 +23,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
 
 
     /**
-     * @var BeanDecorator|MockObject
+     * @var ConverterBeanDecorator|MockObject
      */
     protected $object;
 
@@ -35,7 +35,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockBuilder(BeanDecorator::class)->setMethods(['getBean'])->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object = $this->getMockBuilder(ConverterBeanDecorator::class)->setMethods(['getBean'])->disableOriginalConstructor()->getMockForAbstractClass();
         $this->object->setBeanConverter($this->createMockConverter());
     }
 
@@ -70,12 +70,12 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @coversDefaultClass \Niceshops\Bean\Converter\BeanDecorator
+     * @coversDefaultClass \Niceshops\Bean\Converter\ConverterBeanDecorator
      */
     public function testTestClassExists()
     {
-        $this->assertTrue(class_exists(BeanDecorator::class), "Class Exists");
-        $this->assertTrue(is_a($this->object, BeanDecorator::class), "Mock Object is set");
+        $this->assertTrue(class_exists(ConverterBeanDecorator::class), "Class Exists");
+        $this->assertTrue(is_a($this->object, ConverterBeanDecorator::class), "Mock Object is set");
         $this->assertInstanceOf(BeanInterface::class, $this->object);
         $this->assertInstanceOf(BeanAwareInterface::class, $this->object);
         $this->assertInstanceOf(BeanConverterAwareInterface::class, $this->object);
@@ -94,12 +94,12 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::setData
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::getData
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::hasData
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::removeData
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::resetData
-     * @covers       \Niceshops\Bean\Converter\BeanDecorator::getDataType
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::setData
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getData
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::hasData
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::removeData
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::resetData
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getDataType
      * @dataProvider dataProvider_CallBeanMethod
      * @param string $method
      * @param array $params

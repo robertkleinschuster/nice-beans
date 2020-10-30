@@ -5,7 +5,7 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Finder;
+namespace Niceshops\Bean\Loader;
 
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -13,12 +13,12 @@ use PHPUnit\Framework\MockObject\MockObject;
  * Class DefaultTestCaseTest
  * @package Niceshops\Bean
  */
-class BeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class LoaderBeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
 {
 
 
     /**
-     * @var BeanListDecorator|MockObject
+     * @var LoaderBeanListDecorator|MockObject
      */
     protected $object;
 
@@ -30,7 +30,7 @@ class BeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockBuilder(BeanListDecorator::class)->disableOriginalConstructor()->getMock();
+        $this->object = $this->getMockBuilder(LoaderBeanListDecorator::class)->disableOriginalConstructor()->getMock();
     }
 
 
@@ -49,7 +49,7 @@ class BeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     public function testTestClassExists()
     {
-        $this->assertTrue(class_exists(BeanListDecorator::class), "Class Exists");
-        $this->assertTrue(is_a($this->object, BeanListDecorator::class), "Mock Object is set");
+        $this->assertTrue(class_exists(LoaderBeanListDecorator::class), "Class Exists");
+        $this->assertTrue(is_a($this->object, LoaderBeanListDecorator::class), "Mock Object is set");
     }
 }

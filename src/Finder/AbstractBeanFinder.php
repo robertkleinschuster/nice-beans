@@ -5,8 +5,10 @@ namespace Niceshops\Bean\Finder;
 
 
 use Iterator;
+use Niceshops\Bean\Converter\ConverterBeanDecorator;
 use Niceshops\Bean\Factory\BeanFactoryInterface;
 use Niceshops\Bean\Loader\BeanLoaderInterface;
+use Niceshops\Bean\Loader\LoaderBeanListDecorator;
 use Niceshops\Bean\Type\Base\BeanException;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
@@ -37,12 +39,12 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     /**
      * @var int
      */
-    private $limit;
+    private $limit = null;
 
     /**
      * @var int
      */
-    private $offset;
+    private $offset = null;
 
     /**
      * @var BeanFinderLink[]
@@ -83,7 +85,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     /**
      * @return BeanFinderLink[]
      */
-    protected function getLinkedFinderList(): array
+    public function getLinkedFinderList(): array
     {
         return $this->beanFinderLink_List;
     }
@@ -91,7 +93,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     /**
      * @return bool
      */
-    protected function hasLinkedFinder(): bool
+    public function hasLinkedFinder(): bool
     {
         return is_array($this->beanFinderLink_List) && count($this->beanFinderLink_List) > 0;
     }
@@ -113,33 +115,16 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     }
 
     /**
-     * @param string|null $filterField
-     * @param array|null $filterValueList
-     * @return BeanListDecorator
+     * @return LoaderBeanListDecorator
      */
-    public function getBeanGenerator(string $filterField = null, array $filterValueList = null): BeanListDecorator
+    public function getLoaderBeanListDecorator(): LoaderBeanListDecorator
     {
         $this->initLinkedFinder();
-        return new BeanListDecorator(function () use ($filterField, $filterValueList) {
-            $loader = $this->getLoader();
-            if ($loader->execute() && $loader instanceof Iterator) {
-                foreach ($loader as $data) {
-                    $bean = $this->initializeBeanWithAdditionlData($this->getLoader()->initializeBeanWithData($this->getFactory()->createBean(), $data));
-                    if ($this->hasLinkedFinder()) {
-                        foreach ($this->getLinkedFinderList() as $link) {
-                            $bean->setData($link->getField(), $link->getBeanFinder()->getBeanGenerator($link->getLinkFieldRemote(), [$bean->getData($link->getLinkFieldSelf())]));
-                        }
-                    }
-                    if (null === $filterField && null === $filterValueList
-                    || in_array($bean->getData($filterField), $filterValueList)) {
-                        yield $bean;
-                    }
-                }
-            }
-        }, $this->getFactory()->createBeanList());
+        return new LoaderBeanListDecorator($this->getLoader(), $this, $this->getFactory()->createBeanList());
     }
 
-    protected function initLinkedFinder() {
+    public function initLinkedFinder()
+    {
         if ($this->hasLinkedFinder()) {
             foreach ($this->getLinkedFinderList() as $link) {
                 $link->getBeanFinder()->initByValueList($link->getLinkFieldRemote(), $this->getLoader()->preloadValueList($link->getLinkFieldSelf()));
@@ -153,7 +138,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
      */
     public function getBeanList(bool $fetchAllData = false): BeanListInterface
     {
-        return $this->getBeanGenerator()->toBeanList($fetchAllData);
+        return $this->getLoaderBeanListDecorator()->toBeanList($fetchAllData);
     }
 
     /**
@@ -184,10 +169,10 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     }
 
     /**
-     * @param BeanInterface $bean
-     * @return BeanInterface
+     * @param ConverterBeanDecorator $bean
+     * @return ConverterBeanDecorator
      */
-    protected function initializeBeanWithAdditionlData(BeanInterface $bean): BeanInterface
+    public function initializeBeanWithAdditionlData(ConverterBeanDecorator $bean): ConverterBeanDecorator
     {
         return $bean;
     }

@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Loader;
 
 
+use Niceshops\Bean\Converter\ConverterBeanDecorator;
 use Niceshops\Bean\Type\Base\BeanInterface;
 
 /**
  * Interface BeanFinderLoaderInterface
  * @package Niceshops\Library\Core
  */
-interface BeanLoaderInterface
+interface BeanLoaderInterface extends \Iterator
 {
     /**
      * @return int
@@ -45,8 +46,8 @@ interface BeanLoaderInterface
     /**
      * @param BeanInterface $bean
      * @param array $data
-     * @return BeanInterface
+     * @return ConverterBeanDecorator
      */
-    public function initializeBeanWithData(BeanInterface $bean, array $data): BeanInterface;
+    public function initializeBeanWithData(BeanInterface $bean, array $data): ConverterBeanDecorator;
 
 }

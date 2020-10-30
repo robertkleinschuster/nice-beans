@@ -13,10 +13,11 @@ use Niceshops\Bean\Type\Base\BeanInterface;
  * Class BeanDecorator
  * @package Niceshops\Bean\Converter
  */
-class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, BeanInterface
+class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, BeanInterface
 {
     use BeanAwareTrait;
     use BeanConverterAwareTrait;
+
 
     /**
      * BeanDecorator constructor.
@@ -36,6 +37,9 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
      */
     public function setData($name, $value)
     {
+        if (!$this->getBeanConverter()->hasRawData($name)) {
+            $this->getBeanConverter()->setRawData($name, $value);
+        }
         $this->getBean()->setData($name, $this->getBeanConverter()->convertValueToBean($this->getBean(), $name, $value));
         return $this;
     }
@@ -46,6 +50,9 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
      */
     public function getData($name)
     {
+        if (!$this->getBean()->hasData($name) && $this->getBeanConverter()->hasRawData($name)) {
+            $this->setData($name, $this->getBeanConverter()->getRawData($name));
+        }
         return $this->getBeanConverter()->convertValueFromBean($this->getBean(), $name, $this->getBean()->getData($name));
     }
 
@@ -55,7 +62,7 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
      */
     public function hasData($name)
     {
-        return $this->getBean()->hasData($name);
+        return $this->getBean()->hasData($name) || $this->getBeanConverter()->hasRawData($name);
     }
 
     /**
@@ -64,6 +71,7 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
      */
     public function removeData($name)
     {
+        $this->getBeanConverter()->removeRawData($name);
         return $this->getBeanConverter()->convertValueFromBean($this->getBean(), $name, $this->getBean()->removeData($name));
     }
 
@@ -72,6 +80,7 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
      */
     public function resetData()
     {
+        $this->getBeanConverter()->resetRawData();
         $this->getBean()->resetData();
         return $this;
     }
@@ -91,7 +100,7 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
     public function toArray(): array
     {
         $data = [];
-        $names = $this->getBean()->getOriginalDataName_Map();
+        $names = $this->toBean()->getOriginalDataName_Map();
         foreach ($names as $name) {
             if ($this->hasData($name)) {
                 $data[$name] = $this->getData($name);
@@ -110,5 +119,16 @@ class BeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, 
             $this->setData($key, $value);
         }
         return $this;
+    }
+
+    /**
+     * @return BeanInterface
+     */
+    public function toBean(): BeanInterface
+    {
+        foreach ($this->getBeanConverter()->getRawData() as $key => $value) {
+            $this->setData($key, $value);
+        }
+        return $this->getBean();
     }
 }

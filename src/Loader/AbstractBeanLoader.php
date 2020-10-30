@@ -4,22 +4,26 @@
 namespace Niceshops\Bean\Loader;
 
 
-use Iterator;
+
 use Niceshops\Bean\Converter\BeanConverterAwareInterface;
 use Niceshops\Bean\Converter\BeanConverterAwareTrait;
+use Niceshops\Bean\Converter\ConverterBeanDecorator;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Core\Attribute\AttributeAwareInterface;
 use Niceshops\Core\Attribute\AttributeAwareTrait;
 use Niceshops\Core\Option\OptionAwareInterface;
 use Niceshops\Core\Option\OptionAwareTrait;
 
-abstract class AbstractBeanLoader implements BeanLoaderInterface, Iterator, OptionAwareInterface, AttributeAwareInterface, BeanConverterAwareInterface
+abstract class AbstractBeanLoader implements BeanLoaderInterface, OptionAwareInterface, AttributeAwareInterface, BeanConverterAwareInterface
 {
     use OptionAwareTrait;
     use AttributeAwareTrait;
     use BeanConverterAwareTrait;
 
-    private $data = null;
+    /**
+     * @var array
+     */
+    private $data = [];
 
     /**
      * @var bool
@@ -40,7 +44,12 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, Iterator, Opti
         if ($this->loaded) {
             return count($this->data);
         } else {
-            return $this->init();
+            if (count($this->data) > 0) {
+                throw new \LogicException('BeanLoader can not be executed twice before it is fully loaded. Iterate over all elements first.');
+            }
+            $count = $this->init();
+            $this->data[$this->key()] = $this->load();
+            return $count;
         }
     }
 
@@ -51,6 +60,7 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, Iterator, Opti
     {
         return $this->data[$this->key];
     }
+
 
     public function next()
     {
@@ -104,12 +114,12 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, Iterator, Opti
     /**
      * @param BeanInterface $bean
      * @param array $data
-     * @return BeanInterface
+     * @return ConverterBeanDecorator
      */
-    public function initializeBeanWithData(BeanInterface $bean, array $data): BeanInterface
+    public function initializeBeanWithData(BeanInterface $bean, array $data): ConverterBeanDecorator
     {
         if ($this->hasBeanConverter()) {
-            return $this->getBeanConverter()->convert($bean)->fromArray($data);
+            return $this->getBeanConverter()->convert($bean, $data);
         } else {
             return $bean->fromArray($data);
         }

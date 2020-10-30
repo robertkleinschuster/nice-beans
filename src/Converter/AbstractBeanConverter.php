@@ -8,12 +8,65 @@ use Niceshops\Bean\Type\Base\BeanInterface;
 
 abstract class AbstractBeanConverter implements BeanConverterInterface
 {
+
+    /**
+     * @var array
+     */
+    private $rawData = [];
+
     /**
      * @param BeanInterface $bean
-     * @return BeanDecorator
+     * @param array $rawData
+     * @return ConverterBeanDecorator
      */
-    public function convert(BeanInterface $bean): BeanDecorator
+    public function convert(BeanInterface $bean, array $rawData = []): ConverterBeanDecorator
     {
-        return new BeanDecorator($bean, $this);
+        $this->rawData = $rawData;
+        return new ConverterBeanDecorator($bean, $this);
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getRawData(string $name)
+    {
+        return $this->rawData[$name];
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasRawData(string $name): bool
+    {
+        return isset($this->rawData[$name]);
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     * @return $this
+     */
+    public function setRawData(string $name, $value): self
+    {
+        $this->rawData[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function removeRawData(string $name)
+    {
+        unset($this->rawData[$name]);
+    }
+
+    /**
+     *
+     */
+    public function resetRawData()
+    {
+        $this->rawData = [];
     }
 }
