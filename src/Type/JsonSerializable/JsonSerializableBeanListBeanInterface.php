@@ -5,13 +5,14 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\PHPUnit;
+namespace Niceshops\Bean\Type\JsonSerializable;
+
 
 /**
- * Class DefaultTestCase
- * @package Niceshops\Bean
+ * Interface JsonSerializableInterface
+ * @package Bean
  */
-class DefaultTestCase extends \Niceshops\Core\PHPUnit\DefaultTestCase
+interface JsonSerializableBeanListBeanInterface extends JsonSerializableBeanInterface
 {
 
 }

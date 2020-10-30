@@ -5,22 +5,27 @@
     "require": {
         "php": ">=7.2.0",
         "ext-json": "*",
-        "niceshops/nice-core": "^1.0"
+        "robertkleinschuster/nice-core": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.2"
     },
     "autoload": {
         "psr-4": {
-            "NiceshopsDev\\Bean\\": "src/"
+            "Niceshops\\Bean\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "NiceshopsDev\\Bean\\": "test/"
+            "Niceshops\\Bean\\": "test/"
         }
     },
     "scripts": {
         "test" : "vendor/bin/phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }

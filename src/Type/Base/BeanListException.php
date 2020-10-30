@@ -5,13 +5,13 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\PHPUnit;
+namespace Niceshops\Bean\Type\Base;
+
 
 /**
- * Class DefaultTestCase
+ * Class BeanException
  * @package Niceshops\Bean
  */
-class DefaultTestCase extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class BeanListException extends BeanException
 {
-
 }
