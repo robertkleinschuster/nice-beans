@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Niceshops\Bean\Loader;
 
 
 use Niceshops\Bean\Type\Base\BeanInterface;

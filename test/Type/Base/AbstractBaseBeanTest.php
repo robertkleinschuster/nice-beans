@@ -113,9 +113,9 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setOriginalDataName
-     * @covers \Niceshops\Bean\AbstractBaseBean::getOriginalDataName
-     * @covers \Niceshops\Bean\AbstractBaseBean::unsetOriginalDataName
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setOriginalDataName
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getOriginalDataName
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::unsetOriginalDataName
      */
     public function testSetGetUnsetOriginalDataName()
     {
@@ -145,7 +145,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataType
      */
     public function testGetDataType_isString()
     {
@@ -164,7 +164,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataType
      */
     public function testGetDataType_isNull()
     {
@@ -183,7 +183,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataTypeCallback
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataTypeCallback
      */
     public function testGetDataTypeCallback_CallbackAtDataTypeDataFound()
     {
@@ -226,7 +226,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider getDataTypeCallback_CallbackFoundAtBeanClassDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDataTypeCallback
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataTypeCallback
      *
      * @param string $dataType
      */
@@ -265,7 +265,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider getDataTypeCallback_CallbackNotFoundAtBeanClass
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDataTypeCallback
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataTypeCallback
      *
      * @param string $dataType
      */
@@ -292,7 +292,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group        unit
      * @small
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDataTypeCallback
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataTypeCallback
      */
     public function testGetDataTypeCallback_DataTypeNotFound()
     {
@@ -315,8 +315,8 @@ class AbstractBaseBeanTest extends DefaultTestCase
 //     * @group  integration
 //     * @small
 //     *
-//     * @covers \Niceshops\Bean\AbstractBaseBean::setData
-//     * @uses \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_for_normalizedDataName
+//     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setData
+//     * @uses \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_for_normalizedDataName
 //     * @throws BeanException
 //     * @todo implement BeanInterface at AbstractBaseBean to enable test "testSetData_with_structuredData_and_DataTypes"
 //     */
@@ -369,7 +369,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_for_normalizedDataNameDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_for_normalizedDataName
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_for_normalizedDataName
      *
      * @param array $arrDataName_with_DataTypeDefinition_DefaultValue_Map [ <DATA_NAME> => <DEFAULT_VALUE>, ... ]
      * @param array $arrDataName_with_DataTypeDefinition_sorted
@@ -431,7 +431,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getData_with_DefaultValue_hasDataDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getData_with_DefaultValue
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getData_with_DefaultValue
      *
      * @param string $name
      * @param        $value
@@ -475,7 +475,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getData_with_DefaultValue_hasDataTypeDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getData_with_DefaultValue
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getData_with_DefaultValue
      *
      * @param string $name
      * @param string $dataType
@@ -502,7 +502,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group        unit
      * @small
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getData_with_DefaultValue
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getData_with_DefaultValue
      */
     public function testGetData_with_DefaultValue_noData_and_noDataType()
     {
@@ -548,7 +548,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getDefaultValue_for_DataTypeDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDefaultValue_for_DataType
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDefaultValue_for_DataType
      *
      * @param string $dataType
      * @param        $expectedValue
@@ -563,7 +563,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataType_List
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataType_List
      */
     public function testGetDataType_List()
     {
@@ -650,7 +650,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getDataName_List_with_DataNamePrefix_and_DataTypeDefinitionDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDataName_List_with_DataNamePrefix_and_DataTypeDefinition
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataName_List_with_DataNamePrefix_and_DataTypeDefinition
      *
      * @param array       $arrDataType [ <DATA_NAME> => <DATA_TYPE>, ... ]
      * @param string      $normalizedDataNamePrefix
@@ -690,7 +690,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      */
     public function testGetValueAtObjectKey_BeanList_numericOffsetExists()
     {
@@ -711,7 +711,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      */
     public function testGetValueAtObjectKey_BeanList_numericOffsetDoesNotExist()
     {
@@ -729,7 +729,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      */
     public function testGetValueAtObjectKey_BeanInterface_hasData()
     {
@@ -750,7 +750,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      */
     public function testGetValueAtObjectKey_BeanInterface_doNotHasData()
     {
@@ -769,7 +769,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      * @uses   \Niceshops\Core\Helper\Object\ObjectPropertyFinder
      */
     public function testGetValueAtObjectKey_utilize_ObjectPropertyFinder()
@@ -786,7 +786,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      * @uses   \Niceshops\Core\Helper\Object\ObjectPropertyFinder
      */
     public function testGetValueAtObjectKey_utilize_ObjectPropertyFinder_withInvalidObject()
@@ -800,7 +800,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getObjectKeys
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getObjectKeys
      */
     public function testGetObjectKeys_fromArray()
     {
@@ -813,7 +813,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getObjectKeys
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getObjectKeys
      * @uses   \Niceshops\Core\Helper\Object\ObjectPropertyFinder
      */
     public function testGetObjectKeys_fromObject()
@@ -830,7 +830,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getData
      */
     public function testGetData_NameNotFound()
     {
@@ -851,7 +851,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getData
      * @throws BeanException
      */
     public function testGetData_NameFoundButNoValue()
@@ -870,7 +870,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getData
      * @throws BeanException
      */
     public function testGetData_ValueFound()
@@ -889,7 +889,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::hasData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::hasData
      * @throws BeanException
      */
     public function testHasData_isTrue()
@@ -908,7 +908,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::hasData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::hasData
      * @throws BeanException
      */
     public function testHasData_isFalse()
@@ -927,7 +927,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::removeDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::removeDataType
      */
     public function testRemoveDataType()
     {
@@ -948,7 +948,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::removeData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::removeData
      */
     public function testRemoveData_DataNotFound()
     {
@@ -972,7 +972,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::removeData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::removeData
      * @throws BeanException
      */
     public function testRemoveData_DataFound()
@@ -1000,7 +1000,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::resetData
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::resetData
      */
     public function testResetData()
     {
@@ -1016,7 +1016,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::toArray
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray_doNotUseOrigDataNames()
     {
@@ -1031,7 +1031,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::toArray
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray_useOrigDataNames_butNoData()
     {
@@ -1051,7 +1051,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::toArray
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray_useOrigDataNames()
     {
@@ -1104,7 +1104,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider setFromArrayDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::setFromArray
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::fromArray
      *
      * @param array      $arrData         [ "<NAME>" => <VALUE>, ... ]
      * @param array|null $arrName         [ "<NAME>", ... ]
@@ -1131,7 +1131,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::normalizeDataValue
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue
      */
     public function testNormalizeDataValue_dataTypeIsNull()
     {
@@ -1155,7 +1155,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::normalizeDataValue
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue
      */
     public function testNormalizeDataValue_valueIsNotNullable()
     {
@@ -1184,7 +1184,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::normalizeDataValue
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue
      */
     public function testNormalizeDataValue_valueIsNullButDataTypeHasDefaultValue()
     {
@@ -1212,7 +1212,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::normalizeDataValue
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue
      */
     public function testNormalizeDataValue_valueIsNotNull()
     {
@@ -1239,7 +1239,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::normalizeDataValue
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue
      */
     public function testNormalizeDataValue_valueIsNotNullWithDataTypeCallback()
     {
@@ -1304,7 +1304,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_boolDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_bool
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_bool
      *
      * @param      $value
      * @param bool $expectedValue
@@ -1357,7 +1357,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_intDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_int
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_int
      *
      * @param      $value
      * @param int  $expectedValue
@@ -1414,7 +1414,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_floatDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_float
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_float
      *
      * @param       $value
      * @param float $expectedValue
@@ -1467,7 +1467,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_stringDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_string
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_string
      *
      * @param       $value
      * @param string $expectedValue
@@ -1520,7 +1520,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_arrayDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_array
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_array
      *
      * @param       $value
      * @param array $expectedValue
@@ -1585,7 +1585,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_iterableDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_iterable
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_iterable
      *
      * @param       $value
      * @param array $expectedValue
@@ -1627,7 +1627,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_datetimeDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_datetime
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_datetime
      *
      * @param                   $value
      * @param DateTimeInterface $expectedValue
@@ -1676,7 +1676,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_objectDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_object
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_object
      *
      * @param                   $value
      * @param object            $expectedValue
@@ -1724,7 +1724,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_resourceDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_resource
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_resource
      *
      * @param                   $value
      * @param resource          $expectedValue
@@ -1769,7 +1769,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataValue_callableDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataValue_callable
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataValue_callable
      *
      * @param                   $value
      * @param resource          $expectedValue
@@ -1843,7 +1843,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider normalizeDataTypeDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::normalizeDataType
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::normalizeDataType
      *
      * @param string $dataType
      * @param string $expectedValue
@@ -1884,7 +1884,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getParentDataNameDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getParentDataName
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getParentDataName
      *
      * @param string $name
      * @param        $expectedValue
@@ -1899,7 +1899,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::hasParentDataName
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::hasParentDataName
      */
     public function testHasParentDataName()
     {
@@ -1917,7 +1917,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getValidDataType_List
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getValidDataType_List
      */
     public function testGetValidDataType_List()
     {
@@ -1929,7 +1929,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType_to_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType_to_Parent
      */
     public function testSetDataType_to_Parent_withoutParentName()
     {
@@ -1952,7 +1952,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType_to_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType_to_Parent
      */
     public function testSetDataType_to_Parent_withParentNameAndParentDataType()
     {
@@ -1976,7 +1976,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType_to_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType_to_Parent
      */
     public function testSetDataType_to_Parent_withParentNameAndNoParentDataType()
     {
@@ -2000,7 +2000,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType_to_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType_to_Parent
      */
     public function testSetDataType_to_Parent_withParentNameAndOverwrite()
     {
@@ -2023,7 +2023,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataType_from_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataType_from_Parent
      */
     public function testGetDataType_from_Parent_withoutParentName()
     {
@@ -2044,7 +2044,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::getDataType_from_Parent
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataType_from_Parent
      */
     public function testGetDataType_from_Parent_withParentName()
     {
@@ -2065,7 +2065,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      */
     public function testSetDataType_withInvalidDataType()
     {
@@ -2097,7 +2097,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      */
     public function testSetDataType_withInvalidParentDataType()
     {
@@ -2131,7 +2131,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      */
     public function testSetDataType_callableButWithInvalidCallable()
     {
@@ -2173,7 +2173,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider setDataType_callableDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      *
      * @param bool $nullable
      */
@@ -2226,7 +2226,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider setDataType_classOrInterfaceDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      *
      * @param string $dataType
      * @param bool   $nullable
@@ -2305,13 +2305,13 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider setDataType_withValidDataTypeDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::setDataType
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataType
      *
      * @param string $dataType
      *
      * @param bool $nullable
      *
-     * @uses         \Niceshops\Bean\AbstractBaseBean::getValidDataType_List()
+     * @uses         \Niceshops\Bean\Type\Base\AbstractBaseBean::getValidDataType_List()
      */
     public function testSetDataType_withValidDataType(string $dataType, bool $nullable)
     {
@@ -2365,7 +2365,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @dataProvider getDataTypeNullableDataProvider
      *
-     * @covers       \Niceshops\Bean\AbstractBaseBean::getDataTypeNullable
+     * @covers       \Niceshops\Bean\Type\Base\AbstractBaseBean::getDataTypeNullable
      *
      * @param array  $arrDataTypeData   [ "nullable" => <BOOL> ]
      * @param bool   $expectedValue
@@ -2385,7 +2385,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataTypeCallable
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataTypeCallable
      */
     public function testSetDataTypeCallable()
     {
@@ -2407,7 +2407,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::setDataTypeNullable
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::setDataTypeNullable
      */
     public function testSetDataTypeNullable()
     {
@@ -2559,10 +2559,10 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @small
      * @dataProvider ResolveWildcardsDataProvider
      *
-     * @covers \Niceshops\Bean\AbstractBaseBean::resolveWildcards
-     * @uses \Niceshops\Bean\AbstractBaseBean::findDataIgnoreWildcards
-     * @uses \Niceshops\Bean\AbstractBaseBean::getObjectKeys
-     * @uses \Niceshops\Bean\AbstractBaseBean::getValueAtObjectKey
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::resolveWildcards
+     * @uses \Niceshops\Bean\Type\Base\AbstractBaseBean::findDataIgnoreWildcards
+     * @uses \Niceshops\Bean\Type\Base\AbstractBaseBean::getObjectKeys
+     * @uses \Niceshops\Bean\Type\Base\AbstractBaseBean::getValueAtObjectKey
      *
      * @param array  $arrData
      * @param string $name

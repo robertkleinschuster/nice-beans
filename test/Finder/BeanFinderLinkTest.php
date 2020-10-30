@@ -5,21 +5,20 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Type\Base;
+namespace Niceshops\Bean\Finder;
 
-use Niceshops\Bean\PHPUnit\DefaultTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * Class BeanExceptionTest
+ * Class DefaultTestCaseTest
  * @package Niceshops\Bean
  */
-class BeanExceptionTest extends DefaultTestCase
+class BeanFinderLinkTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
 {
 
 
     /**
-     * @var BeanException|MockObject
+     * @var BeanFinderLink|MockObject
      */
     protected $object;
 
@@ -31,7 +30,7 @@ class BeanExceptionTest extends DefaultTestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockBuilder(BeanException::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object = $this->getMockBuilder(BeanFinderLink::class)->disableOriginalConstructor()->getMock();
     }
 
 
@@ -50,7 +49,7 @@ class BeanExceptionTest extends DefaultTestCase
      */
     public function testTestClassExists()
     {
-        $this->assertTrue(class_exists(BeanException::class), "Class Exists");
-        $this->assertTrue(is_a($this->object, BeanException::class), "Mock Object is set");
+        $this->assertTrue(class_exists(BeanFinderLink::class), "Class Exists");
+        $this->assertTrue(is_a($this->object, BeanFinderLink::class), "Mock Object is set");
     }
 }

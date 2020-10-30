@@ -14,7 +14,7 @@ use Niceshops\Bean\Type\Base\BeanListAwareInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareTrait;
 use Niceshops\Bean\Type\Base\BeanListInterface;
 
-class BeanGenerator implements BeanListInterface, IteratorAggregate, Countable, ArrayAccess, BeanListAwareInterface
+class BeanListDecorator implements BeanListInterface, IteratorAggregate, Countable, ArrayAccess, BeanListAwareInterface
 {
     use BeanListAwareTrait;
 
@@ -55,7 +55,7 @@ class BeanGenerator implements BeanListInterface, IteratorAggregate, Countable, 
             foreach ($this->getGenerator() as $bean) {
                 if ($recursive) {
                     foreach ($bean as $key => $item) {
-                        if ($item instanceof BeanGenerator) {
+                        if ($item instanceof BeanListDecorator) {
                             $bean->setData($key, $item->toBeanList($recursive));
                         }
                     }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Niceshops\Bean\Finder;
+namespace Niceshops\Bean\Loader;
 
 
 use Iterator;
@@ -19,17 +19,17 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, Iterator, Opti
     use AttributeAwareTrait;
     use BeanConverterAwareTrait;
 
-    private $data;
+    private $data = null;
 
     /**
      * @var bool
      */
-    private $loaded;
+    private $loaded = false;
 
     /**
      * @var int
      */
-    private $key;
+    private $key = 0;
 
     /**
      * @return int

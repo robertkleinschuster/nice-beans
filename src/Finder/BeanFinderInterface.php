@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Finder;
 
 use Niceshops\Bean\Factory\BeanFactoryInterface;
+use Niceshops\Bean\Loader\BeanLoaderInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
 
@@ -48,9 +49,9 @@ interface BeanFinderInterface
     /**
      * @param string|null $filterField
      * @param array|null $filterValueList
-     * @return BeanGenerator
+     * @return BeanListDecorator
      */
-    public function getBeanGenerator(string $filterField = null, array $filterValueList = null): BeanGenerator;
+    public function getBeanGenerator(string $filterField = null, array $filterValueList = null): BeanListDecorator;
 
     /**
      * @param bool $fetchAllData
