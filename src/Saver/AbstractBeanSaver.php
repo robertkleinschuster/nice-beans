@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Processor;
+namespace Niceshops\Bean\Saver;
 
 use Niceshops\Bean\Type\Base\BeanException;
 use Niceshops\Bean\Type\Base\BeanInterface;

@@ -5,9 +5,19 @@ namespace Niceshops\Bean\Converter;
 
 
 use Niceshops\Bean\Type\Base\BeanInterface;
+use Niceshops\Core\Attribute\AttributeAwareInterface;
+use Niceshops\Core\Attribute\AttributeAwareTrait;
+use Niceshops\Core\Option\OptionAwareInterface;
+use Niceshops\Core\Option\OptionAwareTrait;
 
-abstract class AbstractBeanConverter implements BeanConverterInterface
+/**
+ * Class AbstractBeanConverter
+ * @package Niceshops\Bean\Converter
+ */
+abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAwareInterface, AttributeAwareInterface
 {
+    use OptionAwareTrait;
+    use AttributeAwareTrait;
 
     /**
      * @var array

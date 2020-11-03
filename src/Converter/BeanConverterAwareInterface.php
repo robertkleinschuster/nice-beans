@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
-
+/**
+ * Interface BeanConverterAwareInterface
+ * @package Niceshops\Bean\Converter
+ */
 interface BeanConverterAwareInterface
 {
     /**

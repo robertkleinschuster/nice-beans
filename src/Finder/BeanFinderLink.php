@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
 
-
-class BeanFinderLink
+/**
+ * Class BeanFinderLink
+ * @package Niceshops\Bean\Finder
+ */
+class BeanFinderLink implements BeanFinderAwareInterface
 {
-    /**
-     * @var BeanFinderInterface
-     */
-    private $beanFinder;
+    use BeanFinderAwareTrait;
 
     /**
      * @var string
@@ -35,18 +35,10 @@ class BeanFinderLink
      */
     public function __construct(BeanFinderInterface $beanFinder, string $field, string $linkFieldSelf, string $linkFieldRemote)
     {
-        $this->beanFinder = $beanFinder;
+        $this->setBeanFinder($beanFinder);
         $this->field = $field;
         $this->linkFieldSelf = $linkFieldSelf;
         $this->linkFieldRemote = $linkFieldRemote;
-    }
-
-    /**
-     * @return BeanFinderInterface
-     */
-    public function getBeanFinder(): BeanFinderInterface
-    {
-        return $this->beanFinder;
     }
 
     /**

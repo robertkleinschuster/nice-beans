@@ -16,10 +16,9 @@ interface BeanProcessorInterface
      */
     public function save(): int;
 
+    /**
+     * @return int
+     */
     public function delete(): int;
-
-    public function getSaver(): BeanSaverInterface;
-
-
 
 }

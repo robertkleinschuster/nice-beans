@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Niceshops\Bean\Finder;
 
-
+/**
+ * Trait BeanFinderAwareTrait
+ * @package Niceshops\Bean\Finder
+ */
 trait BeanFinderAwareTrait
 {
     /**

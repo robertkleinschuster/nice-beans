@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
 
-
-use Iterator;
 use Niceshops\Bean\Converter\ConverterBeanDecorator;
+use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
+use Niceshops\Bean\Factory\BeanFactoryAwareTrait;
 use Niceshops\Bean\Factory\BeanFactoryInterface;
+use Niceshops\Bean\Loader\BeanLoaderAwareInterface;
+use Niceshops\Bean\Loader\BeanLoaderAwareTrait;
 use Niceshops\Bean\Loader\BeanLoaderInterface;
 use Niceshops\Bean\Loader\LoaderBeanListDecorator;
 use Niceshops\Bean\Type\Base\BeanException;
@@ -21,20 +23,12 @@ use Niceshops\Core\Option\OptionAwareTrait;
  * Class AbstractBeanFinderFactory
  * @package Niceshops\Library\Core
  */
-abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInterface, AttributeAwareInterface
+abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwareInterface, BeanFactoryAwareInterface, OptionAwareInterface, AttributeAwareInterface
 {
+    use BeanLoaderAwareTrait;
+    use BeanFactoryAwareTrait;
     use OptionAwareTrait;
     use AttributeAwareTrait;
-
-    /**
-     * @var BeanLoaderInterface
-     */
-    private $loader;
-
-    /**
-     * @var BeanFactoryInterface
-     */
-    private $factory;
 
     /**
      * @var int
@@ -52,12 +46,6 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     private $beanFinderLink_List = [];
 
     /**
-     * @var BeanInterface[]
-     */
-    private $beanBuffer = [];
-
-
-    /**
      * AbstractBeanFinderFactory constructor.
      *
      * @param BeanLoaderInterface $loader
@@ -65,8 +53,8 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
      */
     public function __construct(BeanLoaderInterface $loader, BeanFactoryInterface $factory)
     {
-        $this->loader = $loader;
-        $this->factory = $factory;
+        $this->setBeanLoader($loader);
+        $this->setBeanFactory($factory);
     }
 
     /**
@@ -99,35 +87,22 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
     }
 
     /**
-     * @return BeanLoaderInterface
-     */
-    public function getLoader(): BeanLoaderInterface
-    {
-        return $this->loader;
-    }
-
-    /**
-     * @return BeanFactoryInterface
-     */
-    public function getFactory(): BeanFactoryInterface
-    {
-        return $this->factory;
-    }
-
-    /**
      * @return LoaderBeanListDecorator
      */
     public function getLoaderBeanListDecorator(): LoaderBeanListDecorator
     {
         $this->initLinkedFinder();
-        return new LoaderBeanListDecorator($this->getLoader(), $this, $this->getFactory()->createBeanList());
+        return new LoaderBeanListDecorator($this->getBeanLoader(), $this, $this->getBeanFactory()->createBeanList());
     }
 
+    /**
+     *
+     */
     public function initLinkedFinder()
     {
         if ($this->hasLinkedFinder()) {
             foreach ($this->getLinkedFinderList() as $link) {
-                $link->getBeanFinder()->initByValueList($link->getLinkFieldRemote(), $this->getLoader()->preloadValueList($link->getLinkFieldSelf()));
+                $link->getBeanFinder()->initByValueList($link->getLinkFieldRemote(), $this->getBeanLoader()->preloadValueList($link->getLinkFieldSelf()));
             }
         }
     }
@@ -164,7 +139,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
      */
     public function initByValueList(string $field, array $valueList)
     {
-        $this->getLoader()->initByValueList($field, $valueList);
+        $this->getBeanLoader()->initByValueList($field, $valueList);
         return $this;
     }
 
@@ -182,7 +157,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, OptionAwareInt
      */
     public function count(): int
     {
-        return $this->getLoader()->count();
+        return $this->getBeanLoader()->count();
     }
 
     /**

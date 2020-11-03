@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Niceshops\Bean\Loader;
 
-
+/**
+ * Trait BeanLoaderAwareTrait
+ * @package Niceshops\Bean\Loader
+ */
 trait BeanLoaderAwareTrait
 {
     /**

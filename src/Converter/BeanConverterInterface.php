@@ -6,6 +6,10 @@ namespace Niceshops\Bean\Converter;
 
 use Niceshops\Bean\Type\Base\BeanInterface;
 
+/**
+ * Interface BeanConverterInterface
+ * @package Niceshops\Bean\Converter
+ */
 interface BeanConverterInterface
 {
     public function convert(BeanInterface $bean, array $rawData = []): ConverterBeanDecorator;

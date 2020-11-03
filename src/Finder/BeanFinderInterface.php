@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
 
-use Niceshops\Bean\Factory\BeanFactoryInterface;
-use Niceshops\Bean\Loader\BeanLoaderInterface;
 use Niceshops\Bean\Loader\LoaderBeanListDecorator;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
@@ -62,17 +60,6 @@ interface BeanFinderInterface
      * @return BeanInterface
      */
     public function getBean(bool $fetchAllData = false): BeanInterface;
-
-
-    /**
-     * @return BeanLoaderInterface
-     */
-    public function getLoader(): BeanLoaderInterface;
-
-    /**
-     * @return BeanFactoryInterface
-     */
-    public function getFactory(): BeanFactoryInterface;
 
     /**
      * @return int

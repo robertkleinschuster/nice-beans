@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
-
+/**
+ * Trait BeanConverterAwareTrait
+ * @package Niceshops\Bean\Converter
+ */
 trait BeanConverterAwareTrait
 {
     /**

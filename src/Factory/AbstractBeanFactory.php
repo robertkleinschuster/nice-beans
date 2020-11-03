@@ -11,6 +11,10 @@ use Niceshops\Core\Attribute\AttributeAwareTrait;
 use Niceshops\Core\Option\OptionAwareInterface;
 use Niceshops\Core\Option\OptionAwareTrait;
 
+/**
+ * Class AbstractBeanFactory
+ * @package Niceshops\Bean\Factory
+ */
 abstract class AbstractBeanFactory implements BeanFactoryInterface, OptionAwareInterface, AttributeAwareInterface
 {
     use OptionAwareTrait;

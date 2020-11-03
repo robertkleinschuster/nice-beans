@@ -5,6 +5,9 @@ namespace Niceshops\Bean\Processor;
 
 
 use Countable;
+use Niceshops\Bean\Saver\BeanSaverAwareInterface;
+use Niceshops\Bean\Saver\BeanSaverAwareTrait;
+use Niceshops\Bean\Saver\BeanSaverInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareTrait;
@@ -18,8 +21,9 @@ use Niceshops\Core\Option\OptionAwareTrait;
  * Class AbstractBeanProcessor
  * @package Niceshops\Bean\BeanProcessor
  */
-abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanListAwareInterface, OptionAwareInterface, AttributeAwareInterface
+abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSaverAwareInterface, BeanListAwareInterface, OptionAwareInterface, AttributeAwareInterface
 {
+    use BeanSaverAwareTrait;
     use BeanListAwareTrait;
     use OptionAwareTrait;
     use AttributeAwareTrait;
@@ -30,10 +34,6 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanList
     const OPTION_SAVE_NON_EMPTY_ONLY = "non_empty_only";
     const OPTION_IGNORE_VALIDATION = "ignore_validation";
 
-    /**
-     * @var BeanSaverInterface
-     */
-    private $saver;
 
     /**
      * AbstractBeanProcessor constructor.
@@ -42,15 +42,7 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanList
      */
     public function __construct(BeanSaverInterface $saver)
     {
-        $this->saver = $saver;
-    }
-
-    /**
-     * @return BeanSaverInterface
-     */
-    public function getSaver(): BeanSaverInterface
-    {
-        return $this->saver;
+        $this->setBeanSaver($saver);
     }
 
     /**
@@ -62,8 +54,11 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanList
         foreach ($beanList as $bean) {
             $this->beforeSave($bean);
         }
-        $this->getSaver()->setBeanList($beanList);
-        $result = $this->getSaver()->save();
+        $saver = $this->getBeanSaver();
+        if ($saver instanceof BeanListAwareInterface) {
+            $saver->setBeanList($beanList);
+        }
+        $result = $saver->save();
         foreach ($beanList as $bean) {
             $this->afterSave($bean);
         }
@@ -80,27 +75,42 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanList
         foreach ($beanList as $bean) {
             $this->beforeDelete($bean);
         }
-        $this->getSaver()->setBeanList($beanList);
-        $result = $this->getSaver()->delete();
+        $saver = $this->getBeanSaver();
+        if ($saver instanceof BeanListAwareInterface) {
+            $saver->setBeanList($beanList);
+        }
+        $result = $saver->delete();
         foreach ($beanList as $bean) {
             $this->afterDelete($bean);
         }
         return $result;
     }
 
+    /**
+     * @param BeanInterface $bean
+     */
     protected function beforeSave(BeanInterface $bean)
     {
 
     }
 
+    /**
+     * @param BeanInterface $bean
+     */
     protected function afterSave(BeanInterface $bean) {
 
     }
 
+    /**
+     * @param BeanInterface $bean
+     */
     protected function beforeDelete(BeanInterface $bean) {
 
     }
 
+    /**
+     * @param BeanInterface $bean
+     */
     protected function afterDelete(BeanInterface $bean) {
 
     }

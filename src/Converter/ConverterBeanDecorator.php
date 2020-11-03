@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
-
-
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Niceshops\Bean\Type\Base\BeanInterface;

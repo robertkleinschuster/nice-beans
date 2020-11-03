@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Niceshops\Bean\Loader;
 
-
+/**
+ * Interface BeanLoaderAwareInterface
+ * @package Niceshops\Bean\Loader
+ */
 interface BeanLoaderAwareInterface
 {
     /**

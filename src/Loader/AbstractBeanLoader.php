@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Niceshops\Bean\Loader;
@@ -14,11 +15,15 @@ use Niceshops\Core\Attribute\AttributeAwareTrait;
 use Niceshops\Core\Option\OptionAwareInterface;
 use Niceshops\Core\Option\OptionAwareTrait;
 
-abstract class AbstractBeanLoader implements BeanLoaderInterface, OptionAwareInterface, AttributeAwareInterface, BeanConverterAwareInterface
+/**
+ * Class AbstractBeanLoader
+ * @package Niceshops\Bean\Loader
+ */
+abstract class AbstractBeanLoader implements BeanLoaderInterface, BeanConverterAwareInterface, OptionAwareInterface, AttributeAwareInterface
 {
+    use BeanConverterAwareTrait;
     use OptionAwareTrait;
     use AttributeAwareTrait;
-    use BeanConverterAwareTrait;
 
     /**
      * @var array
