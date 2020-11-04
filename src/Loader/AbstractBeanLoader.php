@@ -119,9 +119,9 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, BeanConverterA
     /**
      * @param BeanInterface $bean
      * @param array $data
-     * @return ConverterBeanDecorator
+     * @return BeanInterface
      */
-    public function initializeBeanWithData(BeanInterface $bean, array $data): ConverterBeanDecorator
+    public function initializeBeanWithData(BeanInterface $bean, array $data): BeanInterface
     {
         if ($this->hasBeanConverter()) {
             return $this->getBeanConverter()->convert($bean, $data);

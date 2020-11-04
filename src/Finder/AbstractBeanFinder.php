@@ -87,12 +87,13 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
     }
 
     /**
-     * @return LoaderBeanListDecorator
+     * @return FinderBeanListDecorator
+     * @throws BeanException
      */
-    public function getLoaderBeanListDecorator(): LoaderBeanListDecorator
+    public function getBeanListDecorator(): FinderBeanListDecorator
     {
         $this->initLinkedFinder();
-        return new LoaderBeanListDecorator($this->getBeanLoader(), $this, $this->getBeanFactory()->createBeanList());
+        return new FinderBeanListDecorator($this);
     }
 
     /**
@@ -113,7 +114,7 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
      */
     public function getBeanList(bool $fetchAllData = false): BeanListInterface
     {
-        return $this->getLoaderBeanListDecorator()->toBeanList($fetchAllData);
+        return $this->getBeanListDecorator()->toBeanList($fetchAllData);
     }
 
     /**
@@ -144,10 +145,10 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
     }
 
     /**
-     * @param ConverterBeanDecorator $bean
-     * @return ConverterBeanDecorator
+     * @param BeanInterface $bean
+     * @return BeanInterface
      */
-    public function initializeBeanWithAdditionlData(ConverterBeanDecorator $bean): ConverterBeanDecorator
+    public function initializeBeanWithAdditionlData(BeanInterface $bean): BeanInterface
     {
         return $bean;
     }

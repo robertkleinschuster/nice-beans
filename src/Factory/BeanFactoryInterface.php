@@ -12,13 +12,16 @@ use Niceshops\Bean\Type\Base\BeanListInterface;
  */
 interface BeanFactoryInterface
 {
+
+
     /**
+     * @param array $data
      * @return BeanInterface
      */
-    public function createBean(): BeanInterface;
+    public function getEmptyBean(array $data): BeanInterface;
 
     /**
      * @return BeanListInterface
      */
-    public function createBeanList(): BeanListInterface;
+    public function getEmptyBeanList(): BeanListInterface;
 }

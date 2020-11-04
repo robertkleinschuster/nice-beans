@@ -11,7 +11,7 @@ use Niceshops\Bean\Type\Base\BeanInterface;
  * Interface BeanFinderLoaderInterface
  * @package Niceshops\Library\Core
  */
-interface BeanLoaderInterface extends \Iterator
+interface BeanLoaderInterface extends \Iterator, \Countable
 {
     /**
      * @return int
@@ -48,6 +48,6 @@ interface BeanLoaderInterface extends \Iterator
      * @param array $data
      * @return ConverterBeanDecorator
      */
-    public function initializeBeanWithData(BeanInterface $bean, array $data): ConverterBeanDecorator;
+    public function initializeBeanWithData(BeanInterface $bean, array $data): BeanInterface;
 
 }

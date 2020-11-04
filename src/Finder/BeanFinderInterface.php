@@ -47,7 +47,7 @@ interface BeanFinderInterface
 
     /**
      */
-    public function getLoaderBeanListDecorator(): LoaderBeanListDecorator;
+    public function getBeanListDecorator(): FinderBeanListDecorator;
 
     /**
      * @param bool $fetchAllData
