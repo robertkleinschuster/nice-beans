@@ -79,4 +79,14 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
     {
         $this->rawData = [];
     }
+
+    /**
+     * @return array
+     */
+    public function getRawDataMap(): array
+    {
+        return $this->rawData;
+    }
+
+
 }
