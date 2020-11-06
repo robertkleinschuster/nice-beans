@@ -30,8 +30,16 @@ interface BeanConverterInterface
      */
     public function convertValueToBean(BeanInterface $bean, string $name, $value);
 
-
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function getRawData(string $name);
+
+    /**
+     * @return array
+     */
+    public function getRawDataMap(): array;
 
     /**
      * @param string $name
@@ -46,7 +54,14 @@ interface BeanConverterInterface
      */
     public function setRawData(string $name, $value): self;
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function removeRawData(string $name);
 
+    /**
+     * @return mixed
+     */
     public function resetRawData();
 }

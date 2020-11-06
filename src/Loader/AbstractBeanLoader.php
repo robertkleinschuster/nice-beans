@@ -17,7 +17,11 @@ use Niceshops\Core\Option\OptionAwareTrait;
  * Class AbstractBeanLoader
  * @package Niceshops\Bean\Loader
  */
-abstract class AbstractBeanLoader implements BeanLoaderInterface, BeanConverterAwareInterface, OptionAwareInterface, AttributeAwareInterface
+abstract class AbstractBeanLoader implements
+    BeanLoaderInterface,
+    BeanConverterAwareInterface,
+    OptionAwareInterface,
+    AttributeAwareInterface
 {
     use BeanConverterAwareTrait;
     use OptionAwareTrait;

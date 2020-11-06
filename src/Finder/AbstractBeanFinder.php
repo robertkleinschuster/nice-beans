@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
 
-use Niceshops\Bean\Converter\ConverterBeanDecorator;
 use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
 use Niceshops\Bean\Factory\BeanFactoryAwareTrait;
 use Niceshops\Bean\Factory\BeanFactoryInterface;
 use Niceshops\Bean\Loader\BeanLoaderAwareInterface;
 use Niceshops\Bean\Loader\BeanLoaderAwareTrait;
 use Niceshops\Bean\Loader\BeanLoaderInterface;
-use Niceshops\Bean\Loader\LoaderBeanListDecorator;
 use Niceshops\Bean\Type\Base\BeanException;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
@@ -24,7 +22,12 @@ use Niceshops\Core\Option\OptionAwareTrait;
  * Class AbstractBeanFinderFactory
  * @package Niceshops\Library\Core
  */
-abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwareInterface, BeanFactoryAwareInterface, OptionAwareInterface, AttributeAwareInterface
+abstract class AbstractBeanFinder implements
+    BeanFinderInterface,
+    BeanLoaderAwareInterface,
+    BeanFactoryAwareInterface,
+    OptionAwareInterface,
+    AttributeAwareInterface
 {
     use BeanLoaderAwareTrait;
     use BeanFactoryAwareTrait;
@@ -65,8 +68,12 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
      * @param string $linkFieldRemote
      * @return $this|BeanFinderInterface
      */
-    public function addLinkedFinder(BeanFinderInterface $beanFinder, string $field, string $linkFieldSelf, string $linkFieldRemote): BeanFinderInterface
-    {
+    public function addLinkedFinder(
+        BeanFinderInterface $beanFinder,
+        string $field,
+        string $linkFieldSelf,
+        string $linkFieldRemote
+    ): BeanFinderInterface {
         $this->beanFinderLink_List[] = new BeanFinderLink($beanFinder, $field, $linkFieldSelf, $linkFieldRemote);
         return $this;
     }
@@ -104,9 +111,24 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
     {
         if ($this->hasLinkedFinder()) {
             foreach ($this->getLinkedFinderList() as $link) {
-                $link->getBeanFinder()->initByValueList($link->getLinkFieldRemote(), $this->getBeanLoader()->preloadValueList($link->getLinkFieldSelf()));
+                $link->getBeanFinder()->initByValueList(
+                    $link->getLinkFieldRemote(),
+                    $this->preloadValueList($link->getLinkFieldSelf())
+                );
             }
         }
+    }
+
+    /**
+     * @param string $field
+     * @return array
+     */
+    public function preloadValueList(string $field): array
+    {
+        if ($this->hasBeanLoader()) {
+            return $this->getBeanLoader()->preloadValueList($field);
+        }
+        return [];
     }
 
     /**
@@ -141,7 +163,9 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
      */
     public function initByValueList(string $field, array $valueList)
     {
-        $this->getBeanLoader()->initByValueList($field, $valueList);
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->filter([$field => $valueList]);
+        }
         return $this;
     }
 
@@ -159,7 +183,10 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
      */
     public function count(): int
     {
-        return $this->getBeanLoader()->count();
+        if ($this->hasBeanLoader()) {
+            return $this->getBeanLoader()->count();
+        }
+        return 0;
     }
 
     /**
@@ -173,6 +200,44 @@ abstract class AbstractBeanFinder implements BeanFinderInterface, BeanLoaderAwar
         $this->offset = $offset;
         return $this;
     }
+
+    /**
+     * @param string $search
+     * @param array|null $field_List
+     * @return $this|mixed
+     */
+    public function search(string $search, array $field_List = null)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->search($search, $field_List);
+        }
+        return $this;
+    }
+
+    /**
+     * @param  array $field_List
+     * @return $this|mixed
+     */
+    public function order(array $field_List)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->order($field_List);
+        }
+        return $this;
+    }
+
+    /**
+     * @param array $data_Map
+     * @return $this|mixed
+     */
+    public function filter(array $data_Map)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->filter($data_Map);
+        }
+        return $this;
+    }
+
 
     /**
      * @return int

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
 
-use Niceshops\Bean\Loader\LoaderBeanListDecorator;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
 
@@ -29,13 +28,37 @@ interface BeanFinderInterface
     public function limit(int $limit, int $offset);
 
     /**
+     * @param string $search
+     * @param array|null $field_List
+     * @return mixed
+     */
+    public function search(string $search, array $field_List = null);
+
+    /**
+     * @param array $field_List
+     * @return mixed
+     */
+    public function order(array $field_List);
+
+    /**
+     * @param array $data_Map
+     * @return mixed
+     */
+    public function filter(array $data_Map);
+
+    /**
      * @param BeanFinderInterface $beanFinder
      * @param string $field
      * @param string $linkFieldSelf
      * @param string $linkFieldRemote
      * @return BeanFinderInterface
      */
-    public function addLinkedFinder(BeanFinderInterface $beanFinder, string $field, string $linkFieldSelf, string $linkFieldRemote): BeanFinderInterface;
+    public function addLinkedFinder(
+        BeanFinderInterface $beanFinder,
+        string $field,
+        string $linkFieldSelf,
+        string $linkFieldRemote
+    ): BeanFinderInterface;
 
     /**
      * filter by key value pairs

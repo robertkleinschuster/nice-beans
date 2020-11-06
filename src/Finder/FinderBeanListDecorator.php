@@ -21,7 +21,13 @@ use Niceshops\Bean\Type\Base\BeanListInterface;
  * Class BeanLoaderDecorator
  * @package Niceshops\Bean\Finder
  */
-class FinderBeanListDecorator implements BeanListInterface, IteratorAggregate, Countable, ArrayAccess, BeanListAwareInterface, BeanFinderAwareInterface
+class FinderBeanListDecorator implements
+    BeanListInterface,
+    IteratorAggregate,
+    Countable,
+    ArrayAccess,
+    BeanListAwareInterface,
+    BeanFinderAwareInterface
 {
     use BeanListAwareTrait;
     use BeanFinderAwareTrait;
@@ -110,20 +116,27 @@ class FinderBeanListDecorator implements BeanListInterface, IteratorAggregate, C
      */
     public function getIterator()
     {
-        $this->getBeanLoader()->execute();
-
-        foreach ($this->getBeanLoader() as $data) {
-            $bean = $this->getBeanLoader()->initializeBeanWithData($this->getBeanFactory()->getEmptyBean($data), $data);
-            if (!$this->hasFilter() || $bean->getData($this->filterField) == $this->filterValue) {
-                $this->getBeanFinder()->initializeBeanWithAdditionlData($bean);
-                if ($this->getBeanFinder()->hasLinkedFinder()) {
-                    foreach ($this->getBeanFinder()->getLinkedFinderList() as $link) {
-                        $finder = $link->getBeanFinder();
-                        $decorator = $finder->getBeanListDecorator()->setFilter($link->getLinkFieldRemote(), $bean->getData($link->getLinkFieldSelf()));
-                        $bean->setData($link->getField(), $decorator);
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->execute();
+            foreach ($this->getBeanLoader() as $data) {
+                $bean = $this->getBeanLoader()->initializeBeanWithData(
+                    $this->getBeanFactory()->getEmptyBean($data),
+                    $data
+                );
+                if (!$this->hasFilter() || $bean->getData($this->filterField) == $this->filterValue) {
+                    $this->getBeanFinder()->initializeBeanWithAdditionlData($bean);
+                    if ($this->getBeanFinder()->hasLinkedFinder()) {
+                        foreach ($this->getBeanFinder()->getLinkedFinderList() as $link) {
+                            $finder = $link->getBeanFinder();
+                            $decorator = $finder->getBeanListDecorator()->setFilter(
+                                $link->getLinkFieldRemote(),
+                                $bean->getData($link->getLinkFieldSelf())
+                            );
+                            $bean->setData($link->getField(), $decorator);
+                        }
                     }
+                    yield $bean;
                 }
-                yield $bean;
             }
         }
     }

@@ -31,11 +31,23 @@ interface BeanLoaderInterface extends \Iterator, \Countable
     public function limit(int $limit, int $offset);
 
     /**
-     * @param string $field
-     * @param array $valueList
+     * @param string $search
+     * @param array|null $field_List
      * @return $this
      */
-    public function initByValueList(string $field, array $valueList);
+    public function search(string $search, array $field_List = null);
+
+    /**
+     * @param array $field_List
+     * @return $this
+     */
+    public function order(array $field_List);
+
+    /**
+     * @param array $data_Map
+     * @return $this
+     */
+    public function filter(array $data_Map);
 
     /**
      * @param string $field

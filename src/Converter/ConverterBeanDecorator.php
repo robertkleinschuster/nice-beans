@@ -39,7 +39,14 @@ class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareIn
         if (!$this->getBeanConverter()->hasRawData($name)) {
             $this->getBeanConverter()->setRawData($name, $value);
         }
-        $this->getBean()->setData($name, $this->getBeanConverter()->convertValueToBean($this->getBean(), $name, $value));
+        $this->getBean()->setData(
+            $name,
+            $this->getBeanConverter()->convertValueToBean(
+                $this->getBean(),
+                $name,
+                $value
+            )
+        );
         return $this;
     }
 
@@ -52,7 +59,11 @@ class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareIn
         if (!$this->getBean()->hasData($name) && $this->getBeanConverter()->hasRawData($name)) {
             $this->setData($name, $this->getBeanConverter()->getRawData($name));
         }
-        return $this->getBeanConverter()->convertValueFromBean($this->getBean(), $name, $this->getBean()->getData($name));
+        return $this->getBeanConverter()->convertValueFromBean(
+            $this->getBean(),
+            $name,
+            $this->getBean()->getData($name)
+        );
     }
 
     /**
@@ -71,7 +82,11 @@ class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareIn
     public function removeData($name)
     {
         $this->getBeanConverter()->removeRawData($name);
-        return $this->getBeanConverter()->convertValueFromBean($this->getBean(), $name, $this->getBean()->removeData($name));
+        return $this->getBeanConverter()->convertValueFromBean(
+            $this->getBean(),
+            $name,
+            $this->getBean()->removeData($name)
+        );
     }
 
     /**
@@ -125,7 +140,7 @@ class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareIn
      */
     public function toBean(): BeanInterface
     {
-        foreach ($this->getBeanConverter()->getRawData() as $key => $value) {
+        foreach ($this->getBeanConverter()->getRawDataMap() as $key => $value) {
             $this->setData($key, $value);
         }
         return $this->getBean();
