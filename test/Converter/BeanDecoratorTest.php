@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @see       https://github.com/niceshops/nice-beans for the canonical source repository
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
@@ -104,7 +106,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      * @param string $method
      * @param array $params
      */
-    public function testCallBeanMethod(string $method,  array $params, array $additionalMethods = null)
+    public function testCallBeanMethod(string $method, array $params, array $additionalMethods = null)
     {
         $mockBean = $this->getMockBuilder(AbstractBaseBean::class)->setMethods([$method])->getMockForAbstractClass();
         $this->object->method('getBean')->willReturn($mockBean);
@@ -116,5 +118,4 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
         $mockBean->expects($this->once())->method($method);
         call_user_func_array([$this->object, $method], $params);
     }
-
 }

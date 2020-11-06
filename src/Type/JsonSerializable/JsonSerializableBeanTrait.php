@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @see       https://github.com/niceshops/nice-beans for the canonical source repository
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
 namespace Niceshops\Bean\Type\JsonSerializable;
-
 
 use Exception;
 use Niceshops\Bean\Type\Base\BeanException;
@@ -71,7 +72,7 @@ trait JsonSerializableBeanTrait
         if ($dataOnly) {
             if ($data) {
                 if (method_exists($this, "setSerializeData")) {
-                    $this->setSerializeData(array(self::SERIALIZE_DATA_KEY => $data));
+                    $this->setSerializeData([self::SERIALIZE_DATA_KEY => $data]);
                 }
 
                 throw new BeanException("Could not set data from json!");
@@ -106,5 +107,4 @@ trait JsonSerializableBeanTrait
 
         return $data;
     }
-
 }

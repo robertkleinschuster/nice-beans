@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @see       https://github.com/niceshops/nice-beans for the canonical source repository
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
 namespace Niceshops\Bean\Type\Base;
-
 
 use ArrayAccess;
 use ArrayIterator;
@@ -436,9 +437,12 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
                 if (self::DATA_TYPE_ARRAY !== $this->getDataType_from_Parent($normalizedDataName)) {
                     throw new BeanException(
                         sprintf(
-                            "Parent of '%s' has wrong datatype '%s' ('%s' required)!", $normalizedDataName, $this->getDataType_from_Parent($normalizedDataName),
+                            "Parent of '%s' has wrong datatype '%s' ('%s' required)!",
+                            $normalizedDataName,
+                            $this->getDataType_from_Parent($normalizedDataName),
                             self::DATA_TYPE_ARRAY
-                        ), BeanException::ERROR_CODE_INVALID_DATA_TYPE
+                        ),
+                        BeanException::ERROR_CODE_INVALID_DATA_TYPE
                     );
                 }
             }
@@ -471,7 +475,8 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
                 ];
             } else {
                 throw new BeanException(
-                    sprintf("Try to set invalid datatype '%s' for data '%s'!", $dataType, $name), BeanException::ERROR_CODE_INVALID_DATA_TYPE
+                    sprintf("Try to set invalid datatype '%s' for data '%s'!", $dataType, $name),
+                    BeanException::ERROR_CODE_INVALID_DATA_TYPE
                 );
             }
 
@@ -803,7 +808,8 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
                 $value = $value->toArray();
             } else {
                 throw new BeanException(
-                    "Invalid value for data type 'iterable'!", BeanException::ERROR_CODE_INVALID_DATA_VALUE
+                    "Invalid value for data type 'iterable'!",
+                    BeanException::ERROR_CODE_INVALID_DATA_VALUE
                 );
             }
         }
@@ -833,12 +839,15 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
                     }
                 } catch (BeanException $e) {
                     throw new BeanException(
-                        sprintf("Invalid value '%s' for data type 'datetime' - %s!", $origValue, $e->getMessage()), BeanException::ERROR_CODE_INVALID_DATA_VALUE, $e
+                        sprintf("Invalid value '%s' for data type 'datetime' - %s!", $origValue, $e->getMessage()),
+                        BeanException::ERROR_CODE_INVALID_DATA_VALUE,
+                        $e
                     );
                 }
             } else {
                 throw new BeanException(
-                    sprintf("Invalid value '%s' for data type 'datetime'!", is_scalar($origValue) ? (string)$origValue : "NOT_A_SCALAR_VALUE"), BeanException::ERROR_CODE_INVALID_DATA_VALUE
+                    sprintf("Invalid value '%s' for data type 'datetime'!", is_scalar($origValue) ? (string)$origValue : "NOT_A_SCALAR_VALUE"),
+                    BeanException::ERROR_CODE_INVALID_DATA_VALUE
                 );
             }
         }
@@ -1015,9 +1024,10 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
     protected function getDataName_List_with_DataNamePrefix_and_DataTypeDefinition(string $normalizedDataNamePrefix, bool $ignoreSelf = true)
     {
         $arrDataTypeName = array_filter(
-            array_keys($this->getDataType_List()), function ($key) use ($normalizedDataNamePrefix) {
-            return strpos($key, $normalizedDataNamePrefix . ".") === 0;
-        }
+            array_keys($this->getDataType_List()),
+            function ($key) use ($normalizedDataNamePrefix) {
+                return strpos($key, $normalizedDataNamePrefix . ".") === 0;
+            }
         );
 
         if (!$ignoreSelf && $this->getDataType($normalizedDataNamePrefix)) {
@@ -1483,7 +1493,7 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
      * @return static
      * @throws BeanException
      */
-    static public function createFromArray(array $arrData)
+    public static function createFromArray(array $arrData)
     {
         $bean = new static();
         $bean->fromArray($arrData);

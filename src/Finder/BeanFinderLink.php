@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
@@ -64,6 +65,4 @@ class BeanFinderLink implements BeanFinderAwareInterface
     {
         return $this->linkFieldRemote;
     }
-
-
 }

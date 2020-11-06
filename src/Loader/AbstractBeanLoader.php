@@ -1,10 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
 namespace Niceshops\Bean\Loader;
-
-
 
 use Niceshops\Bean\Converter\BeanConverterAwareInterface;
 use Niceshops\Bean\Converter\BeanConverterAwareTrait;
@@ -80,7 +78,7 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, BeanConverterA
      */
     public function key()
     {
-       return $this->key;
+        return $this->key;
     }
 
     /**
@@ -129,6 +127,4 @@ abstract class AbstractBeanLoader implements BeanLoaderInterface, BeanConverterA
             return $bean->fromArray($data);
         }
     }
-
-
 }

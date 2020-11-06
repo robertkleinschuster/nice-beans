@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Processor;
-
 
 use Countable;
 use Niceshops\Bean\Saver\BeanSaverAwareInterface;
@@ -91,28 +91,27 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
      */
     protected function beforeSave(BeanInterface $bean)
     {
-
     }
 
     /**
      * @param BeanInterface $bean
      */
-    protected function afterSave(BeanInterface $bean) {
-
+    protected function afterSave(BeanInterface $bean)
+    {
     }
 
     /**
      * @param BeanInterface $bean
      */
-    protected function beforeDelete(BeanInterface $bean) {
-
+    protected function beforeDelete(BeanInterface $bean)
+    {
     }
 
     /**
      * @param BeanInterface $bean
      */
-    protected function afterDelete(BeanInterface $bean) {
-
+    protected function afterDelete(BeanInterface $bean)
+    {
     }
 
 

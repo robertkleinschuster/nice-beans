@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace Niceshops\Bean\Factory;
 
@@ -41,6 +41,4 @@ trait BeanFactoryAwareTrait
     {
         return $this->beanFactory !== null;
     }
-
-
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Factory;
-
 
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListInterface;
@@ -59,7 +59,7 @@ abstract class AbstractBeanFactory implements BeanFactoryInterface, OptionAwareI
      */
     protected function createBean(string $class): BeanInterface
     {
-        return new $class;
+        return new $class();
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractBeanFactory implements BeanFactoryInterface, OptionAwareI
      */
     protected function createBeanList(string $class): BeanListInterface
     {
-        return new $class;
+        return new $class();
     }
 
     /**
@@ -81,5 +81,4 @@ abstract class AbstractBeanFactory implements BeanFactoryInterface, OptionAwareI
      * @return string
      */
     abstract protected function getBeanListClass(): string;
-
 }

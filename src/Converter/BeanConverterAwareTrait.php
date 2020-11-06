@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
@@ -41,5 +41,4 @@ trait BeanConverterAwareTrait
     {
         return $this->beanConverter !== null;
     }
-
 }

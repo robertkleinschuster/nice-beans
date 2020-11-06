@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
 namespace Niceshops\Bean\Type\Base;
-
 
 trait BeanAwareTrait
 {
@@ -39,5 +38,4 @@ trait BeanAwareTrait
     {
         return $this->bean !== null;
     }
-
 }

@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Serializable;
-
-
 
 /**
  * Interface SerializableBeanListInterface
@@ -23,5 +22,4 @@ interface SerializableBeanListInterface extends SerializeableBeanInterface
      *
      */
     const SERIALIZE_ARR_BEAN_CLASS_MAP_KEY = "arrBeanClassMap";
-
 }

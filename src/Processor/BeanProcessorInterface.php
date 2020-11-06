@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Processor;
-
 
 /**
  * Interface ProcessorInterface
@@ -20,5 +20,4 @@ interface BeanProcessorInterface
      * @return int
      */
     public function delete(): int;
-
 }

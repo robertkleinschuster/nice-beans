@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Saver;
@@ -115,5 +116,4 @@ abstract class AbstractBeanSaver implements BeanSaverInterface, BeanListAwareInt
     {
         throw new BeanException($error->getMessage());
     }
-
 }

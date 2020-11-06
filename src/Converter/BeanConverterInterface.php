@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
-
 
 use Niceshops\Bean\Type\Base\BeanInterface;
 

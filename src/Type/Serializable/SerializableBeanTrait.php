@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
 namespace Niceshops\Bean\Type\Serializable;
-
 
 use Niceshops\Bean\Type\Base\BeanException;
 
@@ -131,7 +130,7 @@ trait SerializableBeanTrait
     /**
      * @return array
      */
-    static protected function getSerializeKey_List()
+    protected static function getSerializeKey_List()
     {
         return [
             self::SERIALIZE_DATA_KEY,
@@ -144,7 +143,7 @@ trait SerializableBeanTrait
      *
      * @return bool
      */
-    static protected function isSerializedData(array $arrData)
+    protected static function isSerializedData(array $arrData)
     {
         $flag = true;
 
@@ -165,7 +164,7 @@ trait SerializableBeanTrait
      * @return static
      * @throws BeanException
      */
-    static public function createFromArray(array $arrData)
+    public static function createFromArray(array $arrData)
     {
         $bean = new static();
 

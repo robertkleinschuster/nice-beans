@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Serializable;
@@ -40,11 +41,11 @@ trait SerializableBeanListTrait
      */
     public function getSerializeData(): array
     {
-        $arrData = array(
+        $arrData = [
             self::SERIALIZE_ARR_BEAN_KEY => $this->getBeans(),
             self::SERIALIZE_ARR_BEAN_CLASS_KEY => $this->getBeanClasses(),
             self::SERIALIZE_ARR_BEAN_CLASS_MAP_KEY => [],
-        );
+        ];
 
         foreach ($arrData[self::SERIALIZE_ARR_BEAN_KEY] as $key => $bean) {
             $arrData[self::SERIALIZE_ARR_BEAN_CLASS_MAP_KEY][$key] = get_class($bean);

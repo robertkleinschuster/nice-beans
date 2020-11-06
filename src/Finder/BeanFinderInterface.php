@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Finder;
@@ -80,5 +81,4 @@ interface BeanFinderInterface
      * @return bool
      */
     public function hasOffset(): bool;
-
 }

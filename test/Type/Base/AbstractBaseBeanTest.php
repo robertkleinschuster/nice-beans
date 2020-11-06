@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @see       https://github.com/niceshops/nice-beans for the canonical source repository
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
@@ -679,9 +681,13 @@ class AbstractBaseBeanTest extends DefaultTestCase
 
 
         $this->assertSame(
-            $expectedValue, $this->invokeMethod(
-            $this->object, "getDataName_List_with_DataNamePrefix_and_DataTypeDefinition", $normalizedDataNamePrefix, $ignoreSelf
-        )
+            $expectedValue,
+            $this->invokeMethod(
+                $this->object,
+                "getDataName_List_with_DataNamePrefix_and_DataTypeDefinition",
+                $normalizedDataNamePrefix,
+                $ignoreSelf
+            )
         );
     }
 
@@ -1251,7 +1257,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $expectedValue = "foo=bak with " . get_class($this->object);
         $name = "foo";
         $dataType = "bar";
-        $callback = function($value, string $name, AbstractBaseBean $context){
+        $callback = function ($value, string $name, AbstractBaseBean $context) {
             return "$name=$value with " . get_class($context);
         };
 
@@ -1707,7 +1713,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
     public function normalizeDataValue_resourceDataProvider()
     {
         $tmpFile = tmpfile();
-        $file = tempnam(sys_get_temp_dir(),"ut");
+        $file = tempnam(sys_get_temp_dir(), "ut");
 
         yield [$tmpFile, $tmpFile];
         yield [$file, $file];
@@ -1751,7 +1757,8 @@ class AbstractBaseBeanTest extends DefaultTestCase
      */
     public function normalizeDataValue_callableDataProvider()
     {
-        $func = function(){};
+        $func = function () {
+        };
 
         yield ["strlen", "strlen"];
         yield [$func, $func];
@@ -1793,7 +1800,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      */
     public function testSerializationOfClosureIsNotAllowed()
     {
-        $func = function($value) {
+        $func = function ($value) {
             return "hello $value!";
         };
 
@@ -1908,8 +1915,8 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object->expects($this->at(0))->method("getParentDataName")->with(...["foo.bar"])->willReturn("foo");
         $this->object->expects($this->at(1))->method("getParentDataName")->with(...["foo"])->willReturn(null);
 
-        $this->assertTrue($this->invokeMethod($this->object,"hasParentDataName", "foo.bar"));
-        $this->assertFalse($this->invokeMethod($this->object,"hasParentDataName", "foo"));
+        $this->assertTrue($this->invokeMethod($this->object, "hasParentDataName", "foo.bar"));
+        $this->assertFalse($this->invokeMethod($this->object, "hasParentDataName", "foo"));
     }
 
 
@@ -2427,7 +2434,8 @@ class AbstractBaseBeanTest extends DefaultTestCase
     /**
      * @return Generator
      */
-    function ResolveWildcardsDataProvider(){
+    function ResolveWildcardsDataProvider()
+    {
         $arrData = [
             "foo" => [
                 "bar" => [
@@ -2496,22 +2504,22 @@ class AbstractBaseBeanTest extends DefaultTestCase
             $arrData,
             "*.*.*.tags",
             [
-                'foo.items.bat.tags' => array(
+                'foo.items.bat.tags' => [
                     0 => 'foo',
-                ),
-                'foo.items.baz.tags' => array(
+                ],
+                'foo.items.baz.tags' => [
                     0 => 'foo',
                     1 => 'bar',
-                ),
-                'bar.items.bam.tags' => array(
+                ],
+                'bar.items.bam.tags' => [
                     0 => 'baz',
                     1 => 'bat',
                     2 => 'bal',
-                ),
-                'bar.items.bat.tags' => array(
+                ],
+                'bar.items.bat.tags' => [
                     0 => 'bat',
                     1 => 'foo',
-                ),
+                ],
             ]
         ];
 
@@ -2523,30 +2531,30 @@ class AbstractBaseBeanTest extends DefaultTestCase
                 'foo.items.bak.name' => 'Bak A',
                 'foo.items.bat.id' => 4567,
                 'foo.items.bat.name' => 'Bat A',
-                'foo.items.bat.tags' => array(
+                'foo.items.bat.tags' => [
                     0 => 'foo',
-                ),
+                ],
                 'foo.items.baz.id' => 3210,
                 'foo.items.baz.name' => 'Baz A',
-                'foo.items.baz.tags' => array(
+                'foo.items.baz.tags' => [
                     0 => 'foo',
                     1 => 'bar',
-                ),
+                ],
                 'bar.items.bar.id' => 5687,
                 'bar.items.bar.name' => 'Bar B',
                 'bar.items.bam.id' => 3687,
                 'bar.items.bam.name' => 'Bam B',
-                'bar.items.bam.tags' => array(
+                'bar.items.bam.tags' => [
                     0 => 'baz',
                     1 => 'bat',
                     2 => 'bal',
-                ),
+                ],
                 'bar.items.bat.id' => 9804,
                 'bar.items.bat.name' => 'Bat B',
-                'bar.items.bat.tags' => array(
+                'bar.items.bat.tags' => [
                     0 => 'bat',
                     1 => 'foo',
-                ),
+                ],
                 'bar.items.bal.id' => 6882,
                 'bar.items.bal.name' => 'Bal B',
             ]

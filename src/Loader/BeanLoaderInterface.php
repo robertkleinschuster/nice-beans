@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Loader;
-
 
 use Niceshops\Bean\Converter\ConverterBeanDecorator;
 use Niceshops\Bean\Type\Base\BeanInterface;
@@ -49,5 +49,4 @@ interface BeanLoaderInterface extends \Iterator, \Countable
      * @return ConverterBeanDecorator
      */
     public function initializeBeanWithData(BeanInterface $bean, array $data): BeanInterface;
-
 }

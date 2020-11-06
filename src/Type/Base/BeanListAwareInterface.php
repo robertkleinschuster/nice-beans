@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Base;
-
-
 
 /**
  * Interface BeanListAwareInterface
@@ -17,5 +16,4 @@ interface BeanListAwareInterface
      * @return $this
      */
     public function setBeanList(BeanListInterface $beanList);
-
 }

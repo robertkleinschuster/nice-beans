@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Base;
@@ -26,7 +27,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
     /**
      * @var BeanInterface[]
      */
-    protected $arrBean = array();
+    protected $arrBean = [];
 
 
     /**
@@ -34,7 +35,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      *
      * @var array
      */
-    protected $arrBeanClass = array(BeanInterface::class);
+    protected $arrBeanClass = [BeanInterface::class];
 
 
     /**
@@ -62,17 +63,18 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
     {
         $arrBeanClass = array_values(
             array_filter(
-                array_map("trim", $arrBeanClass), function ($val) {
-                if (!is_string($val) || !class_exists($val) && !interface_exists($val)) {
-                    return false;
-                }
+                array_map("trim", $arrBeanClass),
+                function ($val) {
+                    if (!is_string($val) || !class_exists($val) && !interface_exists($val)) {
+                        return false;
+                    }
 
-                if ($val != BeanInterface::class && !in_array(BeanInterface::class, class_implements($val))) {
-                    return false;
-                }
+                    if ($val != BeanInterface::class && !in_array(BeanInterface::class, class_implements($val))) {
+                        return false;
+                    }
 
-                return true;
-            }
+                    return true;
+                }
             )
         );
 
@@ -134,7 +136,8 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
         if (!$valid) {
             $this->throwError(
                 "Bean from class '" . get_class($bean) . "' does not extends or implements any of the required classes '" . implode(
-                    ", ", $this->getBeanClasses()
+                    ", ",
+                    $this->getBeanClasses()
                 ) . "'!"
             );
         }
@@ -173,7 +176,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
         }
 
         if (!$removed) {
-            $arrBeanStr = array();
+            $arrBeanStr = [];
             $i = 0;
             foreach ($bean as $key => $val) {
                 if ($i > 3 || !is_scalar($val)) {
@@ -267,7 +270,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
         }
 
 
-        $arrBeans = array();
+        $arrBeans = [];
         foreach ($beans as $bean) {
             if ($this->validateBean($bean)) {
                 $arrBeans[] = $bean;
@@ -285,7 +288,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function resetBeans()
     {
-        $this->arrBean = array();
+        $this->arrBean = [];
 
         return $this;
     }
@@ -566,7 +569,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function map(callable $callback)
     {
-        $arrData = array();
+        $arrData = [];
         foreach ($this as $key => $val) {
             $arrData[] = call_user_func($callback, $val, $key, $this);
         }
@@ -610,7 +613,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function unshift(BeanInterface $bean)
     {
-        $args = array(&$this->arrBean);
+        $args = [&$this->arrBean];
         foreach (func_get_args() as $arg) {
             if ($this->validateBean($arg)) {
                 $args[] = $arg;
@@ -684,7 +687,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function sortByData($key1, $order1 = SORT_ASC, $flags1 = SORT_REGULAR)
     {
-        $args = array();
+        $args = [];
         $argFlagCount = 2;
         foreach (func_get_args() as $key => $arg) {
             if ($argFlagCount >= 2 && (!is_string($arg) || !strlen($arg))) {
@@ -695,15 +698,19 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
 
             if (is_string($arg)) {
                 $argFlagCount = 0;
-                if (!array_reduce(
-                    $this->hasData($arg), function ($flag, $val) {
-                    if ($flag && !$val) {
-                        $flag = false;
-                    }
+                if (
+                    !array_reduce(
+                        $this->hasData($arg),
+                        function ($flag, $val) {
+                            if ($flag && !$val) {
+                                $flag = false;
+                            }
 
-                    return $flag;
-                }, true
-                )) {
+                            return $flag;
+                        },
+                        true
+                    )
+                ) {
                     $this->throwError("Key '$arg' not found at any bean at the bean list!");
 
                     return false;
@@ -777,7 +784,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function getData($name)
     {
-        $arrData = array();
+        $arrData = [];
 
         /**
          * @var $bean BeanInterface
@@ -797,7 +804,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function getDataType($name)
     {
-        $arrDataType = array();
+        $arrDataType = [];
 
         /**
          * @var $bean BeanInterface
@@ -817,7 +824,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function hasData($name)
     {
-        $arrData = array();
+        $arrData = [];
 
         /**
          * @var $bean BeanInterface
@@ -837,7 +844,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function removeData($name)
     {
-        $arrData = array();
+        $arrData = [];
 
         /**
          * @var $bean BeanInterface
@@ -888,7 +895,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      */
     public function toArray(): array
     {
-        $arrData = array();
+        $arrData = [];
 
         /**
          * @var $bean BeanInterface
@@ -908,7 +915,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
      * @return static
      * @throws BeanListException
      */
-    static public function createFromArray(array $arrData, $beanClass = BeanInterface::class)
+    public static function createFromArray(array $arrData, $beanClass = BeanInterface::class)
     {
         if (!in_array(BeanInterface::class, class_implements($beanClass))) {
             throw new BeanListException("Class '$beanClass' doesn't implement the 'BeanInterface' interface!");
@@ -918,13 +925,13 @@ abstract class AbstractBaseBeanList implements BeanListInterface, ArrayAccess, I
 
         foreach ($arrData as $data) {
             if (!($data instanceof $beanClass)) {
-                $beanList->addBean(call_user_func(array($beanClass, "createFromArray"), $data));
+                $beanList->addBean(call_user_func([$beanClass, "createFromArray"], $data));
             } else {
                 $beanList->addBean($data);
             }
         }
 
-        $beanList->setBeanClasses(array($beanClass));
+        $beanList->setBeanClasses([$beanClass]);
 
         return $beanList;
     }

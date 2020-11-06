@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace Niceshops\Bean\Saver;
 
@@ -39,5 +39,4 @@ trait BeanSaverAwareTrait
     {
         return $this->beanSaver !== null;
     }
-
 }

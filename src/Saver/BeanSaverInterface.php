@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Niceshops\Bean\Saver;
-
 
 /**
  * Interface BeanSaverInterface
@@ -19,6 +19,4 @@ interface BeanSaverInterface
      * @return int
      */
     public function delete(): int;
-
-
 }
