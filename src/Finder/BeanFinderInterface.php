@@ -13,6 +13,12 @@ use Niceshops\Bean\Type\Base\BeanListInterface;
  */
 interface BeanFinderInterface
 {
+
+    public const ORDER_MODE_ASC = 'asc';
+    public const ORDER_MODE_DESC = 'desc';
+    public const FILTER_MODE_AND = 'and';
+    public const FILTER_MODE_OR = 'or';
+
     /**
      * count without limit
      *
@@ -42,9 +48,16 @@ interface BeanFinderInterface
 
     /**
      * @param array $data_Map
+     * @param string $mode
      * @return mixed
      */
-    public function filter(array $data_Map);
+    public function filter(array $data_Map, string $mode = self::FILTER_MODE_AND);
+
+    /**
+     * @param array $data_Map
+     * @return mixed
+     */
+    public function exclude(array $data_Map);
 
     /**
      * @param BeanFinderInterface $beanFinder

@@ -228,16 +228,28 @@ abstract class AbstractBeanFinder implements
 
     /**
      * @param array $data_Map
+     * @param string $mode
      * @return $this|mixed
      */
-    public function filter(array $data_Map)
+    public function filter(array $data_Map, string $mode = self::FILTER_MODE_AND)
     {
         if ($this->hasBeanLoader()) {
-            $this->getBeanLoader()->filter($data_Map);
+            $this->getBeanLoader()->filter($data_Map, $mode);
         }
         return $this;
     }
 
+    /**
+     * @param array $data_Map
+     * @return $this|mixed
+     */
+    public function exclude(array $data_Map)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->exclude($data_Map);
+        }
+        return $this;
+    }
 
     /**
      * @return int

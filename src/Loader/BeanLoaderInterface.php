@@ -45,9 +45,16 @@ interface BeanLoaderInterface extends \Iterator, \Countable
 
     /**
      * @param array $data_Map
+     * @param string $mode
      * @return $this
      */
-    public function filter(array $data_Map);
+    public function filter(array $data_Map, string $mode);
+
+    /**
+     * @param array $data_Map
+     * @return mixed
+     */
+    public function exclude(array $data_Map);
 
     /**
      * @param string $field

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Processor;
 
 use Countable;
+use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
+use Niceshops\Bean\Finder\BeanFinderInterface;
 use Niceshops\Bean\Saver\BeanSaverAwareInterface;
 use Niceshops\Bean\Saver\BeanSaverAwareTrait;
 use Niceshops\Bean\Saver\BeanSaverInterface;
@@ -63,6 +65,56 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
             $this->afterSave($bean);
         }
         return $result;
+    }
+
+    /**
+     * @param BeanFinderInterface $finder
+     * @param BeanInterface $bean
+     * @param string $orderField
+     * @param int $steps
+     * @param string|null $orderReferenceField
+     * @param null $orderReferenceValue
+     */
+    public function move(
+        BeanFinderInterface $finder,
+        BeanInterface $bean,
+        string $orderField,
+        int $steps,
+        string $orderReferenceField = null,
+        $orderReferenceValue = null
+    ) {
+        if ($bean->hasData($orderField)) {
+            if ($finder instanceof BeanFactoryAwareInterface) {
+                if (!empty($orderReferenceField) && !empty($orderReferenceValue)) {
+                    $finder->filter([$orderReferenceField => $orderReferenceValue]);
+                }
+                $currentOrder = $bean->getData($orderField);
+                $newOrder = $currentOrder + $steps;
+                $newOrder_List = [];
+                if ($currentOrder < $newOrder) {
+                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_ASC]);
+                    for ($i = $currentOrder + 1; $i <= $newOrder; $i++) {
+                        $newOrder_List[] = $i;
+                    }
+                }
+                if ($currentOrder > $newOrder) {
+                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_DESC]);
+                    for ($i = $currentOrder - 1; $i >= $newOrder; $i--) {
+                        $newOrder_List[] = $i;
+                    }
+                }
+                $finder->filter([$orderField => $newOrder_List]);
+                $i = 0;
+                $beanList = $finder->getBeanList();
+                foreach ($beanList as $previousBean) {
+                    $previousBean->setData($orderField, $newOrder_List[$i++]);
+                }
+                $bean->setData($orderField, $newOrder);
+                $beanList->addBean($bean);
+                $this->setBeanList($beanList);
+            }
+            $this->save();
+        }
     }
 
 
@@ -134,7 +186,7 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
      */
     protected function isBeanAllowedToSave(BeanInterface $bean): bool
     {
-        if ($this->hasOption(self::OPTION_SAVE_NON_EMPTY_ONLY) && $bean instanceof Countable &&  $bean->count() == 0) {
+        if ($this->hasOption(self::OPTION_SAVE_NON_EMPTY_ONLY) && $bean instanceof Countable && $bean->count() == 0) {
             return false;
         }
         if ($this->hasOption(self::OPTION_IGNORE_VALIDATION)) {
