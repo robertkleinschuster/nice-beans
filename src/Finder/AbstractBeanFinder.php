@@ -164,7 +164,7 @@ abstract class AbstractBeanFinder implements
     public function initByValueList(string $field, array $valueList)
     {
         if ($this->hasBeanLoader()) {
-            $this->getBeanLoader()->filter([$field => $valueList]);
+            $this->getBeanLoader()->filter([$field => $valueList], self::FILTER_MODE_AND);
         }
         return $this;
     }
