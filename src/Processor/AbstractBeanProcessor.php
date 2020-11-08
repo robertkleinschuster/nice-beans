@@ -23,7 +23,12 @@ use Niceshops\Core\Option\OptionAwareTrait;
  * Class AbstractBeanProcessor
  * @package Niceshops\Bean\BeanProcessor
  */
-abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSaverAwareInterface, BeanListAwareInterface, OptionAwareInterface, AttributeAwareInterface
+abstract class AbstractBeanProcessor implements
+    BeanProcessorInterface,
+    BeanSaverAwareInterface,
+    BeanListAwareInterface,
+    OptionAwareInterface,
+    AttributeAwareInterface
 {
     use BeanSaverAwareTrait;
     use BeanListAwareTrait;
@@ -33,8 +38,8 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
     /**
      *
      */
-    const OPTION_SAVE_NON_EMPTY_ONLY = "non_empty_only";
-    const OPTION_IGNORE_VALIDATION = "ignore_validation";
+    public const OPTION_SAVE_NON_EMPTY_ONLY = "non_empty_only";
+    public const OPTION_IGNORE_VALIDATION = "ignore_validation";
 
 
     /**
@@ -67,6 +72,7 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
         return $result;
     }
 
+
     /**
      * @param BeanFinderInterface $finder
      * @param BeanInterface $bean
@@ -90,27 +96,40 @@ abstract class AbstractBeanProcessor implements BeanProcessorInterface, BeanSave
                 }
                 $currentOrder = $bean->getData($orderField);
                 $newOrder = $currentOrder + $steps;
-                $newOrder_List = [];
+                $reorder_List = [];
                 if ($currentOrder < $newOrder) {
                     $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_ASC]);
                     for ($i = $currentOrder + 1; $i <= $newOrder; $i++) {
-                        $newOrder_List[] = $i;
+                        $reorder_List[] = $i;
                     }
                 }
                 if ($currentOrder > $newOrder) {
                     $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_DESC]);
                     for ($i = $currentOrder - 1; $i >= $newOrder; $i--) {
-                        $newOrder_List[] = $i;
+                        $reorder_List[] = $i;
                     }
                 }
-                $finder->filter([$orderField => $newOrder_List]);
-                $i = 0;
+                $finder->filter([$orderField => $reorder_List]);
+
                 $beanList = $finder->getBeanList();
-                foreach ($beanList as $previousBean) {
-                    $previousBean->setData($orderField, $newOrder_List[$i++]);
+                if ($newOrder > 0) {
+                    foreach ($beanList as $previousBean) {
+                        if ($currentOrder < $newOrder) {
+                            $previousBean->setData($orderField, $previousBean->getData($orderField) - 1);
+
+                        }
+                        if ($currentOrder > $newOrder) {
+                            $previousBean->setData($orderField, $previousBean->getData($orderField) + 1);
+                        }
+                    }
+                    $bean->setData($orderField, $newOrder);
+                    if ($currentOrder < $newOrder) {
+                        $beanList->addBean($bean);
+                    }
+                    if ($currentOrder > $newOrder) {
+                        $beanList->unshift($bean);
+                    }
                 }
-                $bean->setData($orderField, $newOrder);
-                $beanList->addBean($bean);
                 $this->setBeanList($beanList);
             }
             $this->save();
