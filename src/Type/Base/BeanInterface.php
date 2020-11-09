@@ -15,6 +15,19 @@ namespace Niceshops\Bean\Type\Base;
  */
 interface BeanInterface
 {
+    public const DATA_TYPE_CALLABLE = 'callable';
+    public const DATA_TYPE_STRING = 'string';
+    public const DATA_TYPE_ARRAY = 'array';
+    public const DATA_TYPE_INT = 'int';
+    public const DATA_TYPE_FLOAT = 'float';
+    public const DATA_TYPE_BOOL = 'bool';
+    public const DATA_TYPE_ITERABLE = 'iterable';
+    public const DATA_TYPE_DATE = 'date';
+    public const DATA_TYPE_DATETIME_PHP = 'datetime';
+    public const DATA_TYPE_OBJECT = 'object';
+    public const DATA_TYPE_RESOURCE = 'resource';
+    public const DATA_KEY_WILDCARD = "*";
+
 
     /**
      * @param string $name

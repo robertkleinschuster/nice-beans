@@ -28,20 +28,6 @@ abstract class AbstractBaseBean implements BeanInterface, ArrayAccess, IteratorA
 {
 
 
-    const DATA_TYPE_CALLABLE = 'callable';
-    const DATA_TYPE_STRING = 'string';
-    const DATA_TYPE_ARRAY = 'array';
-    const DATA_TYPE_INT = 'int';
-    const DATA_TYPE_FLOAT = 'float';
-    const DATA_TYPE_BOOL = 'bool';
-    const DATA_TYPE_ITERABLE = 'iterable';
-    const DATA_TYPE_DATE = 'date';
-    const DATA_TYPE_DATETIME_PHP = 'datetime';
-    const DATA_TYPE_OBJECT = 'object';
-    const DATA_TYPE_RESOURCE = 'resource';
-
-    const DATA_KEY_WILDCARD = "*";
-
     /**
      * @var array
      */

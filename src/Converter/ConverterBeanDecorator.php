@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Niceshops\Bean\Type\Base\BeanInterface;
@@ -12,7 +16,13 @@ use Niceshops\Bean\Type\Base\BeanInterface;
  * Class BeanDecorator
  * @package Niceshops\Bean\Converter
  */
-class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareInterface, BeanInterface
+class ConverterBeanDecorator implements
+    BeanAwareInterface,
+    BeanConverterAwareInterface,
+    BeanInterface,
+    ArrayAccess,
+    IteratorAggregate,
+    Countable
 {
     use BeanAwareTrait;
     use BeanConverterAwareTrait;
@@ -144,5 +154,58 @@ class ConverterBeanDecorator implements BeanAwareInterface, BeanConverterAwareIn
             $this->setData($key, $value);
         }
         return $this->getBean();
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->hasData($offset) && null !== $this->getData($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getData($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return $this|BeanInterface|void
+     */
+    public function offsetSet($offset, $value)
+    {
+        return $this->setData($offset, $value);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|void
+     */
+    public function offsetUnset($offset)
+    {
+        return $this->removeData($offset);
+    }
+
+    /**
+     * @return ArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->toArray());
+    }
+
+    /**
+     * @return int|void
+     */
+    public function count()
+    {
+        return count($this->toArray());
     }
 }
