@@ -15,7 +15,9 @@ use Niceshops\Bean\Type\Base\BeanException;
 use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareTrait;
+use Niceshops\Bean\Type\Base\BeanListException;
 use Niceshops\Bean\Type\Base\BeanListInterface;
+use Traversable;
 
 /**
  * Class BeanLoaderDecorator
@@ -23,9 +25,6 @@ use Niceshops\Bean\Type\Base\BeanListInterface;
  */
 class FinderBeanListDecorator implements
     BeanListInterface,
-    IteratorAggregate,
-    Countable,
-    ArrayAccess,
     BeanListAwareInterface,
     BeanFinderAwareInterface
 {
@@ -101,11 +100,11 @@ class FinderBeanListDecorator implements
                 if ($recursive) {
                     foreach ($bean as $key => $item) {
                         if ($item instanceof FinderBeanListDecorator) {
-                            $bean->setData($key, $item->toBeanList($recursive));
+                            $bean->set($key, $item->toBeanList($recursive));
                         }
                     }
                 }
-                $this->getBeanList()->addBean($bean);
+                $this->getBeanList()->push($bean);
             }
         }
         return $this->getBeanList();
@@ -123,16 +122,16 @@ class FinderBeanListDecorator implements
                     $this->getBeanFactory()->getEmptyBean($data),
                     $data
                 );
-                if (!$this->hasFilter() || $bean->getData($this->filterField) == $this->filterValue) {
+                if (!$this->hasFilter() || $bean->get($this->filterField) == $this->filterValue) {
                     $this->getBeanFinder()->initializeBeanWithAdditionlData($bean);
                     if ($this->getBeanFinder()->hasLinkedFinder()) {
                         foreach ($this->getBeanFinder()->getLinkedFinderList() as $link) {
                             $finder = $link->getBeanFinder();
                             $decorator = $finder->getBeanListDecorator()->setFilter(
                                 $link->getLinkFieldRemote(),
-                                $bean->getData($link->getLinkFieldSelf())
+                                $bean->get($link->getLinkFieldSelf())
                             );
-                            $bean->setData($link->getField(), $decorator);
+                            $bean->set($link->getField(), $decorator);
                         }
                     }
                     yield $bean;
@@ -141,175 +140,17 @@ class FinderBeanListDecorator implements
         }
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return BeanInterface
-     */
-    public function setData($name, $value)
-    {
-        return $this->toBeanList()->setData($name, $value);
-    }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function getData($name)
-    {
-        return $this->toBeanList()->getData($name);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasData($name)
-    {
-        return $this->toBeanList()->hasData($name);
-    }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function removeData($name)
-    {
-        return $this->toBeanList()->removeData($name);
-    }
-
-    /**
-     * @return BeanInterface
-     */
-    public function resetData()
-    {
-        return $this->toBeanList()->resetData();
-    }
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function getDataType($name)
-    {
-        return $this->toBeanList()->getDataType($name);
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return $this->toBeanList()->toArray();
-    }
-
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function fromArray(array $data)
-    {
-        return $this->toBeanList()->fromArray($data);
-    }
-
-    /**
-     * @param BeanInterface $bean
-     * @return BeanListInterface
-      */
-    public function addBean(BeanInterface $bean)
-    {
-        return $this->toBeanList()->addBean($bean);
-    }
-
-    /**
-     * @param $beans
-     * @return BeanListInterface
-     */
-    public function addBeans($beans)
-    {
-        return $this->toBeanList()->addBeans($beans);
-    }
-
-    /**
-     * @param BeanInterface $bean
-     * @return BeanListInterface
-     */
-    public function removeBean(BeanInterface $bean)
-    {
-        return $this->toBeanList()->removeBean($bean);
-    }
-
-    /**
-     * @param BeanInterface $bean
-     * @return bool
-     */
-    public function hasBean(BeanInterface $bean)
-    {
-        return $this->toBeanList()->hasBean($bean);
-    }
-
-    /**
-     * @param BeanInterface $bean
-     * @return int
-     */
-    public function indexOfBean(BeanInterface $bean)
-    {
-        return $this->toBeanList()->indexOfBean($bean);
-    }
-
-    /**
-     * @return array
-     */
-    public function getBeans(): array
-    {
-        return $this->toBeanList()->getBeans();
-    }
-
-    /**
-     * @param $beans
-     * @return BeanListInterface
-     */
-    public function setBeans($beans)
-    {
-        return $this->toBeanList()->setBeans($beans);
-    }
-
-    /**
-     * @return BeanListInterface
-     */
-    public function resetBeans()
-    {
-        return $this->toBeanList()->resetBeans();
-    }
 
     /**
      * @param int $offset
-     * @param null $length
-     * @param int $stepWidth
+     * @param int $length
      * @return BeanListInterface
      */
-    public function slice($offset = 0, $length = null, $stepWidth = 1)
+    public function slice(int $offset = 0, int $length = null): BeanListInterface
     {
-        return $this->toBeanList()->slice($offset, $length, $stepWidth);
+        return $this->toBeanList()->slice($offset, $length);
     }
 
-    /**
-     * @param callable $callback
-     * @return BeanListInterface
-     */
-    public function each(callable $callback)
-    {
-        return $this->toBeanList()->each($callback);
-    }
-
-    /**
-     * @param callable $callback
-     * @return BeanListInterface
-     */
-    public function every(callable $callback)
-    {
-        return $this->toBeanList()->every($callback);
-    }
 
     /**
      * @return bool
@@ -321,38 +162,17 @@ class FinderBeanListDecorator implements
 
     /**
      * @param callable $callback
-     * @param bool $returnBeanList
      * @return BeanListInterface
      */
-    public function some(callable $callback, $returnBeanList = false)
-    {
-        return $this->toBeanList()->some($callback, $returnBeanList);
-    }
-
-    /**
-     * @param callable $callback
-     * @return BeanListInterface
-     */
-    public function filter(callable $callback)
+    public function filter(callable $callback = null): BeanListInterface
     {
         return $this->toBeanList()->filter($callback);
     }
 
     /**
      * @param callable $callback
-     * @param bool $returnBean
-     * @return BeanInterface
      */
-    public function exclusive(callable $callback, $returnBean = false)
-    {
-        return $this->toBeanList()->exclusive($callback, $returnBean);
-    }
-
-    /**
-     * @param callable $callback
-     * @return array
-     */
-    public function map(callable $callback)
+    public function map(callable $callback = null): BeanListInterface
     {
         return $this->toBeanList()->map($callback);
     }
@@ -361,72 +181,41 @@ class FinderBeanListDecorator implements
      * @param callable $callback
      * @return mixed
      */
-    public function sort(callable $callback)
+    public function sort(callable $callback = null): BeanListInterface
     {
         return $this->toBeanList()->sort($callback);
     }
 
     /**
-     * @param $key1
-     * @param int $order1
-     * @param int $flags1
      * @return mixed
      */
-    public function sortByData($key1, $order1 = SORT_ASC, $flags1 = SORT_REGULAR)
-    {
-        return $this->toBeanList()->sortByData($key1, $order1, $flags1);
-    }
-
-    /**
-     * @param $key
-     * @param int $flags
-     * @return mixed
-     */
-    public function sortAscendingByKey($key, $flags = SORT_REGULAR)
-    {
-        return $this->toBeanList()->sortAscendingByKey($key, $flags);
-    }
-
-    /**
-     * @param $key
-     * @param int $flags
-     * @return mixed
-     */
-    public function sortDescendingByKey($key, $flags = SORT_REGULAR)
-    {
-        return $this->toBeanList()->sortDescendingByKey($key, $flags);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function reverse()
+    public function reverse(): BeanListInterface
     {
         return $this->toBeanList()->reverse();
     }
 
     /**
-     * @param BeanInterface $bean
+     * @param BeanInterface[] $values
      * @return mixed
      */
-    public function push(BeanInterface $bean)
+    public function push(...$values): BeanListInterface
     {
-        return $this->toBeanList()->push($bean);
+        return $this->toBeanList()->push(...$values);
     }
 
     /**
-     * @param BeanInterface $bean
+     * @param BeanInterface[] $values
      * @return mixed
      */
-    public function unshift(BeanInterface $bean)
+    public function unshift(...$values): BeanListInterface
     {
-        return $this->toBeanList()->unshift($bean);
+        return $this->toBeanList()->unshift(...$values);
     }
 
     /**
      * @return mixed
      */
-    public function shift()
+    public function shift(): BeanInterface
     {
         return $this->toBeanList()->shift();
     }
@@ -434,25 +223,17 @@ class FinderBeanListDecorator implements
     /**
      * @return mixed
      */
-    public function pop()
+    public function pop(): BeanInterface
     {
         return $this->toBeanList()->pop();
     }
 
-    /**
-     * @param string $dataName
-     * @return array
-     */
-    public function countValues_for_DataName(string $dataName): array
-    {
-        return $this->toBeanList()->pop();
-    }
 
     /**
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->toBeanList()->offsetExists($offset);
     }
@@ -469,29 +250,148 @@ class FinderBeanListDecorator implements
     /**
      * @param mixed $offset
      * @param mixed $value
+     * @return BeanListInterface
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): BeanListInterface
     {
-        $this->toBeanList()->offsetSet($offset, $value);
+        return $this->toBeanList()->offsetSet($offset, $value);
     }
 
     /**
      * @param mixed $offset
+     * @return BeanListInterface
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): BeanListInterface
     {
-        $this->toBeanList()->offsetUnset($offset);
+        return $this->toBeanList()->offsetUnset($offset);
     }
 
     /**
      * @param bool $countData
      * @return int
      */
-    public function count(bool $countData = false)
+    public function count(bool $countData = false): int
     {
         if ($countData) {
             return $this->toBeanList()->count();
         }
         return $this->getBeanLoader()->count();
     }
+
+    public function clear(): BeanListInterface
+    {
+        return $this->toBeanList()->clear();
+    }
+
+    public function copy(bool $recurive = false): BeanListInterface
+    {
+        return $this->toBeanList()->copy($recurive);
+    }
+
+    public function toArray(bool $recursive = false): array
+    {
+        return $this->toBeanList()->toArray($recursive);
+    }
+
+    public function allocate(int $capacity): BeanListInterface
+    {
+        return $this->toBeanList()->allocate($capacity);
+    }
+
+    public function apply(callable $callback): BeanListInterface
+    {
+        return $this->toBeanList()->apply($callback);
+    }
+
+    public function capacity(): int
+    {
+        return $this->toBeanList()->capacity();
+    }
+
+    public function contains(...$values): bool
+    {
+        return $this->toBeanList()->contains(...$values);
+    }
+
+    public function find($value)
+    {
+        return $this->toBeanList()->find($value);
+    }
+
+    public function first()
+    {
+        return $this->toBeanList()->first();
+    }
+
+    public function get(int $index)
+    {
+        return $this->toBeanList()->get($index);
+    }
+
+    public function insert(int $index, ...$values): BeanListInterface
+    {
+        return $this->toBeanList()->insert($index, ...$values);
+    }
+
+    public function join(string $glue = null): string
+    {
+        return $this->toBeanList()->join($glue);
+    }
+
+    public function last()
+    {
+        return $this->toBeanList()->last();
+    }
+
+    public function merge($values): BeanListInterface
+    {
+        return $this->toBeanList()->merge($values);
+    }
+
+    public function reduce(callable $callback, $initial = null)
+    {
+        return $this->toBeanList()->reduce($callback, $initial);
+    }
+
+    public function remove(int $index): BeanListInterface
+    {
+        return $this->toBeanList()->remove($index);
+    }
+
+    public function reversed(): BeanListInterface
+    {
+        return $this->toBeanList()->reversed();
+    }
+
+    public function rotate(int $rotations): BeanListInterface
+    {
+        return $this->toBeanList()->rotate($rotations);
+    }
+
+    public function set(int $index, $value): BeanListInterface
+    {
+        return $this->toBeanList()->set($index, $value);
+    }
+
+    public function sorted(callable $comparator = null): BeanListInterface
+    {
+        return $this->toBeanList()->sorted($comparator);
+    }
+
+    /**
+     * @return float|int|void
+     * @throws BeanListException
+     * @deprecated
+     */
+    public function sum()
+    {
+        return $this->toBeanList()->sum();
+    }
+
+    public function jsonSerialize(bool $recureive = false)
+    {
+        return $this->toBeanList()->jsonSerialize($recureive);
+    }
+
+
 }

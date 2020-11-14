@@ -89,12 +89,12 @@ abstract class AbstractBeanProcessor implements
         string $orderReferenceField = null,
         $orderReferenceValue = null
     ) {
-        if ($bean->hasData($orderField)) {
+        if ($bean->has($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
                 if (!empty($orderReferenceField) && !empty($orderReferenceValue)) {
                     $finder->filter([$orderReferenceField => $orderReferenceValue]);
                 }
-                $currentOrder = $bean->getData($orderField);
+                $currentOrder = $bean->get($orderField);
                 $newOrder = $currentOrder + $steps;
                 $reorder_List = [];
                 if ($currentOrder < $newOrder) {
@@ -122,7 +122,7 @@ abstract class AbstractBeanProcessor implements
                             $previousBean->setData($orderField, $previousBean->getData($orderField) + 1);
                         }
                     }
-                    $bean->setData($orderField, $newOrder);
+                    $bean->set($orderField, $newOrder);
                     if ($currentOrder < $newOrder) {
                         $beanList->addBean($bean);
                     }

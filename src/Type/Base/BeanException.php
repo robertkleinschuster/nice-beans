@@ -17,10 +17,6 @@ use Niceshops\Core\Exception\CoreException;
  */
 class BeanException extends CoreException
 {
-
-
-    const ERROR_CODE_DATA_NOT_FOUND = 1000;
-    const ERROR_CODE_INVALID_DATA_VALUE = 1001;
-    const ERROR_CODE_INVALID_DATA_TYPE = 1002;
-    const ERROR_CODE_DATA_IS_NOT_NULLABLE = 1003;
+    public const ERROR_CODE_DATA_NOT_FOUND = 1000;
+    public const ERROR_CODE_INVALID_DATA_NAME = 1001;
 }

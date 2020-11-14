@@ -85,23 +85,23 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
 
     public function dataProvider_CallBeanMethod()
     {
-        yield 'setData' => ['setData', ['foo', 'bar'], ['convertValueToBean']];
-        yield 'getData' => ['getData', ['foo'], ['convertValueFromBean']];
-        yield 'hasData' => ['hasData', ['foo']];
-        yield 'removeData' => ['removeData', ['foo'], ['convertValueFromBean']];
-        yield 'resetData' => ['resetData', []];
-        yield 'getDataType' => ['getDataType', ['foo']];
+        yield 'set' => ['set', ['foo', 'bar'], ['convertValueToBean']];
+        yield 'get' => ['get', ['foo'], ['convertValueFromBean']];
+        yield 'has' => ['has', ['foo']];
+        yield 'unset' => ['unset', ['foo']];
+        yield 'reset' => ['reset', []];
+        yield 'getType' => ['getType', ['foo']];
     }
 
     /**
      * @group unit
      * @small
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::setData
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getData
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::hasData
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::removeData
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::resetData
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getDataType
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::set
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::get
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::has
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::unset
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::reset
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getType
      * @dataProvider dataProvider_CallBeanMethod
      * @param string $method
      * @param array $params

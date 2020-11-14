@@ -9,77 +9,30 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Base;
 
+use Ds\Sequence;
+use Traversable;
+
 /**
  * Interface BeanListInterface
  * @package Niceshops\Bean\BeanList
  */
-interface BeanListInterface extends BeanInterface
+interface BeanListInterface extends Sequence
 {
     /**
-     * @param BeanInterface $bean
-     * @return $this
+     *
      */
-    public function addBean(BeanInterface $bean);
+    public function clear(): self;
 
     /**
-     * @param $beans
-     * @return $this
-     */
-    public function addBeans($beans);
-
-    /**
-     * @param BeanInterface $bean
-     * @return $this
-     */
-    public function removeBean(BeanInterface $bean);
-
-    /**
-     * @param BeanInterface $bean
-     * @return bool
-     */
-    public function hasBean(BeanInterface $bean);
-
-    /**
-     * @param BeanInterface $bean
      * @return int
      */
-    public function indexOfBean(BeanInterface $bean);
+    public function count(): int;
 
     /**
-     * @return BeanInterface[]
-     */
-    public function getBeans(): array;
-
-    /**
-     * @param $beans
+     * @param bool $recurive
      * @return $this
      */
-    public function setBeans($beans);
-
-    /**
-     * @return $this
-     */
-    public function resetBeans();
-
-    /**
-     * @param int $offset
-     * @param null $length
-     * @param int $stepWidth
-     * @return $this
-     */
-    public function slice($offset = 0, $length = null, $stepWidth = 1);
-
-    /**
-     * @param callable $callback
-     * @return $this
-     */
-    public function each(callable $callback);
-
-    /**
-     * @param callable $callback
-     * @return $this
-     */
-    public function every(callable $callback);
+    public function copy(bool $recurive = false): self;
 
     /**
      * @return bool
@@ -87,89 +40,203 @@ interface BeanListInterface extends BeanInterface
     public function isEmpty(): bool;
 
     /**
-     * @param callable $callback
-     * @param bool $returnBeanList
-     * @return $this
+     * @param bool $recursive
+     * @return array
      */
-    public function some(callable $callback, $returnBeanList = false);
+    public function toArray(bool $recursive = false): array;
+
+    /**
+     * @return BeanIterator|Traversable
+     */
+    public function getIterator();
+
+    /**
+     * @param int $offset
+     * @return bool
+     */
+    public function offsetExists($offset): bool;
+
+    /**
+     * @param int $offset
+     * @return mixed
+     */
+    public function offsetGet($offset);
+
+    /**
+     * @param int $offset
+     * @param mixed $value
+     * @return self
+     */
+    public function offsetSet($offset, $value): self;
+
+    /**
+     * @param int $offset
+     * @return self
+     */
+    public function offsetUnset($offset): self;
+
+    /**
+     * @param int $capacity
+     * @return BeanListInterface
+     */
+    public function allocate(int $capacity): self;
 
     /**
      * @param callable $callback
-     * @return $this
+     * @return BeanListInterface
      */
-    public function filter(callable $callback);
+    public function apply(callable $callback): self;
+
+    /**
+     * @return int
+     */
+    public function capacity(): int;
+
+    /**
+     * @param mixed ...$values
+     * @return bool
+     */
+    public function contains(...$values): bool;
+
+    /**
+     * @param callable|null $callback
+     * @return self
+     */
+    public function filter(callable $callback = null): self;
+
+    /**
+     * @param mixed $value
+     * @return bool|int|void
+     */
+    public function find($value);
+
+    /**
+     * @return mixed
+     */
+    public function first();
+
+    /**
+     * @param int $index
+     * @return mixed|void
+     */
+    public function get(int $index);
+
+    /**
+     * @param int $index
+     * @param mixed ...$values
+     * @return self
+     */
+    public function insert(int $index, ...$values): self;
+
+    /**
+     * @param string|null $glue
+     * @return string
+     */
+    public function join(string $glue = null): string;
+
+    /**
+     * @return mixed
+     */
+    public function last();
 
     /**
      * @param callable $callback
-     * @param bool $returnBean
+     * @return self
+     */
+    public function map(callable $callback): self;
+
+    /**
+     * @param array|Traversable $values
+     * @return self
+     */
+    public function merge($values): self;
+
+    /**
      * @return BeanInterface
      */
-    public function exclusive(callable $callback, $returnBean = false);
+    public function pop(): BeanInterface;
+
+    /**
+     * @param BeanInterface ...$values
+     */
+    public function push(...$values): self;
 
     /**
      * @param callable $callback
-     * @return array
-     */
-    public function map(callable $callback);
-
-    /**
-     * @param callable $callback
+     * @param null $initial
      * @return mixed
      */
-    public function sort(callable $callback);
+    public function reduce(callable $callback, $initial = null);
 
     /**
-     * @param $key1
-     * @param int $order1
-     * @param int $flags1
-     * @return mixed
+     * @param int $index
+     * @return self
      */
-    public function sortByData($key1, $order1 = SORT_ASC, $flags1 = SORT_REGULAR);
+    public function remove(int $index): self;
 
     /**
-     * @param $key
-     * @param int $flags
-     * @return mixed
+     * @return $this
      */
-    public function sortAscendingByKey($key, $flags = SORT_REGULAR);
+    public function reverse(): self;
 
     /**
-     * @param $key
-     * @param int $flags
-     * @return mixed
+     * @return self
      */
-    public function sortDescendingByKey($key, $flags = SORT_REGULAR);
+    public function reversed(): self;
 
     /**
-     * @return mixed
+     * @param int $rotations
+     * @return self
      */
-    public function reverse();
+    public function rotate(int $rotations): self;
 
     /**
-     * @param BeanInterface $bean
-     * @return mixed
+     * @param int $index
+     * @param mixed $value
+     * @return self
      */
-    public function push(BeanInterface $bean);
+    public function set(int $index, $value): self;
 
     /**
-     * @param BeanInterface $bean
-     * @return mixed
+     * @return BeanInterface|null
      */
-    public function unshift(BeanInterface $bean);
+    public function shift(): ?BeanInterface;
 
     /**
-     * @return mixed
+     * @param int $index
+     * @param int|null $length
+     * @return self
      */
-    public function shift();
+    public function slice(int $index, int $length = null): self;
 
     /**
-     * @return mixed
+     * @param callable|null $comparator
+     * @return $this
      */
-    public function pop();
+    public function sort(callable $comparator = null): self;
 
     /**
-     * @param string $dataName
-     * @return array
+     * @param callable|null $comparator
+     * @return $this
      */
-    public function countValues_for_DataName(string $dataName): array;
+    public function sorted(callable $comparator = null): self;
+
+    /**
+     * @return float|int|void
+     * @throws BeanListException
+     * @deprecated
+     */
+    public function sum();
+
+    /**
+     * @param mixed ...$values
+     * @return $this
+     */
+    public function unshift(...$values): self;
+
+    /**
+     * @param bool $recureive
+     * @return array|mixed
+     */
+    public function jsonSerialize(bool $recureive = false);
 }

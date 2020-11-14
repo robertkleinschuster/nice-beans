@@ -2,32 +2,31 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
- */
-
 namespace Niceshops\Bean\Type\Base;
+
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
 
 /**
  * Interface BeanInterface
  * @package Niceshops\Library\Core\Bean
  */
-interface BeanInterface
+interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \JsonSerializable
 {
-    public const DATA_TYPE_CALLABLE = 'callable';
-    public const DATA_TYPE_STRING = 'string';
-    public const DATA_TYPE_ARRAY = 'array';
+    public const DATA_TYPE_BOOL = 'bool';
     public const DATA_TYPE_INT = 'int';
     public const DATA_TYPE_FLOAT = 'float';
-    public const DATA_TYPE_BOOL = 'bool';
-    public const DATA_TYPE_ITERABLE = 'iterable';
-    public const DATA_TYPE_DATE = 'date';
-    public const DATA_TYPE_DATETIME_PHP = 'datetime';
+    public const DATA_TYPE_STRING = 'string';
+    public const DATA_TYPE_ARRAY = 'array';
     public const DATA_TYPE_OBJECT = 'object';
     public const DATA_TYPE_RESOURCE = 'resource';
-    public const DATA_KEY_WILDCARD = "*";
-
+    public const DATA_TYPE_RESOURCE_CLOSED = 'resource_closed';
+    public const DATA_TYPE_TRAVERSABLE = 'iterable';
+    public const DATA_TYPE_DATETIME = 'datetime';
+    public const DATA_TYPE_CLOSURE = 'closure';
+    public const DATA_TYPE_NULL = 'null';
+    public const DATA_TYPE_UNKNOWN = 'unknown';
 
     /**
      * @param string $name
@@ -35,7 +34,7 @@ interface BeanInterface
      *
      * @return BeanInterface
      */
-    public function setData($name, $value);
+    public function set(string $name, $value): self;
 
 
     /**
@@ -43,7 +42,7 @@ interface BeanInterface
      *
      * @return mixed
      */
-    public function getData($name);
+    public function get(string $name);
 
 
     /**
@@ -51,38 +50,44 @@ interface BeanInterface
      *
      * @return bool
      */
-    public function hasData($name);
-
+    public function has(string $name): bool;
 
     /**
      * @param string $name
-     *
-     * @return mixed    the removed data or NULL if data couldn't be found
+     * @return bool
      */
-    public function removeData($name);
+    public function empty(string $name): bool;
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function unset(string $name): self;
 
 
     /**
      * @return BeanInterface
      */
-    public function resetData();
+    public function reset(): self;
 
     /**
      * @param $name
      * @return mixed
      */
-    public function getDataType($name);
+    public function getType(string $name): string;
 
     /**
+     * @param bool $recuresive
      * @return array
      */
-    public function toArray(): array;
-
+    public function toArray(bool $recuresive = false): array;
 
     /**
      * @param array $data
      *
      * @return mixed
      */
-    public function fromArray(array $data);
+    public function fromArray(array $data): self;
+
+
 }

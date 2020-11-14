@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Converter;
 
-use ArrayAccess;
 use ArrayIterator;
-use Countable;
-use IteratorAggregate;
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Niceshops\Bean\Type\Base\BeanInterface;
@@ -19,14 +16,10 @@ use Niceshops\Bean\Type\Base\BeanInterface;
 class ConverterBeanDecorator implements
     BeanAwareInterface,
     BeanConverterAwareInterface,
-    BeanInterface,
-    ArrayAccess,
-    IteratorAggregate,
-    Countable
+    BeanInterface
 {
     use BeanAwareTrait;
     use BeanConverterAwareTrait;
-
 
     /**
      * BeanDecorator constructor.
@@ -44,12 +37,12 @@ class ConverterBeanDecorator implements
      * @param mixed $value
      * @return $this|BeanInterface
      */
-    public function setData($name, $value)
+    public function set($name, $value): self
     {
         if (!$this->getBeanConverter()->hasRawData($name)) {
             $this->getBeanConverter()->setRawData($name, $value);
         }
-        $this->getBean()->setData(
+        $this->getBean()->set(
             $name,
             $this->getBeanConverter()->convertValueToBean(
                 $this->getBean(),
@@ -64,15 +57,15 @@ class ConverterBeanDecorator implements
      * @param string $name
      * @return mixed
      */
-    public function getData($name)
+    public function get($name)
     {
-        if (!$this->getBean()->hasData($name) && $this->getBeanConverter()->hasRawData($name)) {
-            $this->setData($name, $this->getBeanConverter()->getRawData($name));
+        if (!$this->getBean()->has($name) && $this->getBeanConverter()->hasRawData($name)) {
+            $this->set($name, $this->getBeanConverter()->getRawData($name));
         }
         return $this->getBeanConverter()->convertValueFromBean(
             $this->getBean(),
             $name,
-            $this->getBean()->getData($name)
+            $this->getBean()->get($name)
         );
     }
 
@@ -80,32 +73,29 @@ class ConverterBeanDecorator implements
      * @param string $name
      * @return bool
      */
-    public function hasData($name)
+    public function has($name): bool
     {
-        return $this->getBean()->hasData($name) || $this->getBeanConverter()->hasRawData($name);
+        return $this->getBean()->has($name) || $this->getBeanConverter()->hasRawData($name);
     }
 
     /**
      * @param string $name
      * @return mixed
      */
-    public function removeData($name)
+    public function unset($name): self
     {
         $this->getBeanConverter()->removeRawData($name);
-        return $this->getBeanConverter()->convertValueFromBean(
-            $this->getBean(),
-            $name,
-            $this->getBean()->removeData($name)
-        );
+        $this->getBean()->unset($name);
+        return $this;
     }
 
     /**
      * @return $this|BeanInterface
      */
-    public function resetData()
+    public function reset(): self
     {
         $this->getBeanConverter()->resetRawData();
-        $this->getBean()->resetData();
+        $this->getBean()->reset();
         return $this;
     }
 
@@ -113,21 +103,22 @@ class ConverterBeanDecorator implements
      * @param $name
      * @return mixed
      */
-    public function getDataType($name)
+    public function getType($name): string
     {
-        return $this->getBean()->getDataType($name);
+        return $this->getBean()->getType($name);
     }
 
     /**
+     * @param bool $recursive
      * @return array
      */
-    public function toArray(): array
+    public function toArray(bool $recursive = false): array
     {
         $data = [];
-        $names = $this->toBean()->getOriginalDataName_Map();
-        foreach ($names as $name) {
-            if ($this->hasData($name)) {
-                $data[$name] = $this->getData($name);
+        $bean = $this->toBean();
+        foreach ($bean as $name => $value) {
+            if ($this->has($name)) {
+                $data[$name] = $this->get($name);
             }
         }
         return $data;
@@ -137,10 +128,10 @@ class ConverterBeanDecorator implements
      * @param array $data
      * @return $this
      */
-    public function fromArray(array $data)
+    public function fromArray(array $data): self
     {
         foreach ($data as $key => $value) {
-            $this->setData($key, $value);
+            $this->set($key, $value);
         }
         return $this;
     }
@@ -151,7 +142,7 @@ class ConverterBeanDecorator implements
     public function toBean(): BeanInterface
     {
         foreach ($this->getBeanConverter()->getRawDataMap() as $key => $value) {
-            $this->setData($key, $value);
+            $this->set($key, $value);
         }
         return $this->getBean();
     }
@@ -162,7 +153,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetExists($offset)
     {
-        return $this->hasData($offset) && null !== $this->getData($offset);
+        return $this->has($offset) && null !== $this->get($offset);
     }
 
     /**
@@ -171,7 +162,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetGet($offset)
     {
-        return $this->getData($offset);
+        return $this->get($offset);
     }
 
     /**
@@ -181,7 +172,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetSet($offset, $value)
     {
-        return $this->setData($offset, $value);
+        return $this->set($offset, $value);
     }
 
     /**
@@ -190,7 +181,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetUnset($offset)
     {
-        return $this->removeData($offset);
+        return $this->unset($offset);
     }
 
     /**
@@ -208,4 +199,20 @@ class ConverterBeanDecorator implements
     {
         return count($this->toArray());
     }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function empty(string $name): bool
+    {
+        return $this->getBean()->empty($name) && empty($this->getBeanConverter()->getRawData($name));
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray(true);
+    }
+
+
 }
