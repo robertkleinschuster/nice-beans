@@ -112,6 +112,15 @@ abstract class AbstractBaseBean implements BeanInterface
      * @param string $name
      * @return bool
      */
+    public function isset(string $name): bool
+    {
+        return isset($this->{$name});
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function empty(string $name): bool
     {
         return empty($this->{$name});

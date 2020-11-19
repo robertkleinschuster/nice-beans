@@ -56,6 +56,12 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      * @param string $name
      * @return bool
      */
+    public function isset(string $name): bool;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function empty(string $name): bool;
 
     /**
@@ -63,7 +69,6 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      * @return $this
      */
     public function unset(string $name): self;
-
 
     /**
      * @return BeanInterface
