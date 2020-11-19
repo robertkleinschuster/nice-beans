@@ -109,18 +109,26 @@ abstract class AbstractBaseBean implements BeanInterface
     /**
      * @param string $name
      * @return bool
+     * @throws BeanException
      */
     public function isset(string $name): bool
     {
+        if (!$this->exists($name)) {
+            $this->throwDataNotFoundException($name);
+        }
         return isset($this->{$name});
     }
 
     /**
      * @param string $name
      * @return bool
+     * @throws BeanException
      */
     public function empty(string $name): bool
     {
+        if (!$this->exists($name)) {
+            $this->throwDataNotFoundException($name);
+        }
         return empty($this->{$name});
     }
 
@@ -359,6 +367,9 @@ abstract class AbstractBaseBean implements BeanInterface
         }
     }
 
+    /**
+     * @return array|mixed
+     */
     public function jsonSerialize()
     {
         return $this->toArray(true);
