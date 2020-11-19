@@ -39,7 +39,7 @@ abstract class AbstractBaseBean implements BeanInterface
      * @return $this
      * @throws BeanException
      */
-    public function set($name, $value): self
+    public function set(string $name, $value): self
     {
         if (strpos($name, '__') === 0) {
             throw new BeanException("Invalid data name $name!", BeanException::ERROR_CODE_INVALID_DATA_NAME);
@@ -53,8 +53,9 @@ abstract class AbstractBaseBean implements BeanInterface
      * @param string $name
      *
      * @return mixed
+     * @throws BeanException
      */
-    public function get($name)
+    public function get(string $name)
     {
         if (!$this->has($name)) {
             $this->throwDataNotFoundException($name);
@@ -67,7 +68,7 @@ abstract class AbstractBaseBean implements BeanInterface
      * @param string $name
      * @return $this
      */
-    public function unset($name): self
+    public function unset(string $name): self
     {
         if ($this->has($name)) {
             unset($this->{$name});
@@ -102,7 +103,7 @@ abstract class AbstractBaseBean implements BeanInterface
      *
      * @return bool
      */
-    public function has($name): bool
+    public function has(string $name): bool
     {
         return property_exists($this, $name);
     }
@@ -168,7 +169,7 @@ abstract class AbstractBaseBean implements BeanInterface
      * @return null|string
      * @throws BeanException
      */
-    public function getType($name): string
+    public function getType(string $name): string
     {
         if (!$this->has($name)) {
             $this->throwDataNotFoundException($name);
@@ -269,12 +270,12 @@ abstract class AbstractBaseBean implements BeanInterface
 
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return mixed
      * @throws BeanException
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset) && null !== $this->get($offset);
     }
