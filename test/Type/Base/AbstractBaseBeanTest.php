@@ -206,6 +206,20 @@ class AbstractBaseBeanTest extends DefaultTestCase
     }
 
 
+    /**
+     * @group  unit
+     * @small
+     *
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::toArray
+     */
+    public function testToArray()
+    {
+        $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object->set('foo', 'bar');
+        $arrData = $this->object->toArray();
+        $this->assertContains('bar', $arrData);
+    }
+
 
     /**
      * @group  unit
