@@ -138,7 +138,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::has
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::exists
      * @throws BeanException
      */
     public function testHasData_isTrue()
@@ -147,7 +147,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $name = "foo";
 
         $this->object->set($name, 'bar');
-        $this->assertTrue($this->object->has($name));
+        $this->assertTrue($this->object->exists($name));
     }
 
 
@@ -155,7 +155,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::has
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::exists
      * @throws BeanException
      */
     public function testHasData_isFalse()
@@ -163,7 +163,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
         $name = "foo";
 
-        $this->assertFalse($this->object->has($name));
+        $this->assertFalse($this->object->exists($name));
     }
 
 

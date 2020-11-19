@@ -89,7 +89,7 @@ abstract class AbstractBeanProcessor implements
         string $orderReferenceField = null,
         $orderReferenceValue = null
     ) {
-        if ($bean->has($orderField)) {
+        if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
                 if (!empty($orderReferenceField) && !empty($orderReferenceValue)) {
                     $finder->filter([$orderReferenceField => $orderReferenceValue]);

@@ -98,7 +98,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      * @small
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::set
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::get
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::has
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::exists
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::unset
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::reset
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getType

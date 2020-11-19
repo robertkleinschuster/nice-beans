@@ -59,7 +59,7 @@ class ConverterBeanDecorator implements
      */
     public function get($name)
     {
-        if (!$this->getBean()->has($name) && $this->getBeanConverter()->hasRawData($name)) {
+        if (!$this->getBean()->exists($name) && $this->getBeanConverter()->hasRawData($name)) {
             $this->set($name, $this->getBeanConverter()->getRawData($name));
         }
         return $this->getBeanConverter()->convertValueFromBean(
@@ -73,9 +73,9 @@ class ConverterBeanDecorator implements
      * @param string $name
      * @return bool
      */
-    public function has($name): bool
+    public function exists($name): bool
     {
-        return $this->getBean()->has($name) || $this->getBeanConverter()->hasRawData($name);
+        return $this->getBean()->exists($name) || $this->getBeanConverter()->hasRawData($name);
     }
 
     /**
@@ -117,7 +117,7 @@ class ConverterBeanDecorator implements
         $data = [];
         $bean = $this->toBean();
         foreach ($bean as $name => $value) {
-            if ($this->has($name)) {
+            if ($this->exists($name)) {
                 $data[$name] = $this->get($name);
             }
         }
@@ -153,7 +153,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetExists($offset)
     {
-        return $this->has($offset) && null !== $this->get($offset);
+        return $this->exists($offset) && null !== $this->get($offset);
     }
 
     /**

@@ -50,7 +50,7 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      *
      * @return bool
      */
-    public function has(string $name): bool;
+    public function exists(string $name): bool;
 
     /**
      * @param string $name

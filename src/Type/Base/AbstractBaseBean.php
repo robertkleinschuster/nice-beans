@@ -57,7 +57,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function get(string $name)
     {
-        if (!$this->has($name)) {
+        if (!$this->exists($name)) {
             $this->throwDataNotFoundException($name);
         }
         return $this->{$name};
@@ -70,7 +70,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function unset(string $name): self
     {
-        if ($this->has($name)) {
+        if ($this->exists($name)) {
             unset($this->{$name});
         }
         return $this;
@@ -87,7 +87,6 @@ abstract class AbstractBaseBean implements BeanInterface
 
     /**
      * @return $this
-     * @throws BeanException
      */
     public function reset(): self
     {
@@ -97,13 +96,12 @@ abstract class AbstractBaseBean implements BeanInterface
         return $this;
     }
 
-
     /**
      * @param string $name
      *
      * @return bool
      */
-    public function has(string $name): bool
+    public function exists(string $name): bool
     {
         return property_exists($this, $name);
     }
@@ -180,7 +178,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function getType(string $name): string
     {
-        if (!$this->has($name)) {
+        if (!$this->exists($name)) {
             $this->throwDataNotFoundException($name);
         }
         $data = $this->get($name);
@@ -286,7 +284,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function offsetExists($offset): bool
     {
-        return $this->has($offset) && null !== $this->get($offset);
+        return $this->exists($offset) && null !== $this->get($offset);
     }
 
 
