@@ -41,11 +41,23 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function set(string $name, $value): self
     {
-        if (strpos($name, '__') === 0) {
+        if (!$this->validateDataName($name)) {
             throw new BeanException("Invalid data name $name!", BeanException::ERROR_CODE_INVALID_DATA_NAME);
         }
         $this->{$name} = $value;
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    private function validateDataName(string $name): bool
+    {
+        return strpos($name, '__') === false
+            && strpos($name, '*') === false
+            && strpos($name, self::class) === false
+            && strpos($name, static::class) === false;
     }
 
 
@@ -91,7 +103,9 @@ abstract class AbstractBaseBean implements BeanInterface
     public function reset(): self
     {
         foreach ($this as $name => $value) {
-            $this->unset($name);
+            if ($this->validateDataName($name)) {
+                $this->unset($name);
+            }
         }
         return $this;
     }
@@ -103,7 +117,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function exists(string $name): bool
     {
-        return property_exists($this, $name);
+        return property_exists($this, $name) && $this->validateDataName($name);
     }
 
     /**
@@ -142,18 +156,22 @@ abstract class AbstractBaseBean implements BeanInterface
         if ($recuresive) {
             $data = [];
             foreach ($this as $name => $value) {
-                if ($value instanceof BeanInterface) {
-                    $data[$name][self::ARRAY_KEY_CLASS] = static::class;
-                    $data[$name] = $value->toArray($recuresive);
-                } elseif (is_object($value)) {
-                    $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
-                } else {
-                    $data[$name] = $value;
+                if ($this->validateDataName($name)) {
+                    if ($value instanceof BeanInterface) {
+                        $data[$name][self::ARRAY_KEY_CLASS] = static::class;
+                        $data[$name] = $value->toArray($recuresive);
+                    } elseif (is_object($value)) {
+                        $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
+                    } else {
+                        $data[$name] = $value;
+                    }
                 }
             }
             return $data;
         } else {
-            return (array) $this;
+            return array_filter((array) $this, function ($name) {
+                return $this->validateDataName($name);
+            }, ARRAY_FILTER_USE_KEY);
         }
     }
 
