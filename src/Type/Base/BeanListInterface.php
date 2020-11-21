@@ -154,7 +154,7 @@ interface BeanListInterface extends Sequence
     /**
      * @return BeanInterface
      */
-    public function pop(): BeanInterface;
+    public function pop();
 
     /**
      * @param BeanInterface ...$values
@@ -200,7 +200,7 @@ interface BeanListInterface extends Sequence
     /**
      * @return BeanInterface|null
      */
-    public function shift(): ?BeanInterface;
+    public function shift();
 
     /**
      * @param int $index

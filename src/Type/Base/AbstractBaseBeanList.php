@@ -259,7 +259,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     /**
      * @return BeanInterface
      */
-    public function pop(): BeanInterface
+    public function pop()
     {
         return $this->vector->pop();
     }
@@ -333,7 +333,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     /**
      * @return BeanInterface|null
      */
-    public function shift(): ?BeanInterface
+    public function shift()
     {
         return $this->vector->shift();
     }
