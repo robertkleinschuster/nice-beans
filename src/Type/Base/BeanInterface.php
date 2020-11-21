@@ -36,14 +36,12 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      */
     public function set(string $name, $value): self;
 
-
     /**
      * @param string $name
      *
      * @return mixed
      */
     public function get(string $name);
-
 
     /**
      * @param string $name
@@ -94,5 +92,18 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      */
     public function fromArray(array $data): self;
 
+    /**
+     * @return mixed
+     */
+    public function clearCache();
 
+    /**
+     * @return array
+     */
+    public function keys(): array;
+
+    /**
+     * @return array
+     */
+    public function values(): array;
 }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Type\Base;
 
 use DateTimeInterface;
+use Niceshops\Bean\Cache\BeanCacheTrait;
 
 
 /**
@@ -21,6 +22,8 @@ abstract class AbstractBaseBean implements BeanInterface
 
     private const ARRAY_KEY_CLASS = '__class';
     private const ARRAY_KEY_SERIALIZE = '__serialize';
+
+    use BeanCacheTrait;
 
     /**
      * AbstractBaseBean constructor.
@@ -45,6 +48,7 @@ abstract class AbstractBaseBean implements BeanInterface
             throw new BeanException("Invalid data name $name!", BeanException::ERROR_CODE_INVALID_DATA_NAME);
         }
         $this->{$name} = $value;
+        $this->clearCache();
         return $this;
     }
 
@@ -84,6 +88,7 @@ abstract class AbstractBaseBean implements BeanInterface
     {
         if ($this->exists($name)) {
             unset($this->{$name});
+            $this->clearCache();
         }
         return $this;
     }
@@ -117,7 +122,11 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function exists(string $name): bool
     {
-        return property_exists($this, $name) && $this->validateDataName($name);
+        if (null === $this->cache(__METHOD__, $name)) {
+            $ret = property_exists($this, $name) && $this->validateDataName($name);
+            $this->cache(__METHOD__, $name, $ret);
+        }
+        return $this->cache(__METHOD__, $name);
     }
 
     /**
@@ -143,7 +152,10 @@ abstract class AbstractBaseBean implements BeanInterface
         if (!$this->exists($name)) {
             $this->throwDataNotFoundException($name);
         }
-        return empty($this->{$name});
+        if ($this->cache(__METHOD__, $name) === null) {
+            $this->cache(__METHOD__, $name, empty($this->{$name}));
+        }
+        return $this->cache(__METHOD__, $name);
     }
 
     /**
@@ -153,26 +165,29 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function toArray(bool $recuresive = false): array
     {
-        if ($recuresive) {
+        if ($this->cache(__METHOD__, $recuresive) === null) {
             $data = [];
-            foreach ($this as $name => $value) {
-                if ($this->validateDataName($name)) {
-                    if ($value instanceof BeanInterface) {
-                        $data[$name][self::ARRAY_KEY_CLASS] = static::class;
-                        $data[$name] = $value->toArray($recuresive);
-                    } elseif (is_object($value)) {
-                        $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
-                    } else {
-                        $data[$name] = $value;
+            if ($recuresive) {
+                foreach ($this as $name => $value) {
+                    if ($this->validateDataName($name)) {
+                        if ($value instanceof BeanInterface) {
+                            $data[$name][self::ARRAY_KEY_CLASS] = static::class;
+                            $data[$name] = $value->toArray($recuresive);
+                        } elseif (is_object($value)) {
+                            $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
+                        } else {
+                            $data[$name] = $value;
+                        }
                     }
                 }
+            } else {
+                $data = array_filter((array) $this, function ($name) {
+                    return $this->validateDataName($name);
+                }, ARRAY_FILTER_USE_KEY);
             }
-            return $data;
-        } else {
-            return array_filter((array) $this, function ($name) {
-                return $this->validateDataName($name);
-            }, ARRAY_FILTER_USE_KEY);
+            $this->cache(__METHOD__, $recuresive, $data);
         }
+        return $this->cache(__METHOD__, $recuresive);
     }
 
 
@@ -196,6 +211,7 @@ abstract class AbstractBaseBean implements BeanInterface
         return $this;
     }
 
+
     /**
      * @param string $name data name
      *
@@ -204,26 +220,29 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function getType(string $name): string
     {
-        if (!$this->exists($name)) {
-            $this->throwDataNotFoundException($name);
-        }
-        $data = $this->get($name);
-        $dataType = null;
-        if (is_object($data)) {
-            if ($data instanceof \Traversable) {
-                $dataType = self::DATA_TYPE_TRAVERSABLE;
-            } elseif ($data instanceof DateTimeInterface) {
-                $dataType = self::DATA_TYPE_DATETIME;
-            } elseif ($data instanceof \Closure) {
-                $dataType = self::DATA_TYPE_CLOSURE;
-            } else {
-                $dataType = is_string(get_class($data)) ?: null;
+        if ($this->cache(__METHOD__, $name) === null) {
+            if (!$this->exists($name)) {
+                $this->throwDataNotFoundException($name);
             }
+            $data = $this->get($name);
+            $dataType = null;
+            if (is_object($data)) {
+                if ($data instanceof \Traversable) {
+                    $dataType = self::DATA_TYPE_TRAVERSABLE;
+                } elseif ($data instanceof DateTimeInterface) {
+                    $dataType = self::DATA_TYPE_DATETIME;
+                } elseif ($data instanceof \Closure) {
+                    $dataType = self::DATA_TYPE_CLOSURE;
+                } else {
+                    $dataType = is_string(get_class($data)) ?: null;
+                }
+            }
+            if ($dataType === null) {
+                $dataType = gettype($this->{$name});
+            }
+            $this->cache(__METHOD__, $name, $this->normalizeDataType($dataType));
         }
-        if ($dataType === null) {
-            $dataType = gettype($this->{$name});
-        }
-        return $this->normalizeDataType($dataType);
+        return $this->cache(__METHOD__, $name);
     }
 
 
@@ -341,7 +360,6 @@ abstract class AbstractBaseBean implements BeanInterface
      * @param mixed $offset
      *
      * @return mixed
-     * @throws BeanException
      */
     public function offsetUnset($offset)
     {
@@ -353,7 +371,10 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function count()
     {
-        return count($this->toArray());
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', count($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
     }
 
     /**
@@ -391,5 +412,27 @@ abstract class AbstractBaseBean implements BeanInterface
     public function jsonSerialize()
     {
         return $this->toArray(true);
+    }
+
+    /**
+     * @return array
+     */
+    public function keys(): array
+    {
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', array_keys($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
+    }
+
+    /**
+     * @return array
+     */
+    public function values(): array
+    {
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', array_values($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
     }
 }

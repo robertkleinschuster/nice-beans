@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Converter;
 
 use ArrayIterator;
+use Niceshops\Bean\Cache\BeanCacheTrait;
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Niceshops\Bean\Type\Base\BeanInterface;
@@ -20,6 +21,7 @@ class ConverterBeanDecorator implements
 {
     use BeanAwareTrait;
     use BeanConverterAwareTrait;
+    use BeanCacheTrait;
 
     /**
      * BeanDecorator constructor.
@@ -39,6 +41,7 @@ class ConverterBeanDecorator implements
      */
     public function set($name, $value): self
     {
+        $this->clearCache();
         if (!$this->getBeanConverter()->hasRawData($name)) {
             $this->getBeanConverter()->setRawData($name, $value);
         }
@@ -59,14 +62,18 @@ class ConverterBeanDecorator implements
      */
     public function get($name)
     {
-        if (!$this->getBean()->exists($name) && $this->getBeanConverter()->hasRawData($name)) {
-            $this->set($name, $this->getBeanConverter()->getRawData($name));
+        if ($this->cache(__METHOD__, $name) === null) {
+            if (!$this->getBean()->exists($name) && $this->getBeanConverter()->hasRawData($name)) {
+                $this->set($name, $this->getBeanConverter()->getRawData($name));
+            }
+            $val = $this->getBeanConverter()->convertValueFromBean(
+                $this->getBean(),
+                $name,
+                $this->getBean()->get($name)
+            );
+            $this->cache(__METHOD__, $name, $val);
         }
-        return $this->getBeanConverter()->convertValueFromBean(
-            $this->getBean(),
-            $name,
-            $this->getBean()->get($name)
-        );
+        return $this->cache(__METHOD__, $name);
     }
 
     /**
@@ -84,6 +91,7 @@ class ConverterBeanDecorator implements
      */
     public function unset($name): self
     {
+        $this->clearCache();
         $this->getBeanConverter()->removeRawData($name);
         $this->getBean()->unset($name);
         return $this;
@@ -94,6 +102,7 @@ class ConverterBeanDecorator implements
      */
     public function reset(): self
     {
+        $this->clearCache();
         $this->getBeanConverter()->resetRawData();
         $this->getBean()->reset();
         return $this;
@@ -114,14 +123,17 @@ class ConverterBeanDecorator implements
      */
     public function toArray(bool $recursive = false): array
     {
-        $data = [];
-        $bean = $this->toBean();
-        foreach ($bean as $name => $value) {
-            if ($this->exists($name)) {
-                $data[$name] = $this->get($name);
+        if ($this->cache(__METHOD__, $recursive) === null) {
+            $data = [];
+            $bean = $this->toBean();
+            foreach ($bean as $name => $value) {
+                if ($this->exists($name)) {
+                    $data[$name] = $this->get($name);
+                }
             }
+            $this->cache(__METHOD__, $recursive, $data);
         }
-        return $data;
+        return $this->cache(__METHOD__, $recursive);
     }
 
     /**
@@ -141,10 +153,13 @@ class ConverterBeanDecorator implements
      */
     public function toBean(): BeanInterface
     {
-        foreach ($this->getBeanConverter()->getRawDataMap() as $key => $value) {
-            $this->set($key, $value);
+        if ($this->cache(__METHOD__) === null) {
+            foreach ($this->getBeanConverter()->getRawDataMap() as $key => $value) {
+                $this->set($key, $value);
+            }
+            $this->cache(__METHOD__, '', $this->getBean());
         }
-        return $this->getBean();
+        return $this->cache(__METHOD__);
     }
 
     /**
@@ -197,7 +212,10 @@ class ConverterBeanDecorator implements
      */
     public function count()
     {
-        return count($this->toArray());
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', count($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
     }
 
     /**
@@ -209,10 +227,43 @@ class ConverterBeanDecorator implements
         return $this->getBean()->empty($name) && empty($this->getBeanConverter()->getRawData($name));
     }
 
+    /**
+     * @return array|mixed
+     */
     public function jsonSerialize()
     {
         return $this->toArray(true);
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function isset(string $name): bool
+    {
+        return $this->getBean()->isset($name) || $this->getBeanConverter()->hasRawData($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function keys(): array
+    {
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', array_keys($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
+    }
+
+    /**
+     * @return array
+     */
+    public function values(): array
+    {
+        if ($this->cache(__METHOD__, '') === null) {
+            $this->cache(__METHOD__, '', array_values($this->toArray()));
+        }
+        return $this->cache(__METHOD__, '');
+    }
 
 }

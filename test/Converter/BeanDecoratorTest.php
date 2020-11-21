@@ -87,7 +87,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     {
         yield 'set' => ['set', ['foo', 'bar'], ['convertValueToBean']];
         yield 'get' => ['get', ['foo'], ['convertValueFromBean']];
-        yield 'has' => ['has', ['foo']];
+        yield 'has' => ['exists', ['foo']];
         yield 'unset' => ['unset', ['foo']];
         yield 'reset' => ['reset', []];
         yield 'getType' => ['getType', ['foo']];
