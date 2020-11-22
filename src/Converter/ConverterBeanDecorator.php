@@ -112,9 +112,9 @@ class ConverterBeanDecorator implements
      * @param $name
      * @return mixed
      */
-    public function getType($name): string
+    public function type($name): string
     {
-        return $this->getBean()->getType($name);
+        return $this->getBean()->type($name);
     }
 
     /**

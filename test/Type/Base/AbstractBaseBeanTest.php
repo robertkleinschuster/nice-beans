@@ -69,7 +69,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::getType
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::type
      */
     public function testGetDataType_isString()
     {

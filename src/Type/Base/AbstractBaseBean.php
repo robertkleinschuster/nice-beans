@@ -218,7 +218,7 @@ abstract class AbstractBaseBean implements BeanInterface
      * @return null|string
      * @throws BeanException
      */
-    public function getType(string $name): string
+    public function type(string $name): string
     {
         if ($this->cache(__METHOD__, $name) === null) {
             if (!$this->exists($name)) {

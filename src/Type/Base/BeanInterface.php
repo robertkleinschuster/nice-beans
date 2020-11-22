@@ -77,7 +77,7 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      * @param $name
      * @return mixed
      */
-    public function getType(string $name): string;
+    public function type(string $name): string;
 
     /**
      * @param bool $recuresive

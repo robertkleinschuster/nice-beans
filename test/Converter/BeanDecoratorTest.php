@@ -101,7 +101,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::exists
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::unset
      * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::reset
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::getType
+     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::type
      * @dataProvider dataProvider_CallBeanMethod
      * @param string $method
      * @param array $params
