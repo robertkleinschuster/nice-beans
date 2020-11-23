@@ -31,7 +31,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
             foreach ($data as $datum) {
                 if ($datum instanceof BeanInterface) {
                     $d[] = $datum;
-                } else {
+                } elseif (is_array($datum)) {
                     $d[] = AbstractBaseBean::createFromArray($datum);
                 }
             }
