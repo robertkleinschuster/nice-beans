@@ -224,21 +224,11 @@ abstract class AbstractBaseBean implements BeanInterface
             if (!$this->exists($name)) {
                 $this->throwDataNotFoundException($name);
             }
-            $data = $this->get($name);
-            $dataType = null;
-            if (is_object($data)) {
-                if ($data instanceof \Traversable) {
-                    $dataType = self::DATA_TYPE_TRAVERSABLE;
-                } elseif ($data instanceof DateTimeInterface) {
-                    $dataType = self::DATA_TYPE_DATETIME;
-                } elseif ($data instanceof \Closure) {
-                    $dataType = self::DATA_TYPE_CLOSURE;
-                } else {
-                    $dataType = is_string(get_class($data)) ?: null;
-                }
-            }
-            if ($dataType === null) {
-                $dataType = gettype($this->{$name});
+            $refl = new \ReflectionProperty(static::class, $name);
+            if ($refl->getType() !== null) {
+                $dataType = $refl->getType()->getName();
+            } else {
+                $dataType = 'null';
             }
             $this->cache(__METHOD__, $name, $this->normalizeDataType($dataType));
         }
@@ -302,18 +292,6 @@ abstract class AbstractBaseBean implements BeanInterface
 
             case "unknown type":
                 $dataType = self::DATA_TYPE_UNKNOWN;
-                break;
-
-            case self::DATA_TYPE_DATETIME:
-                $dataType = self::DATA_TYPE_DATETIME;
-                break;
-
-            case self::DATA_TYPE_TRAVERSABLE:
-                $dataType = self::DATA_TYPE_TRAVERSABLE;
-                break;
-
-            case self::DATA_TYPE_CLOSURE:
-                $dataType = self::DATA_TYPE_CLOSURE;
                 break;
         }
 

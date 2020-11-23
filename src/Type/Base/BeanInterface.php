@@ -22,9 +22,6 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
     public const DATA_TYPE_OBJECT = 'object';
     public const DATA_TYPE_RESOURCE = 'resource';
     public const DATA_TYPE_RESOURCE_CLOSED = 'resource_closed';
-    public const DATA_TYPE_TRAVERSABLE = 'iterable';
-    public const DATA_TYPE_DATETIME = 'datetime';
-    public const DATA_TYPE_CLOSURE = 'closure';
     public const DATA_TYPE_NULL = 'null';
     public const DATA_TYPE_UNKNOWN = 'unknown';
 

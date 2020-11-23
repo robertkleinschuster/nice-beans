@@ -9,17 +9,8 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Base;
 
-use ArrayIterator;
-use ArrayObject;
-use DateTime;
-use DateTimeImmutable;
-use DateTimeInterface;
-use Exception;
-use Generator;
-use IteratorAggregate;
 use Niceshops\Bean\PHPUnit\DefaultTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use stdClass;
 
 /**
  * Class AbstractBaseBeanTest
@@ -78,8 +69,6 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object->set($name, 'test');
         $this->assertSame(BeanInterface::DATA_TYPE_STRING, $this->invokeMethod($this->object, "getType", $name));
     }
-
-
 
 
     /**
@@ -238,5 +227,21 @@ class AbstractBaseBeanTest extends DefaultTestCase
             }
         }
         $this->assertFalse($found);
+    }
+
+    /**
+     * @group  unit
+     * @small
+     *
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::type
+     */
+    public function testType()
+    {
+        $bean = new class() extends AbstractBaseBean {
+            public ?string $test = null;
+            public ?AbstractBaseBeanList $list = null;
+        };
+        $this->assertEquals($bean::DATA_TYPE_STRING, $bean->type('test'));
+        $this->assertEquals(AbstractBaseBeanList::class, $bean->type('list'));
     }
 }
