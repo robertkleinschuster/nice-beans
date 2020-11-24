@@ -207,6 +207,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object->set('foo', 'bar');
         $arrData = $this->object->toArray();
         $this->assertContains('bar', $arrData);
+        $this->assertEquals(['foo' => 'bar'], $arrData);
     }
 
 
