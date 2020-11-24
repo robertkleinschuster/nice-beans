@@ -58,11 +58,19 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     private function validateDataName(string $name): bool
     {
-        return strpos($name, '__') === false
+        $found = false;
+        foreach (class_parents(static::class) as $class_parent) {
+            $found = strpos($name, $class_parent) !== false;
+            if ($found) {
+                break;
+            }
+        }
+        return !$found && strpos($name, '__') === false
             && strpos($name, '*') === false
             && strpos($name, self::class) === false
             && strpos($name, static::class) === false;
     }
+
 
 
     /**
