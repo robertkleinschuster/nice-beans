@@ -405,4 +405,9 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     {
         return array_column($this->toArray(), $name, $index_name);
     }
+
+    public function __clone()
+    {
+        $this->vector = clone $this->vector;
+    }
 }
