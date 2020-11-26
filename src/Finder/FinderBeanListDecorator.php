@@ -393,5 +393,10 @@ class FinderBeanListDecorator implements
         return $this->toBeanList()->jsonSerialize($recureive);
     }
 
+    public function column(?string $name, ?string $index_name = null): array
+    {
+        return $this->toBeanList()->column($name, $index_name);
+    }
+
 
 }

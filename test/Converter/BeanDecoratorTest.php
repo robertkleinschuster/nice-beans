@@ -90,7 +90,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
         yield 'has' => ['exists', ['foo']];
         yield 'unset' => ['unset', ['foo']];
         yield 'reset' => ['reset', []];
-        yield 'getType' => ['getType', ['foo']];
+        yield 'getType' => ['type', ['foo']];
     }
 
     /**

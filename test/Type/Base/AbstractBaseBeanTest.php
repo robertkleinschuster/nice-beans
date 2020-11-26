@@ -62,12 +62,29 @@ class AbstractBaseBeanTest extends DefaultTestCase
      *
      * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::type
      */
-    public function testGetDataType_isString()
+    public function testGetDataType()
     {
         $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
         $name = "foo";
         $this->object->set($name, 'test');
-        $this->assertSame(BeanInterface::DATA_TYPE_STRING, $this->invokeMethod($this->object, "getType", $name));
+        $this->assertSame(BeanInterface::DATA_TYPE_UNKNOWN, $this->invokeMethod($this->object, "type", $name));
+    }
+
+
+    /**
+     * @group  unit
+     * @small
+     *
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::type
+     */
+    public function testGetDataType_isString()
+    {
+        $this->object = new class() extends AbstractBaseBean {
+            public ?string $foo = null;
+        };
+        $name = "foo";
+        $this->object->set($name, 'test');
+        $this->assertSame(BeanInterface::DATA_TYPE_STRING, $this->invokeMethod($this->object, "type", $name));
     }
 
 

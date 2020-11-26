@@ -395,4 +395,14 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     {
         return $this->toArray($recureive);
     }
+
+    /**
+     * @param string|null $name
+     * @param string|null $index_name
+     * @return array
+     */
+    public function column(?string $name, ?string $index_name = null): array
+    {
+        return array_column($this->toArray(), $name, $index_name);
+    }
 }

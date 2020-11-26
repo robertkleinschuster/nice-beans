@@ -239,4 +239,15 @@ interface BeanListInterface extends Sequence
      * @return array|mixed
      */
     public function jsonSerialize(bool $recureive = false);
+
+    /**
+     * Return the values from a single column
+     * @param string|null $name The column of values to return.
+     * This value may be the key of the column you wish to retrieve.
+     * It may also be NULL to return complete arrays (useful together with index_key to reindex the array).
+     * @param string|null $index_name The column to use as the index/keys for the returned array.
+     * @return array Returns an array of values representing a single column.
+     */
+    public function column(?string $name, ?string $index_name = null): array;
+
 }

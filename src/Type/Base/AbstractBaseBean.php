@@ -215,20 +215,25 @@ abstract class AbstractBaseBean implements BeanInterface
     /**
      * @param string $name data name
      *
+     * @param string|null $type
      * @return null|string
      * @throws BeanException
      */
-    public function type(string $name): string
+    public function type(string $name, ?string $type = null): string
     {
         if ($this->cache(__METHOD__, $name) === null) {
             if (!$this->exists($name)) {
                 $this->throwDataNotFoundException($name);
             }
-            $refl = new \ReflectionProperty(static::class, $name);
-            if ($refl->getType() !== null) {
-                $dataType = $refl->getType()->getName();
+            if (null === $this->cache(\ReflectionObject::class)) {
+                $this->cache(\ReflectionObject::class, '', new \ReflectionObject($this));
+            }
+            $obj = $this->cache(\ReflectionObject::class);
+            $prop = $obj->getProperty($name);
+            if ($prop->getType() !== null) {
+                $dataType = $prop->getType()->getName();
             } else {
-                $dataType = 'null';
+                $dataType = self::DATA_TYPE_UNKNOWN;
             }
             $this->cache(__METHOD__, $name, $this->normalizeDataType($dataType));
         }
