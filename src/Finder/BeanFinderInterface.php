@@ -98,23 +98,4 @@ interface BeanFinderInterface
      */
     public function getBean(bool $fetchAllData = false): BeanInterface;
 
-    /**
-     * @return int
-     */
-    public function getLimit(): int;
-
-    /**
-     * @return bool
-     */
-    public function hasLimit(): bool;
-
-    /**
-     * @return int
-     */
-    public function getOffset(): int;
-
-    /**
-     * @return bool
-     */
-    public function hasOffset(): bool;
 }
