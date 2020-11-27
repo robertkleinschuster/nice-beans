@@ -115,16 +115,16 @@ abstract class AbstractBeanProcessor implements
                 if ($newOrder > 0) {
                     foreach ($beanList as $previousBean) {
                         if ($currentOrder < $newOrder) {
-                            $previousBean->setData($orderField, $previousBean->getData($orderField) - 1);
+                            $previousBean->set($orderField, $previousBean->get($orderField) - 1);
 
                         }
                         if ($currentOrder > $newOrder) {
-                            $previousBean->setData($orderField, $previousBean->getData($orderField) + 1);
+                            $previousBean->set($orderField, $previousBean->get($orderField) + 1);
                         }
                     }
                     $bean->set($orderField, $newOrder);
                     if ($currentOrder < $newOrder) {
-                        $beanList->addBean($bean);
+                        $beanList->push($bean);
                     }
                     if ($currentOrder > $newOrder) {
                         $beanList->unshift($bean);
