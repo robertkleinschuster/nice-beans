@@ -35,16 +35,6 @@ abstract class AbstractBeanFinder implements
     use AttributeAwareTrait;
 
     /**
-     * @var int
-     */
-    private $limit = null;
-
-    /**
-     * @var int
-     */
-    private $offset = null;
-
-    /**
      * @var BeanFinderLink[]
      */
     private $beanFinderLink_List = [];
@@ -196,8 +186,9 @@ abstract class AbstractBeanFinder implements
      */
     public function limit(int $limit, int $offset)
     {
-        $this->limit = $limit;
-        $this->offset = $offset;
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->limit($limit, $offset);
+        }
         return $this;
     }
 
@@ -251,36 +242,4 @@ abstract class AbstractBeanFinder implements
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getLimit(): int
-    {
-        return $this->limit;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasLimit(): bool
-    {
-        return $this->limit !== null;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOffset(): int
-    {
-        return $this->offset;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function hasOffset(): bool
-    {
-        return $this->offset !== null;
-    }
 }
