@@ -63,7 +63,7 @@ class ConverterBeanDecorator implements
     public function get($name)
     {
         if ($this->cache(__METHOD__, $name) === null) {
-            if (!$this->getBean()->exists($name) && $this->getBeanConverter()->issetRawData($name)) {
+            if (!$this->getBean()->isset($name) && $this->getBeanConverter()->issetRawData($name)) {
                 $this->set($name, $this->getBeanConverter()->getRawData($name));
             }
             $val = $this->getBeanConverter()->convertValueFromBean(
@@ -82,7 +82,7 @@ class ConverterBeanDecorator implements
      */
     public function exists($name): bool
     {
-        return $this->getBean()->exists($name) || $this->getBeanConverter()->issetRawData($name);
+        return $this->getBean()->exists($name);
     }
 
     /**
@@ -176,7 +176,7 @@ class ConverterBeanDecorator implements
      */
     public function offsetExists($offset)
     {
-        return $this->exists($offset) && null !== $this->get($offset);
+        return $this->isset($offset);
     }
 
     /**
@@ -232,7 +232,7 @@ class ConverterBeanDecorator implements
      */
     public function empty(string $name): bool
     {
-        return $this->getBean()->empty($name) && empty($this->getBeanConverter()->getRawData($name));
+        return $this->getBean()->empty($name) && $this->getBeanConverter()->emptyRawData($name);
     }
 
     /**

@@ -55,6 +55,15 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
 
     /**
      * @param string $name
+     * @return bool
+     */
+    public function emptyRawData(string $name): bool
+    {
+        return empty($this->rawDataMao[$name]);
+    }
+
+    /**
+     * @param string $name
      * @param $value
      * @return $this
      */

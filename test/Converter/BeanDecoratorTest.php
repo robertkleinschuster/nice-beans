@@ -109,6 +109,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     public function testCallBeanMethod(string $method, array $params, array $additionalMethods = null)
     {
         $mockBean = $this->getMockBuilder(AbstractBaseBean::class)->setMethods([$method])->getMockForAbstractClass();
+        $mockBean->set('foo', 'bar');
         $this->object->method('getBean')->willReturn($mockBean);
         if (null !== $additionalMethods) {
             foreach ($additionalMethods as $additionalMethod) {
