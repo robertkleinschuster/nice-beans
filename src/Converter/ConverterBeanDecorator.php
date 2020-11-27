@@ -42,7 +42,7 @@ class ConverterBeanDecorator implements
     public function set($name, $value): self
     {
         $this->clearCache();
-        if (!$this->getBeanConverter()->hasRawData($name)) {
+        if (!$this->getBeanConverter()->issetRawData($name)) {
             $this->getBeanConverter()->setRawData($name, $value);
         }
         $this->getBean()->set(
@@ -63,7 +63,7 @@ class ConverterBeanDecorator implements
     public function get($name)
     {
         if ($this->cache(__METHOD__, $name) === null) {
-            if (!$this->getBean()->exists($name) && $this->getBeanConverter()->hasRawData($name)) {
+            if (!$this->getBean()->exists($name) && $this->getBeanConverter()->issetRawData($name)) {
                 $this->set($name, $this->getBeanConverter()->getRawData($name));
             }
             $val = $this->getBeanConverter()->convertValueFromBean(
@@ -82,7 +82,7 @@ class ConverterBeanDecorator implements
      */
     public function exists($name): bool
     {
-        return $this->getBean()->exists($name) || $this->getBeanConverter()->hasRawData($name);
+        return $this->getBean()->exists($name) || $this->getBeanConverter()->issetRawData($name);
     }
 
     /**
@@ -92,8 +92,16 @@ class ConverterBeanDecorator implements
     public function unset($name): self
     {
         $this->clearCache();
-        $this->getBeanConverter()->removeRawData($name);
+        $this->getBeanConverter()->unsetRawData($name);
         $this->getBean()->unset($name);
+        return $this;
+    }
+
+    public function nullify(string $name): self
+    {
+        $this->clearCache();
+        $this->getBeanConverter()->setRawData($name, null);
+        $this->getBean()->nullify($name);
         return $this;
     }
 
@@ -241,7 +249,7 @@ class ConverterBeanDecorator implements
      */
     public function isset(string $name): bool
     {
-        return $this->getBean()->isset($name) || $this->getBeanConverter()->hasRawData($name);
+        return $this->getBean()->isset($name) || $this->getBeanConverter()->issetRawData($name);
     }
 
     /**

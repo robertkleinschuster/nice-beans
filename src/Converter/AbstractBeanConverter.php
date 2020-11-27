@@ -22,7 +22,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
     /**
      * @var array
      */
-    private $rawData = [];
+    private array $rawDataMao = [];
 
     /**
      * @param BeanInterface $bean
@@ -31,7 +31,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function convert(BeanInterface $bean, array $rawData = []): ConverterBeanDecorator
     {
-        $this->rawData = $rawData;
+        $this->rawDataMao = $rawData;
         return new ConverterBeanDecorator($bean, $this);
     }
 
@@ -41,16 +41,16 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function getRawData(string $name)
     {
-        return $this->rawData[$name];
+        return $this->rawDataMao[$name];
     }
 
     /**
      * @param string $name
      * @return bool
      */
-    public function hasRawData(string $name): bool
+    public function issetRawData(string $name): bool
     {
-        return isset($this->rawData[$name]);
+        return isset($this->rawDataMao[$name]);
     }
 
     /**
@@ -60,16 +60,16 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function setRawData(string $name, $value): self
     {
-        $this->rawData[$name] = $value;
+        $this->rawDataMao[$name] = $value;
         return $this;
     }
 
     /**
      * @param string $name
      */
-    public function removeRawData(string $name)
+    public function unsetRawData(string $name)
     {
-        unset($this->rawData[$name]);
+        unset($this->rawDataMao[$name]);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function resetRawData()
     {
-        $this->rawData = [];
+        $this->rawDataMao = [];
     }
 
     /**
@@ -85,8 +85,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function getRawDataMap(): array
     {
-        return $this->rawData;
+        return $this->rawDataMao;
     }
-
 
 }

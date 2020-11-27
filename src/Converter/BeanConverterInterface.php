@@ -45,7 +45,7 @@ interface BeanConverterInterface
      * @param string $name
      * @return bool
      */
-    public function hasRawData(string $name): bool;
+    public function issetRawData(string $name): bool;
 
     /**
      * @param string $name
@@ -58,7 +58,7 @@ interface BeanConverterInterface
      * @param string $name
      * @return mixed
      */
-    public function removeRawData(string $name);
+    public function unsetRawData(string $name);
 
     /**
      * @return mixed

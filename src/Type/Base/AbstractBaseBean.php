@@ -95,6 +95,19 @@ abstract class AbstractBaseBean implements BeanInterface
 
     /**
      * @param string $name
+     * @return $this
+     * @throws BeanException
+     */
+    public function nullify(string $name): self
+    {
+        if ($this->exists($name)) {
+            $this->set($name, null);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $name
      * @throws BeanException
      */
     protected function throwDataNotFoundException(string $name)
