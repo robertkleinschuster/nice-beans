@@ -27,9 +27,6 @@ trait BeanCacheTrait
      */
     private function cache(string $method, $name = '', $value = null)
     {
-        if (null === $this->cache) {
-            $this->cache = [];
-        }
         if ($value !== null) {
             $this->cache[$method][$name] = $value;
         }
