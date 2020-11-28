@@ -27,14 +27,13 @@ trait BeanCacheTrait
      */
     private function cache(string $method, $name = '', $value = null)
     {
-        $name = implode(' - ', [$method, (string) $name]);
         if (null === $this->cache) {
             $this->cache = [];
         }
         if ($value !== null) {
-            $this->cache[$name] = $value;
+            $this->cache[$method][$name] = $value;
         }
-        return isset($this->cache[$name]) ? $this->cache[$name] : null;
+        return isset($this->cache[$method][$name]) ? $this->cache[$method][$name] : null;
     }
 
 }
