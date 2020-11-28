@@ -62,7 +62,7 @@ class ConverterBeanDecorator implements
      */
     public function get($name)
     {
-        if ($this->cache(__METHOD__, $name) === null) {
+        if ($this->cache('get', $name) === null) {
             if (!$this->getBean()->isset($name) && $this->getBeanConverter()->issetRawData($name)) {
                 $this->set($name, $this->getBeanConverter()->getRawData($name));
             }
@@ -71,9 +71,9 @@ class ConverterBeanDecorator implements
                 $name,
                 $this->getBean()->get($name)
             );
-            $this->cache(__METHOD__, $name, $val);
+            $this->cache('get', $name, $val);
         }
-        return $this->cache(__METHOD__, $name);
+        return $this->cache('get', $name);
     }
 
     /**
@@ -131,7 +131,7 @@ class ConverterBeanDecorator implements
      */
     public function toArray(bool $recursive = false): array
     {
-        if ($this->cache(__METHOD__, $recursive) === null) {
+        if ($this->cache('toArray', $recursive) === null) {
             $data = [];
             $bean = $this->toBean();
             foreach ($bean as $name => $value) {
@@ -139,9 +139,9 @@ class ConverterBeanDecorator implements
                     $data[$name] = $this->get($name);
                 }
             }
-            $this->cache(__METHOD__, $recursive, $data);
+            $this->cache('toArray', $recursive, $data);
         }
-        return $this->cache(__METHOD__, $recursive);
+        return $this->cache('toArray', $recursive);
     }
 
     /**
@@ -161,13 +161,13 @@ class ConverterBeanDecorator implements
      */
     public function toBean(): BeanInterface
     {
-        if ($this->cache(__METHOD__) === null) {
+        if ($this->cache('toBean') === null) {
             foreach ($this->getBeanConverter()->getRawDataMap() as $key => $value) {
                 $this->set($key, $value);
             }
-            $this->cache(__METHOD__, '', $this->getBean());
+            $this->cache('toBean', '', $this->getBean());
         }
-        return $this->cache(__METHOD__);
+        return $this->cache('toBean');
     }
 
     /**
@@ -220,10 +220,10 @@ class ConverterBeanDecorator implements
      */
     public function count()
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', count($this->toArray()));
+        if ($this->cache('count', '') === null) {
+            $this->cache('count', '', count($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('count', '');
     }
 
     /**
@@ -257,10 +257,10 @@ class ConverterBeanDecorator implements
      */
     public function keys(): array
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', array_keys($this->toArray()));
+        if ($this->cache('keys', '') === null) {
+            $this->cache('keys', '', array_keys($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('keys', '');
     }
 
     /**
@@ -268,10 +268,10 @@ class ConverterBeanDecorator implements
      */
     public function values(): array
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', array_values($this->toArray()));
+        if ($this->cache('values', '') === null) {
+            $this->cache('values', '', array_values($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('values', '');
     }
 
 }

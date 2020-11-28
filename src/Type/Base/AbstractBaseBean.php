@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Type\Base;
 
-use DateTimeInterface;
 use Niceshops\Bean\Cache\BeanCacheTrait;
 
 
@@ -58,9 +57,13 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     private function validateDataName(string $name): bool
     {
-        return !(strpos($name, '*') !== false ||
-             strpos($name, '\\') !== false ||
-            strpos($name, 'phpunit') !== false);
+        if ($this->cache('valid', $name) == null) {
+            $valid = !(strpos($name, '*') !== false ||
+                strpos($name, '\\') !== false ||
+                strpos($name, 'phpunit') !== false);
+            $this->cache('valid', $name, $valid);
+        }
+        return $this->cache('valid', $name);
     }
 
 
@@ -135,11 +138,11 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function exists(string $name): bool
     {
-        if (null === $this->cache(__METHOD__, $name)) {
+        if (null === $this->cache('exists', $name)) {
             $ret = property_exists($this, $name) && $this->validateDataName($name);
-            $this->cache(__METHOD__, $name, $ret);
+            $this->cache('exists', $name, $ret);
         }
-        return $this->cache(__METHOD__, $name);
+        return $this->cache('exists', $name);
     }
 
     /**
@@ -165,10 +168,10 @@ abstract class AbstractBaseBean implements BeanInterface
         if (!$this->exists($name)) {
             $this->throwDataNotFoundException($name);
         }
-        if ($this->cache(__METHOD__, $name) === null) {
-            $this->cache(__METHOD__, $name, empty($this->{$name}));
+        if ($this->cache('empty', $name) === null) {
+            $this->cache('empty', $name, empty($this->{$name}));
         }
-        return $this->cache(__METHOD__, $name);
+        return $this->cache('empty', $name);
     }
 
     /**
@@ -178,7 +181,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function toArray(bool $recuresive = false): array
     {
-        if ($this->cache(__METHOD__, $recuresive) === null) {
+        if ($this->cache('toArray', $recuresive) === null) {
             $data = [];
             if ($recuresive) {
                 foreach ($this as $name => $value) {
@@ -198,9 +201,9 @@ abstract class AbstractBaseBean implements BeanInterface
                     return $this->validateDataName($name);
                 }, ARRAY_FILTER_USE_KEY);
             }
-            $this->cache(__METHOD__, $recuresive, $data);
+            $this->cache('toArray', $recuresive, $data);
         }
-        return $this->cache(__METHOD__, $recuresive);
+        return $this->cache('toArray', $recuresive);
     }
 
 
@@ -234,7 +237,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function type(string $name, ?string $type = null): string
     {
-        if ($this->cache(__METHOD__, $name) === null) {
+        if ($this->cache('type', $name) === null) {
             if ($this->exists($name)) {
                 if (null === $this->cache(\ReflectionObject::class)) {
                     $this->cache(\ReflectionObject::class, '', new \ReflectionObject($this));
@@ -249,9 +252,9 @@ abstract class AbstractBaseBean implements BeanInterface
             } else {
                 $dataType = self::DATA_TYPE_UNKNOWN;
             }
-            $this->cache(__METHOD__, $name, $this->normalizeDataType($dataType));
+            $this->cache('type', $name, $this->normalizeDataType($dataType));
         }
-        return $this->cache(__METHOD__, $name);
+        return $this->cache('type', $name);
     }
 
 
@@ -368,10 +371,10 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function count()
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', count($this->toArray()));
+        if ($this->cache('count', '') === null) {
+            $this->cache('count', '', count($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('count', '');
     }
 
     /**
@@ -416,10 +419,10 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function keys(): array
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', array_keys($this->toArray()));
+        if ($this->cache('keys', '') === null) {
+            $this->cache('keys', '', array_keys($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('keys', '');
     }
 
     /**
@@ -427,9 +430,9 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function values(): array
     {
-        if ($this->cache(__METHOD__, '') === null) {
-            $this->cache(__METHOD__, '', array_values($this->toArray()));
+        if ($this->cache('values', '') === null) {
+            $this->cache('values', '', array_values($this->toArray()));
         }
-        return $this->cache(__METHOD__, '');
+        return $this->cache('values', '');
     }
 }
