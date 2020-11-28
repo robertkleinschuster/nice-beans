@@ -58,9 +58,9 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     private function validateDataName(string $name): bool
     {
-        return strpos($name, 'phpunit') === false
-            && strpos($name, '*') === false
-            && strpos($name, '\\') === false;
+        return !(strpos($name, '*') !== false ||
+             strpos($name, '\\') !== false ||
+            strpos($name, 'phpunit') !== false);
     }
 
 
