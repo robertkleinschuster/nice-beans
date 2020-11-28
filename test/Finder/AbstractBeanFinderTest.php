@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\PHPUnit;
+namespace Niceshops\Bean\Finder;
 
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -15,12 +15,12 @@ use PHPUnit\Framework\MockObject\MockObject;
  * Class DefaultTestCaseTest
  * @package Niceshops\Bean
  */
-class DefaultTestCaseTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class AbstractBeanFinderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
 {
 
 
     /**
-     * @var DefaultTestCase|MockObject
+     * @var AbstractBeanFinder|MockObject
      */
     protected $object;
 
@@ -32,7 +32,7 @@ class DefaultTestCaseTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockBuilder(DefaultTestCase::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->object = $this->getMockBuilder(AbstractBeanFinder::class)->disableOriginalConstructor()->getMockForAbstractClass();
     }
 
 
@@ -51,7 +51,7 @@ class DefaultTestCaseTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
      */
     public function testTestClassExists()
     {
-        $this->assertTrue(class_exists(DefaultTestCase::class), "Class Exists");
-        $this->assertTrue(is_a($this->object, DefaultTestCase::class), "Mock Object is set");
+        $this->assertTrue(class_exists(AbstractBeanFinder::class), "Class Exists");
+        $this->assertTrue(is_a($this->object, AbstractBeanFinder::class), "Mock Object is set");
     }
 }

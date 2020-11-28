@@ -7,13 +7,16 @@ declare(strict_types=1);
  * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\PHPUnit;
+namespace Niceshops\Bean\Type\Base;
+
+use Niceshops\Core\Exception\CoreException;
 
 /**
- * Class DefaultTestCase
+ * Class BeanException
  * @package Niceshops\Bean
  */
-class DefaultTestCase extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class BeanException extends CoreException
 {
-
+    public const ERROR_CODE_DATA_NOT_FOUND = 1000;
+    public const ERROR_CODE_INVALID_DATA_NAME = 1001;
 }
