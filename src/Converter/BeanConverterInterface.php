@@ -47,6 +47,16 @@ interface BeanConverterInterface
      */
     public function issetRawData(string $name): bool;
 
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function initializedRawData(string $name): bool;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function emptyRawData(string $name): bool;
 
     /**

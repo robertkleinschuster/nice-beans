@@ -67,7 +67,6 @@ abstract class AbstractBaseBean implements BeanInterface
     }
 
 
-
     /**
      * @param string $name
      *
@@ -174,6 +173,17 @@ abstract class AbstractBaseBean implements BeanInterface
         return $this->cache('empty', $name);
     }
 
+    public function initialized(string $name): bool
+    {
+        if (null === $this->cache('initialized', $name)) {
+            $obj = $this->getReflectionObject();
+            $init = $obj->getProperty($name)->isInitialized($this);
+            $this->cache('initialized', $name, $init);
+        }
+        return $this->cache('initialized', $name);
+    }
+
+
     /**
      *
      * @param bool $recuresive
@@ -197,7 +207,7 @@ abstract class AbstractBaseBean implements BeanInterface
                     }
                 }
             } else {
-                $data = array_filter((array) $this, function ($name) {
+                $data = array_filter((array)$this, function ($name) {
                     return $this->validateDataName($name);
                 }, ARRAY_FILTER_USE_KEY);
             }
@@ -239,10 +249,7 @@ abstract class AbstractBaseBean implements BeanInterface
     {
         if ($this->cache('type', $name) === null) {
             if ($this->exists($name)) {
-                if (null === $this->cache(\ReflectionObject::class)) {
-                    $this->cache(\ReflectionObject::class, '', new \ReflectionObject($this));
-                }
-                $obj = $this->cache(\ReflectionObject::class);
+                $obj = $this->getReflectionObject();
                 $prop = $obj->getProperty($name);
                 if ($prop->getType() !== null) {
                     $dataType = $prop->getType()->getName();
@@ -257,6 +264,13 @@ abstract class AbstractBaseBean implements BeanInterface
         return $this->cache('type', $name);
     }
 
+    protected function getReflectionObject(): \ReflectionObject
+    {
+        if (null === $this->cache(\ReflectionObject::class)) {
+            $this->cache(\ReflectionObject::class, '', new \ReflectionObject($this));
+        }
+        return $this->cache(\ReflectionObject::class);
+    }
 
     /**
      * @param string $dataType
