@@ -60,6 +60,12 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
     public function empty(string $name): bool;
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function initialized(string $name): bool;
+
+    /**
      * @param $name
      * @return $this
      */

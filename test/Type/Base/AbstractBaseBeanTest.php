@@ -216,6 +216,27 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::reset
+     */
+    public function testInitialized()
+    {
+        $arrData = ["foo" => "bar", "baz" => "bat"];
+
+        $this->object = new class() extends AbstractBaseBean {
+            public ?string $foo;
+            public ?string $baz;
+        };
+        $this->object->fromArray($arrData);
+        $this->object->reset();
+        $this->object->set('foo', null);
+        $this->assertTrue($this->object->initialized('foo'));
+        $this->assertFalse($this->object->initialized('baz'));
+    }
+
+    /**
+     * @group  unit
+     * @small
+     *
      * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray()

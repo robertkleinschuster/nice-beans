@@ -236,6 +236,16 @@ class ConverterBeanDecorator implements
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function initialized(string $name): bool
+    {
+        return $this->getBean()->initialized($name) || $this->getBeanConverter()->initializedRawData($name);
+    }
+
+
+    /**
      * @return array|mixed
      */
     public function jsonSerialize()
