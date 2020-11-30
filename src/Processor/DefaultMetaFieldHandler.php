@@ -12,9 +12,9 @@ class DefaultMetaFieldHandler implements MetaFieldHandlerInterface
      */
     private string $field;
     /**
-     * @var string
+     * @var mixed
      */
-    private string $value;
+    private $value;
     /**
      * @var bool
      */
@@ -23,10 +23,10 @@ class DefaultMetaFieldHandler implements MetaFieldHandlerInterface
     /**
      * DefaultMetaFieldHandler constructor.
      * @param string $field
-     * @param string $value
+     * @param mixed $value
      * @param bool $overwrite
      */
-    public function __construct(string $field, string $value, bool $overwrite = false)
+    public function __construct(string $field, $value, bool $overwrite = false)
     {
         $this->field = $field;
         $this->value = $value;
