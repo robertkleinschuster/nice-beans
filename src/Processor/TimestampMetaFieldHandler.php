@@ -68,10 +68,9 @@ class TimestampMetaFieldHandler implements MetaFieldHandlerInterface
      */
     public function handle(BeanInterface $bean): BeanInterface
     {
-        $dateTime = new \DateTime();
-        $bean->set($this->getEditField(), $dateTime->format($this->format));
+        $bean->set($this->getEditField(), new \DateTime());
         if ($bean->empty($this->getCreateField())) {
-            $bean->set($this->getCreateField(), $dateTime->format($this->format));
+            $bean->set($this->getCreateField(), new \DateTime());
         }
         return $bean;
     }
