@@ -21,7 +21,7 @@ class OrderProcessorAwareTrait
      *
      * @return $this
      */
-    public function setBeanOrderProcessor(BeanOrderProcessor $beanOrderProcessor): self
+    public function setBeanOrderProcessor(BeanOrderProcessor $beanOrderProcessor)
     {
         $this->beanOrderProcessor = $beanOrderProcessor;
         return $this;
