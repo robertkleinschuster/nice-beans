@@ -4,7 +4,7 @@
 namespace Niceshops\Bean\Processor;
 
 
-class OrderProcessorAwareTrait
+trait BeanOrderProcessorAwareTrait
 {
     private ?BeanOrderProcessor $beanOrderProcessor = null;
 
