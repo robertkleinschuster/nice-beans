@@ -88,8 +88,12 @@ class OrderMetaFieldHandlerInterface implements MetaFieldHandlerInterface, BeanF
             }
             $this->getBeanFinder()->order([$this->getOrderField() => BeanFinderInterface::ORDER_MODE_DESC]);
             $this->getBeanFinder()->limit(1, 0);
-            $lastOrder = $this->getBeanFinder()->getBean()->get($this->getOrderField());
-            $bean->set($this->getOrderField(), $lastOrder + 1);
+            if ($this->getBeanFinder()->count()) {
+                $lastOrder = $this->getBeanFinder()->getBean()->get($this->getOrderField());
+                $bean->set($this->getOrderField(), $lastOrder + 1);
+            } else {
+                $bean->set($this->getOrderField(), 1);
+            }
         }
         return $bean;
     }
