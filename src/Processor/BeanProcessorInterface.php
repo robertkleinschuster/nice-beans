@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Niceshops\Bean\Processor;
 
-use Niceshops\Bean\Finder\BeanFinderInterface;
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Niceshops\Bean\Validator\BeanValidatorInterface;
 
 /**
  * Interface ProcessorInterface
@@ -25,21 +24,40 @@ interface BeanProcessorInterface
     public function delete(): int;
 
     /**
-     * @param BeanFinderInterface $finder
-     * @param BeanInterface $bean
-     * @param string $orderField
-     * @param string $orderReferenceField
-     * @param $orderReferenceValue
-     * @param int $steps
-     * @return mixed
+     * @param MetaFieldHandlerInterface $fieldHandler
+     * @return $this
      */
-    public function move(
-        BeanFinderInterface $finder,
-        BeanInterface $bean,
-        string $orderField,
-        int $steps,
-        string $orderReferenceField = null,
-        $orderReferenceValue = null
-    );
+    public function addMetaFieldHandler(MetaFieldHandlerInterface $fieldHandler);
+
+    /**
+     * @param string $code
+     * @return MetaFieldHandlerInterface
+     */
+    public function getMetaFieldHandler(string $code): MetaFieldHandlerInterface;
+
+    /**
+     * @param BeanValidatorInterface $validator
+     * @return AbstractBeanProcessor
+     */
+    public function addSaveValidator(BeanValidatorInterface $validator);
+
+    /**
+     * @param string $code
+     * @return BeanValidatorInterface
+     */
+    public function getSaveValidator(string $code): BeanValidatorInterface;
+
+    /**
+     * @param BeanValidatorInterface $validator
+     * @return AbstractBeanProcessor
+     */
+    public function addDeleteValidator(BeanValidatorInterface $validator);
+
+    /**
+     * @param string $code
+     * @return BeanValidatorInterface
+     */
+    public function getDeleteValidator(string $code): BeanValidatorInterface;
+
 
 }

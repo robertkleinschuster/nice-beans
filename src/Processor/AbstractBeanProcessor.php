@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Processor;
 
 use Countable;
-use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
-use Niceshops\Bean\Finder\BeanFinderInterface;
 use Niceshops\Bean\Saver\BeanSaverAwareInterface;
 use Niceshops\Bean\Saver\BeanSaverAwareTrait;
 use Niceshops\Bean\Saver\BeanSaverInterface;
@@ -14,6 +12,7 @@ use Niceshops\Bean\Type\Base\BeanInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareInterface;
 use Niceshops\Bean\Type\Base\BeanListAwareTrait;
 use Niceshops\Bean\Type\Base\BeanListInterface;
+use Niceshops\Bean\Validator\BeanValidatorInterface;
 use Niceshops\Core\Attribute\AttributeAwareInterface;
 use Niceshops\Core\Attribute\AttributeAwareTrait;
 use Niceshops\Core\Option\OptionAwareInterface;
@@ -36,11 +35,25 @@ abstract class AbstractBeanProcessor implements
     use AttributeAwareTrait;
 
     /**
+     * @var MetaFieldHandlerInterface[]
+     */
+    private array $metaHandler = [];
+
+    /**
+     * @var BeanValidatorInterface[]
+     */
+    private array $saveValidators = [];
+
+    /**
+     * @var BeanValidatorInterface[]
+     */
+    private array $deleteValidators = [];
+
+    /**
      *
      */
     public const OPTION_SAVE_NON_EMPTY_ONLY = "non_empty_only";
     public const OPTION_IGNORE_VALIDATION = "ignore_validation";
-
 
     /**
      * AbstractBeanProcessor constructor.
@@ -53,6 +66,63 @@ abstract class AbstractBeanProcessor implements
     }
 
     /**
+     * @param MetaFieldHandlerInterface $fieldHandler
+     * @return $this
+     */
+    public function addMetaFieldHandler(MetaFieldHandlerInterface $fieldHandler)
+    {
+        $this->metaHandler[$fieldHandler->code()] = $fieldHandler;
+        return $this;
+    }
+
+    /**
+     * @param string $code
+     * @return MetaFieldHandlerInterface
+     */
+    public function getMetaFieldHandler(string $code): MetaFieldHandlerInterface
+    {
+        return $this->metaHandler[$code];
+    }
+
+    /**
+     * @param BeanValidatorInterface $validator
+     * @return AbstractBeanProcessor
+     */
+    public function addSaveValidator(BeanValidatorInterface $validator)
+    {
+        $this->saveValidators[$validator->code()] = $validator;
+        return $this;
+    }
+
+    /**
+     * @param string $code
+     * @return BeanValidatorInterface
+     */
+    public function getSaveValidator(string $code): BeanValidatorInterface
+    {
+        return $this->saveValidators[$code];
+    }
+
+    /**
+     * @param BeanValidatorInterface $validator
+     * @return AbstractBeanProcessor
+     */
+    public function addDeleteValidator(BeanValidatorInterface $validator)
+    {
+        $this->deleteValidators[$validator->code()] = $validator;
+        return $this;
+    }
+
+    /**
+     * @param string $code
+     * @return BeanValidatorInterface
+     */
+    public function getDeleteValidator(string $code): BeanValidatorInterface
+    {
+        return $this->deleteValidators[$code];
+    }
+
+    /**
      * Returns the processed bean list.
      */
     public function save(): int
@@ -60,6 +130,9 @@ abstract class AbstractBeanProcessor implements
         $beanList = $this->getBeanListForSave();
         foreach ($beanList as $bean) {
             $this->beforeSave($bean);
+            foreach ($this->metaHandler as $item) {
+                $item->handle($bean);
+            }
         }
         $saver = $this->getBeanSaver();
         if ($saver instanceof BeanListAwareInterface) {
@@ -71,71 +144,6 @@ abstract class AbstractBeanProcessor implements
         }
         return $result;
     }
-
-
-    /**
-     * @param BeanFinderInterface $finder
-     * @param BeanInterface $bean
-     * @param string $orderField
-     * @param int $steps
-     * @param string|null $orderReferenceField
-     * @param null $orderReferenceValue
-     */
-    public function move(
-        BeanFinderInterface $finder,
-        BeanInterface $bean,
-        string $orderField,
-        int $steps,
-        string $orderReferenceField = null,
-        $orderReferenceValue = null
-    ) {
-        if ($bean->exists($orderField)) {
-            if ($finder instanceof BeanFactoryAwareInterface) {
-                if (!empty($orderReferenceField) && !empty($orderReferenceValue)) {
-                    $finder->filter([$orderReferenceField => $orderReferenceValue]);
-                }
-                $currentOrder = $bean->get($orderField);
-                $newOrder = $currentOrder + $steps;
-                $reorder_List = [];
-                if ($currentOrder < $newOrder) {
-                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_ASC]);
-                    for ($i = $currentOrder + 1; $i <= $newOrder; $i++) {
-                        $reorder_List[] = $i;
-                    }
-                }
-                if ($currentOrder > $newOrder) {
-                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_DESC]);
-                    for ($i = $currentOrder - 1; $i >= $newOrder; $i--) {
-                        $reorder_List[] = $i;
-                    }
-                }
-                $finder->filter([$orderField => $reorder_List]);
-
-                $beanList = $finder->getBeanList();
-                if ($newOrder > 0) {
-                    foreach ($beanList as $previousBean) {
-                        if ($currentOrder < $newOrder) {
-                            $previousBean->set($orderField, $previousBean->get($orderField) - 1);
-
-                        }
-                        if ($currentOrder > $newOrder) {
-                            $previousBean->set($orderField, $previousBean->get($orderField) + 1);
-                        }
-                    }
-                    $bean->set($orderField, $newOrder);
-                    if ($currentOrder < $newOrder) {
-                        $beanList->push($bean);
-                    }
-                    if ($currentOrder > $newOrder) {
-                        $beanList->unshift($bean);
-                    }
-                }
-                $this->setBeanList($beanList);
-            }
-            $this->save();
-        }
-    }
-
 
     /**
      * Returns the processed bean list.
@@ -246,7 +254,11 @@ abstract class AbstractBeanProcessor implements
      */
     protected function validateForSave(BeanInterface $bean): bool
     {
-        return true;
+        $result = [];
+        foreach ($this->saveValidators as $saveValidator) {
+            $result[] = $saveValidator->validate($bean);
+        }
+        return !in_array(false, $result);
     }
 
     /**
@@ -255,6 +267,10 @@ abstract class AbstractBeanProcessor implements
      */
     protected function validateForDelete(BeanInterface $bean): bool
     {
-        return true;
+        $result = [];
+        foreach ($this->deleteValidators as $deleteValidator) {
+            $result[] = $deleteValidator->validate($bean);
+        }
+        return !in_array(false, $result);
     }
 }
