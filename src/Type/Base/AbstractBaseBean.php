@@ -197,7 +197,6 @@ abstract class AbstractBaseBean implements BeanInterface
                 foreach ($this as $name => $value) {
                     if ($this->validateDataName($name)) {
                         if ($value instanceof BeanInterface) {
-                            $data[$name][self::ARRAY_KEY_CLASS] = static::class;
                             $data[$name] = $value->toArray($recuresive);
                         } elseif (is_object($value)) {
                             $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
@@ -211,6 +210,7 @@ abstract class AbstractBaseBean implements BeanInterface
                     return $this->validateDataName($name);
                 }, ARRAY_FILTER_USE_KEY);
             }
+            $data[self::ARRAY_KEY_CLASS] = static::class;
             $this->cache('toArray', $recuresive, $data);
         }
         return $this->cache('toArray', $recuresive);
@@ -409,8 +409,8 @@ abstract class AbstractBaseBean implements BeanInterface
     public static function createFromArray(array $data): BeanInterface
     {
         try {
-            if (isset($arrData[self::ARRAY_KEY_CLASS])) {
-                $class = $arrData[self::ARRAY_KEY_CLASS];
+            if (isset($data[self::ARRAY_KEY_CLASS])) {
+                $class = $data[self::ARRAY_KEY_CLASS];
                 return new $class($data);
             } else {
                 return new static($data);
