@@ -136,7 +136,11 @@ class ConverterBeanDecorator implements
             $bean = $this->toBean();
             foreach ($bean as $name => $value) {
                 if ($this->exists($name)) {
-                    $data[$name] = $this->get($name);
+                    if ($recursive && $value instanceof BeanInterface) {
+                        $data[$name] = $this->getBeanConverter()->convert($value)->toArray(true);
+                    } else {
+                        $data[$name] = $this->get($name);
+                    }
                 }
             }
             $this->cache('toArray', $recursive, $data);
