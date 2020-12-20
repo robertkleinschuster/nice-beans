@@ -138,7 +138,7 @@ abstract class AbstractBaseBean implements BeanInterface
     public function exists(string $name): bool
     {
         if (null === $this->cache('exists', $name)) {
-            $ret = property_exists($this, $name) && $this->validateDataName($name);
+            $ret = $this->getReflectionObject()->hasProperty($name);
             $this->cache('exists', $name, $ret);
         }
         return $this->cache('exists', $name);
