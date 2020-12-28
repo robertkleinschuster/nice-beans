@@ -283,4 +283,27 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->assertEquals($bean::DATA_TYPE_STRING, $bean->type('test'));
         $this->assertEquals(AbstractBaseBeanList::class, $bean->type('list'));
     }
+
+
+    /**
+     * @group  unit
+     * @small
+     *
+     * @covers \Niceshops\Bean\Type\Base\AbstractBaseBean::reset
+     */
+    public function testSerialize()
+    {
+        $arrData = ["foo" => "bar", "baz" => "bat"];
+
+        $this->object = new class() extends AbstractBaseBean {
+            public ?string $foo;
+            public ?string $baz;
+        };
+        $this->object->fromArray($arrData);
+        $data = $this->object->toArray();
+        $this->assertEquals('a:3:{s:3:"foo";s:3:"bar";s:3:"baz";s:3:"bat";s:7:"__class";s:109:"class@anonymous /Users/robertkleinschuster/projects/nice-beans/test/Type/Base/AbstractBaseBeanTest.php:298$14";}', $this->object->serialize());
+        $this->object->reset();
+        $this->object->unserialize('a:3:{s:3:"foo";s:3:"bar";s:3:"baz";s:3:"bat";s:7:"__class";s:109:"class@anonymous /Users/robertkleinschuster/projects/nice-beans/test/Type/Base/AbstractBaseBeanTest.php:298$14";}');
+        $this->assertEquals($data, $this->object->toArray());
+    }
 }

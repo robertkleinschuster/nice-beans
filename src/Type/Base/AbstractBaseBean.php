@@ -455,7 +455,6 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function serialize()
     {
-        $this->clearCache();
         return serialize($this->toArray(true));
     }
 
