@@ -449,4 +449,14 @@ abstract class AbstractBaseBean implements BeanInterface
         }
         return $this->cache('values', '');
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep()
+    {
+        $keys = $this->keys();
+        $this->clearCache();
+        return $keys;
+    }
 }
