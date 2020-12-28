@@ -288,4 +288,21 @@ class ConverterBeanDecorator implements
         return $this->cache('values', '');
     }
 
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        $this->clearCache();
+        return serialize($this->toArray(true));
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $this->fromArray(unserialize($serialized));
+    }
+
 }

@@ -451,12 +451,20 @@ abstract class AbstractBaseBean implements BeanInterface
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function __sleep()
+    public function serialize()
     {
-        $keys = $this->keys();
         $this->clearCache();
-        return $keys;
+        return serialize($this->toArray(true));
+    }
+
+    /**
+     * @param string $serialized
+     * @throws BeanException
+     */
+    public function unserialize($serialized)
+    {
+        $this->fromArray(unserialize($serialized));
     }
 }

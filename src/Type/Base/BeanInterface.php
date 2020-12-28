@@ -12,7 +12,7 @@ use IteratorAggregate;
  * Interface BeanInterface
  * @package Niceshops\Library\Core\Bean
  */
-interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \JsonSerializable
+interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \JsonSerializable, \Serializable
 {
     public const DATA_TYPE_BOOL = 'bool';
     public const DATA_TYPE_INT = 'int';
