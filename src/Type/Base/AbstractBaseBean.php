@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Niceshops\Bean\Type\Base;
 
 use Niceshops\Bean\Cache\BeanCacheTrait;
+use Niceshops\Bean\Finder\FinderBeanListDecorator;
 
 
 /**
@@ -199,7 +200,14 @@ abstract class AbstractBaseBean implements BeanInterface
                         if ($value instanceof BeanInterface) {
                             $data[$name] = $value->toArray($recuresive);
                         } elseif (is_object($value)) {
-                            $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
+                            if ($value instanceof FinderBeanListDecorator) {
+                                $value = $value->toBeanList(true);
+                            }
+                            try {
+                                $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
+                            } catch (\Throwable $exception) {
+                                $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize(['unserializable']);
+                            }
                         } else {
                             $data[$name] = $value;
                         }
