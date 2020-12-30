@@ -206,7 +206,6 @@ abstract class AbstractBaseBean implements BeanInterface
                             try {
                                 $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
                             } catch (\Throwable $exception) {
-                                $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize(['unserializable']);
                             }
                         } else {
                             $data[$name] = $value;
