@@ -71,7 +71,7 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
         $processor = $this->getBeanProcessor();
         if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
-                if (!empty($orderReferenceField) && !empty($orderReferenceValue)) {
+                if (!empty($orderReferenceField)) {
                     $finder->filter([$orderReferenceField => $orderReferenceValue]);
                 }
                 $currentOrder = $bean->get($orderField);
@@ -117,4 +117,56 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
             $processor->save();
         }
     }
+    /**
+     * @param BeanInterface $bean
+     * @param null $orderReferenceValue
+     */
+    public function delete(
+        BeanInterface $bean,
+        $orderReferenceValue = null
+    ) {
+        $finder = $this->getBeanFinder();
+        $orderField = $this->getOrderField();
+        $orderReferenceField  = $this->getOrderReferenceField();
+        $processor = $this->getBeanProcessor();
+        if ($bean->exists($orderField)) {
+            if ($finder instanceof BeanFactoryAwareInterface) {
+                if (!empty($orderReferenceField)) {
+                    $finder->filter([$orderReferenceField => $orderReferenceValue]);
+                }
+                $currentOrder = $bean->get($orderField);
+                $newOrder = 0;
+                $reorder_List = [];
+                if ($currentOrder < $newOrder) {
+                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_ASC]);
+                    for ($i = $currentOrder + 1; $i <= $newOrder; $i++) {
+                        $reorder_List[] = $i;
+                    }
+                }
+                if ($currentOrder > $newOrder) {
+                    $finder->order([$orderField => BeanFinderInterface::ORDER_MODE_DESC]);
+                    for ($i = $currentOrder - 1; $i >= $newOrder; $i--) {
+                        $reorder_List[] = $i;
+                    }
+                }
+                $finder->filter([$orderField => $reorder_List]);
+
+                $beanList = $finder->getBeanList();
+                foreach ($beanList as $previousBean) {
+                    if ($currentOrder < $newOrder) {
+                        $previousBean->set($orderField, $previousBean->get($orderField) - 1);
+
+                    }
+                    if ($currentOrder > $newOrder) {
+                        $previousBean->set($orderField, $previousBean->get($orderField) + 1);
+                    }
+                }
+                if ($processor instanceof BeanListAwareInterface) {
+                    $processor->setBeanList($beanList);
+                }
+            }
+            $processor->save();
+        }
+    }
+
 }

@@ -81,10 +81,16 @@ class OrderMetaFieldHandlerInterface implements MetaFieldHandlerInterface, BeanF
     public function handle(BeanInterface $bean): BeanInterface
     {
         if ($bean->empty($this->getOrderField())) {
-            if ($this->hasOrderReferenceField() && !$bean->empty($this->getOrderReferenceField())) {
-                $this->getBeanFinder()->filter(
-                    [$this->getOrderReferenceField() => $bean->get($this->getOrderReferenceField())]
-                );
+            if ($this->hasOrderReferenceField()) {
+                if ($bean->isset($this->getOrderReferenceField())) {
+                    $this->getBeanFinder()->filter(
+                        [$this->getOrderReferenceField() => $bean->get($this->getOrderReferenceField())]
+                    );
+                } else {
+                    $this->getBeanFinder()->filter(
+                        [$this->getOrderReferenceField() => null]
+                    );
+                }
             }
             $this->getBeanFinder()->order([$this->getOrderField() => BeanFinderInterface::ORDER_MODE_DESC]);
             $this->getBeanFinder()->limit(1, 0);
