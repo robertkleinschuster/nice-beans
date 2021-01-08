@@ -72,6 +72,11 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
         if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
                 if (!empty($orderReferenceField)) {
+                    if ($orderReferenceValue == null) {
+                        if ($bean->isset($orderReferenceField)) {
+                            $orderReferenceValue = $bean->get($orderReferenceField);
+                        }
+                    }
                     $finder->filter([$orderReferenceField => $orderReferenceValue]);
                 }
                 $currentOrder = $bean->get($orderField);
@@ -132,6 +137,11 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
         if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
                 if (!empty($orderReferenceField)) {
+                    if ($orderReferenceValue == null) {
+                        if ($bean->isset($orderReferenceField)) {
+                            $orderReferenceValue = $bean->get($orderReferenceField);
+                        }
+                    }
                     $finder->filter([$orderReferenceField => $orderReferenceValue]);
                 }
                 $currentOrder = $bean->get($orderField);
