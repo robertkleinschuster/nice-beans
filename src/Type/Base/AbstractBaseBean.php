@@ -234,7 +234,7 @@ abstract class AbstractBaseBean implements BeanInterface
         foreach ($data as $name => $value) {
             if (isset($value[self::ARRAY_KEY_CLASS])) {
                 $class = $value[self::ARRAY_KEY_CLASS];
-                $this->set($name, new $class($data));
+                $this->set($name, new $class($value));
             } elseif (isset($value[self::ARRAY_KEY_SERIALIZE])) {
                 $this->set($name, unserialize($value[self::ARRAY_KEY_SERIALIZE]));
             } else {
