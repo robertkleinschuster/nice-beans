@@ -398,5 +398,12 @@ class FinderBeanListDecorator implements
         return $this->toBeanList()->column($name, $index_name);
     }
 
-
+    /**
+     * @param array $data
+     * @return BeanListInterface
+     */
+    public function fromArray(array $data): BeanListInterface
+    {
+        return $this->toBeanList()->fromArray($data);
+    }
 }
