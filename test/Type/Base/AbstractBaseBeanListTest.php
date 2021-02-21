@@ -78,5 +78,25 @@ class AbstractBaseBeanListTest extends DefaultTestCase
         }
         $this->assertEquals(3, $i);
     }
+    /**
+     * @group integration
+     * @small
+     */
+    public function testfromArray()
+    {
+        $this->object = $this->getMockBuilder(AbstractBaseBeanList::class)->getMockForAbstractClass();
+        $this->object->push($this->mockBean()->set('foo', 'bar'));
+        $this->object->push($this->mockBean()->set('foo', 'bar'));
+        $this->object->push($this->mockBean()->set('foo', 'bar'));
+        $this->assertCount(3, $this->object);
+        $data = $this->object->toArray(true);
+        $object = AbstractBaseBeanList::createFromArray($data);
+        $this->assertInstanceOf(BeanListInterface::class, $object);
+        $this->assertEquals(3, $object->count());
+        foreach ($object as $item) {
+            $this->assertEquals('bar', $item->get('foo'));
+            $this->assertInstanceOf(BeanInterface::class, $item);
+        }
+    }
 
 }

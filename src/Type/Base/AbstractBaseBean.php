@@ -203,9 +203,13 @@ abstract class AbstractBaseBean implements BeanInterface
                             if ($value instanceof FinderBeanListDecorator) {
                                 $value = $value->toBeanList(true);
                             }
-                            try {
-                                $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
-                            } catch (\Throwable $exception) {
+                            if ($value instanceof BeanListInterface) {
+                                $data[$name] = $value->toArray(true);
+                            } else {
+                                try {
+                                    $data[$name][self::ARRAY_KEY_SERIALIZE] = serialize($value);
+                                } catch (\Throwable $exception) {
+                                }
                             }
                         } else {
                             $data[$name] = $value;
@@ -231,6 +235,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function fromArray(array $data): self
     {
+        unset($data[self::ARRAY_KEY_CLASS]);
         foreach ($data as $name => $value) {
             if (isset($value[self::ARRAY_KEY_CLASS])) {
                 $class = $value[self::ARRAY_KEY_CLASS];
@@ -423,7 +428,7 @@ abstract class AbstractBaseBean implements BeanInterface
                 return new static($data);
             }
         } catch (\Throwable $ex) {
-            throw new BeanException('Could not create from array.', 1000, $ex);
+            throw new BeanException('Could not create from array.' . $ex->getMessage(), 1000, $ex);
         }
     }
 

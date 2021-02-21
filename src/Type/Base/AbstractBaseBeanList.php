@@ -13,6 +13,8 @@ use Traversable;
  */
 abstract class AbstractBaseBeanList implements BeanListInterface
 {
+    private const ARRAY_KEY_CLASS = '__class';
+
     /**
      * @var Vector
      */
@@ -27,15 +29,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
         if ($data instanceof Vector) {
             $this->vector = $data;
         } elseif (is_array($data)) {
-            $d = [];
-            foreach ($data as $datum) {
-                if ($datum instanceof BeanInterface) {
-                    $d[] = $datum;
-                } elseif (is_array($datum)) {
-                    $d[] = AbstractBaseBean::createFromArray($datum);
-                }
-            }
-            $this->vector = new Vector($d);
+            $this->fromArray($data);
         } else {
             $this->vector = new Vector();
         }
@@ -83,15 +77,51 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     {
         if ($recursive) {
             $data = [];
+            $data[self::ARRAY_KEY_CLASS] = static::class;
             foreach ($this as $key => $item) {
                 $data[$key] = $item->toArray($recursive);
             }
             return $data;
         } else {
-            return $this->vector->toArray();
+            $data = $this->vector->toArray();
+            $data[self::ARRAY_KEY_CLASS] = static::class;
+            return $data;
         }
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     * @throws BeanException
+     */
+    public function fromArray(array $data): self
+    {
+        $d = [];
+        unset($data[self::ARRAY_KEY_CLASS]);
+        foreach ($data as $datum) {
+            if ($datum instanceof BeanInterface) {
+                $d[] = $datum;
+            } elseif (is_array($datum) && isset($datum[self::ARRAY_KEY_CLASS])) {
+                $d[] = AbstractBaseBean::createFromArray($datum);
+            }
+        }
+        $this->vector = new Vector($d);
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public static function createFromArray(array $data): self
+    {
+        if (isset($data[self::ARRAY_KEY_CLASS])) {
+            $class = $data[self::ARRAY_KEY_CLASS];
+        } else {
+            $class = static::class;
+        }
+        return new $class($data);
+    }
 
     /**
      * @return BeanIterator|Traversable

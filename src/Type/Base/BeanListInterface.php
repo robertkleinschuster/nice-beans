@@ -46,6 +46,12 @@ interface BeanListInterface extends Sequence
     public function toArray(bool $recursive = false): array;
 
     /**
+     * @param array $data
+     * @return $this
+     */
+    public function fromArray(array $data): self;
+
+    /**
      * @return BeanIterator|Traversable
      */
     public function getIterator();
