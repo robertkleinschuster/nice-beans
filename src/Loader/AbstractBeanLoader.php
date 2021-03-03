@@ -61,6 +61,17 @@ abstract class AbstractBeanLoader implements
     }
 
     /**
+     * @return $this
+     */
+    public function reset(): self
+    {
+        $this->rewind();
+        $this->loaded = false;
+        $this->data = [];
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function current()

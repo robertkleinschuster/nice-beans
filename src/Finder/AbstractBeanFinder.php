@@ -52,6 +52,16 @@ abstract class AbstractBeanFinder implements
     }
 
     /**
+     * @return $this
+     */
+    public function reset(): self
+    {
+        $this->getBeanLoader()->reset();
+        return $this;
+    }
+
+    /**
+     *
      * @param BeanFinderInterface $beanFinder
      * @param string $field
      * @param string $linkFieldSelf
