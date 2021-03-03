@@ -66,8 +66,8 @@ class OrderMetaFieldHandlerInterface implements MetaFieldHandlerInterface, BeanF
     }
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
     public function hasOrderReferenceField(): bool
     {
         return isset($this->orderReferenceField);
@@ -80,22 +80,24 @@ class OrderMetaFieldHandlerInterface implements MetaFieldHandlerInterface, BeanF
      */
     public function handle(BeanInterface $bean): BeanInterface
     {
+        $finder = clone $this->getBeanFinder();
+        $finder->reset();
         if ($bean->empty($this->getOrderField())) {
             if ($this->hasOrderReferenceField()) {
                 if ($bean->isset($this->getOrderReferenceField())) {
-                    $this->getBeanFinder()->filter(
+                    $finder->filter(
                         [$this->getOrderReferenceField() => $bean->get($this->getOrderReferenceField())]
                     );
                 } else {
-                    $this->getBeanFinder()->filter(
+                    $finder->filter(
                         [$this->getOrderReferenceField() => null]
                     );
                 }
             }
-            $this->getBeanFinder()->order([$this->getOrderField() => BeanFinderInterface::ORDER_MODE_DESC]);
-            $this->getBeanFinder()->limit(1, 0);
-            if ($this->getBeanFinder()->count()) {
-                $lastOrder = $this->getBeanFinder()->getBean()->get($this->getOrderField());
+            $finder->order([$this->getOrderField() => BeanFinderInterface::ORDER_MODE_DESC]);
+            $finder->limit(1, 0);
+            if ($finder->count()) {
+                $lastOrder = $finder->getBean()->get($this->getOrderField());
                 $bean->set($this->getOrderField(), $lastOrder + 1);
             } else {
                 $bean->set($this->getOrderField(), 1);
