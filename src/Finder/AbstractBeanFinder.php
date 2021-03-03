@@ -252,4 +252,13 @@ abstract class AbstractBeanFinder implements
         return $this;
     }
 
+    /**
+     *
+     */
+    public function __clone()
+    {
+        $this->setBeanLoader(clone $this->getBeanLoader());
+    }
+
+
 }
