@@ -8,10 +8,10 @@ use Pars\Bean\Converter\BeanConverterAwareInterface;
 use Pars\Bean\Converter\BeanConverterAwareTrait;
 use Pars\Bean\Converter\ConverterBeanDecorator;
 use Pars\Bean\Type\Base\BeanInterface;
-use Pars\Patterns\Attribute\AttributeAwareInterface;
-use Pars\Patterns\Attribute\AttributeAwareTrait;
-use Pars\Patterns\Option\OptionAwareInterface;
-use Pars\Patterns\Option\OptionAwareTrait;
+use Pars\Pattern\Attribute\AttributeAwareInterface;
+use Pars\Pattern\Attribute\AttributeAwareTrait;
+use Pars\Pattern\Option\OptionAwareInterface;
+use Pars\Pattern\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanLoader

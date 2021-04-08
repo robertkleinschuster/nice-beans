@@ -6,10 +6,10 @@ namespace Pars\Bean\Factory;
 
 use Pars\Bean\Type\Base\BeanInterface;
 use Pars\Bean\Type\Base\BeanListInterface;
-use Pars\Patterns\Attribute\AttributeAwareInterface;
-use Pars\Patterns\Attribute\AttributeAwareTrait;
-use Pars\Patterns\Option\OptionAwareInterface;
-use Pars\Patterns\Option\OptionAwareTrait;
+use Pars\Pattern\Attribute\AttributeAwareInterface;
+use Pars\Pattern\Attribute\AttributeAwareTrait;
+use Pars\Pattern\Option\OptionAwareInterface;
+use Pars\Pattern\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanFactory

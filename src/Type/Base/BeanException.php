@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Type\Base;
 
-use Pars\Patterns\Exception\CoreException;
+use Pars\Pattern\Exception\CoreException;
 
 /**
  * Class BeanException

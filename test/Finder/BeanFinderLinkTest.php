@@ -15,7 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * Class DefaultTestCaseTest
  * @package Pars\Bean
  */
-class BeanFinderLinkTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class BeanFinderLinkTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 

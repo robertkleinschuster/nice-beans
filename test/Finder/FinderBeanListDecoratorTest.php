@@ -19,7 +19,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * Class DefaultTestCaseTest
  * @package Pars\Bean
  */
-class FinderBeanListDecoratorTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class FinderBeanListDecoratorTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 

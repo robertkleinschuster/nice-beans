@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Factory;
 
-use Pars\Patterns\Attribute\AttributeAwareInterface;
-use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Pattern\Attribute\AttributeAwareInterface;
+use Pars\Pattern\Option\OptionAwareInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
  * @package Pars\Bean
  */
-class AbstractBeanFactoryTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class AbstractBeanFactoryTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 

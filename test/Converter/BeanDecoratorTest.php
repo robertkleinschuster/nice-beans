@@ -20,7 +20,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * @uses \Pars\Bean\Converter\BeanConverterAwareTrait
  * @uses \Pars\Bean\Converter\AbstractBeanConverter
  */
-class BeanDecoratorTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class BeanDecoratorTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 

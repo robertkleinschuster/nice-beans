@@ -13,7 +13,7 @@ namespace Pars\Bean\PHPUnit;
  * Class DefaultTestCase
  * @package Pars\Bean
  */
-class DefaultTestCase extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class DefaultTestCase extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 }

@@ -15,7 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * Class DefaultTestCaseTest
  * @package Pars\Bean
  */
-class DefaultTestCaseTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
+class DefaultTestCaseTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
 
 
