@@ -3,21 +3,21 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
-use Niceshops\Bean\Type\Base\AbstractBaseBean;
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\AbstractBaseBean;
+use Pars\Bean\Type\Base\BeanInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
- * @package Niceshops\Bean
+ * @package Pars\Bean
  */
-class AbstractBeanConverterTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class AbstractBeanConverterTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
 {
 
 
@@ -50,7 +50,7 @@ class AbstractBeanConverterTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @coversDefaultClass  \Niceshops\Bean\Converter\AbstractBeanConverter
+     * @coversDefaultClass  \Pars\Bean\Converter\AbstractBeanConverter
      */
     public function testTestClassExists()
     {
@@ -70,7 +70,7 @@ class AbstractBeanConverterTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Niceshops\Bean\Converter\AbstractBeanConverter::convert
+     * @covers \Pars\Bean\Converter\AbstractBeanConverter::convert
      */
     public function testConvert()
     {

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Loader;
+namespace Pars\Bean\Loader;
 
-use Niceshops\Bean\Converter\BeanConverterAwareInterface;
-use Niceshops\Bean\Converter\BeanConverterAwareTrait;
-use Niceshops\Bean\Converter\ConverterBeanDecorator;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Attribute\AttributeAwareTrait;
-use Niceshops\Core\Option\OptionAwareInterface;
-use Niceshops\Core\Option\OptionAwareTrait;
+use Pars\Bean\Converter\BeanConverterAwareInterface;
+use Pars\Bean\Converter\BeanConverterAwareTrait;
+use Pars\Bean\Converter\ConverterBeanDecorator;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareTrait;
+use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Patterns\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanLoader
- * @package Niceshops\Bean\Loader
+ * @package Pars\Bean\Loader
  */
 abstract class AbstractBeanLoader implements
     BeanLoaderInterface,

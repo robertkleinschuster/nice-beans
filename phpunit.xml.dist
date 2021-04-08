@@ -7,7 +7,7 @@
          beStrictAboutChangesToGlobalState="true"
 >
     <testsuites>
-        <testsuite name="nice-beans">
+        <testsuite name="pars-beans">
             <directory>./test/</directory>
         </testsuite>
     </testsuites>

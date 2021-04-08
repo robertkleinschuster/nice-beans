@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Saver;
+namespace Pars\Bean\Saver;
 
-use Niceshops\Bean\Type\Base\BeanException;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareTrait;
-use Niceshops\Bean\Type\Base\BeanListInterface;
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Attribute\AttributeAwareTrait;
-use Niceshops\Core\Option\OptionAwareInterface;
-use Niceshops\Core\Option\OptionAwareTrait;
+use Pars\Bean\Type\Base\BeanException;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListAwareInterface;
+use Pars\Bean\Type\Base\BeanListAwareTrait;
+use Pars\Bean\Type\Base\BeanListInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareTrait;
+use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Patterns\Option\OptionAwareTrait;
 use Throwable;
 
 /**
  * Class AbstractBeanSaver
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 abstract class AbstractBeanSaver implements BeanSaverInterface, BeanListAwareInterface, OptionAwareInterface, AttributeAwareInterface
 {

@@ -1,10 +1,10 @@
-# nice-beans
+# pars-beans
 [TODO] write component description
 
 ## Installation
 Run the following to install this library:
 ```bash
-$ composer require niceshops/nice-beans
+$ composer require pars/pars-beans
 ```
 
 or if composer package is not available add the following to your composer.json
@@ -12,10 +12,10 @@ or if composer package is not available add the following to your composer.json
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/niceshops/nice-beans"
+        "url": "https://github.com/pars/pars-beans"
     }
 ],
 "require": {
-    "niceshops/nice-beans": "dev-master"
+    "pars/pars-beans": "dev-master"
 }
 ```

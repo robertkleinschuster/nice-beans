@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
-use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
-use Niceshops\Bean\Factory\BeanFactoryAwareTrait;
-use Niceshops\Bean\Factory\BeanFactoryInterface;
-use Niceshops\Bean\Loader\BeanLoaderAwareInterface;
-use Niceshops\Bean\Loader\BeanLoaderAwareTrait;
-use Niceshops\Bean\Loader\BeanLoaderInterface;
-use Niceshops\Bean\Type\Base\BeanException;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListInterface;
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Attribute\AttributeAwareTrait;
-use Niceshops\Core\Option\OptionAwareInterface;
-use Niceshops\Core\Option\OptionAwareTrait;
+use Pars\Bean\Factory\BeanFactoryAwareInterface;
+use Pars\Bean\Factory\BeanFactoryAwareTrait;
+use Pars\Bean\Factory\BeanFactoryInterface;
+use Pars\Bean\Loader\BeanLoaderAwareInterface;
+use Pars\Bean\Loader\BeanLoaderAwareTrait;
+use Pars\Bean\Loader\BeanLoaderInterface;
+use Pars\Bean\Type\Base\BeanException;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareTrait;
+use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Patterns\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanFinderFactory
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 abstract class AbstractBeanFinder implements
     BeanFinderInterface,

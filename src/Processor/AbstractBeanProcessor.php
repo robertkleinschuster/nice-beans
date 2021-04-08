@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
 use Countable;
-use Niceshops\Bean\Saver\BeanSaverAwareInterface;
-use Niceshops\Bean\Saver\BeanSaverAwareTrait;
-use Niceshops\Bean\Saver\BeanSaverInterface;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareTrait;
-use Niceshops\Bean\Type\Base\BeanListInterface;
-use Niceshops\Bean\Validator\BeanValidatorInterface;
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Attribute\AttributeAwareTrait;
-use Niceshops\Core\Option\OptionAwareInterface;
-use Niceshops\Core\Option\OptionAwareTrait;
+use Pars\Bean\Saver\BeanSaverAwareInterface;
+use Pars\Bean\Saver\BeanSaverAwareTrait;
+use Pars\Bean\Saver\BeanSaverInterface;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListAwareInterface;
+use Pars\Bean\Type\Base\BeanListAwareTrait;
+use Pars\Bean\Type\Base\BeanListInterface;
+use Pars\Bean\Validator\BeanValidatorInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareTrait;
+use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Patterns\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanProcessor
- * @package Niceshops\Bean\BeanProcessor
+ * @package Pars\Bean\BeanProcessor
  */
 abstract class AbstractBeanProcessor implements
     BeanProcessorInterface,

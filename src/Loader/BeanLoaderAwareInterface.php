@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Loader;
+namespace Pars\Bean\Loader;
 
 /**
  * Interface BeanLoaderAwareInterface
- * @package Niceshops\Bean\Loader
+ * @package Pars\Bean\Loader
  */
 interface BeanLoaderAwareInterface
 {

@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
 
-use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
-use Niceshops\Bean\Finder\BeanFinderAwareInterface;
-use Niceshops\Bean\Finder\BeanFinderAwareTrait;
-use Niceshops\Bean\Finder\BeanFinderInterface;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareInterface;
+use Pars\Bean\Factory\BeanFactoryAwareInterface;
+use Pars\Bean\Finder\BeanFinderAwareInterface;
+use Pars\Bean\Finder\BeanFinderAwareTrait;
+use Pars\Bean\Finder\BeanFinderInterface;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListAwareInterface;
 
 class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAwareInterface
 {

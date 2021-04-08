@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
 use ArrayIterator;
-use Niceshops\Bean\Cache\BeanCacheTrait;
-use Niceshops\Bean\Type\Base\BeanAwareInterface;
-use Niceshops\Bean\Type\Base\BeanAwareTrait;
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Cache\BeanCacheTrait;
+use Pars\Bean\Type\Base\BeanAwareInterface;
+use Pars\Bean\Type\Base\BeanAwareTrait;
+use Pars\Bean\Type\Base\BeanInterface;
 
 /**
  * Class BeanDecorator
- * @package Niceshops\Bean\Converter
+ * @package Pars\Bean\Converter
  */
 class ConverterBeanDecorator implements
     BeanAwareInterface,

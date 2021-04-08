@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
-use Niceshops\Bean\Validator\BeanValidatorInterface;
+use Pars\Bean\Validator\BeanValidatorInterface;
 
 /**
  * Interface ProcessorInterface
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 interface BeanProcessorInterface
 {

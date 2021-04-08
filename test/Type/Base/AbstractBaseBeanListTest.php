@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
-use Niceshops\Bean\PHPUnit\DefaultTestCase;
+use Pars\Bean\PHPUnit\DefaultTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class AbstractBaseBeanTest
- * @package Niceshops\Bean
+ * @package Pars\Bean
  */
 class AbstractBaseBeanListTest extends DefaultTestCase
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
 /**
  * Trait BeanFinderAwareTrait
- * @package Niceshops\Bean\Finder
+ * @package Pars\Bean\Finder
  */
 trait BeanFinderAwareTrait
 {

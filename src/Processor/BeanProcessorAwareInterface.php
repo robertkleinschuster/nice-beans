@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
 /**
  * Interface BeanProcessorAwareInterface
- * @package Niceshops\Bean\Processor
+ * @package Pars\Bean\Processor
  */
 interface BeanProcessorAwareInterface
 {

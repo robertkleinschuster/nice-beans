@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
 use ArrayAccess;
 use Countable;
@@ -10,7 +10,7 @@ use IteratorAggregate;
 
 /**
  * Interface BeanInterface
- * @package Niceshops\Library\Core\Bean
+ * @package Pars\Library\Patterns\Bean
  */
 interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \JsonSerializable, \Serializable
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Factory;
+namespace Pars\Bean\Factory;
 
 /**
  * Trait BeanFactoryAwareTrait
- * @package Niceshops\Bean\Factory
+ * @package Pars\Bean\Factory
  */
 trait BeanFactoryAwareTrait
 {

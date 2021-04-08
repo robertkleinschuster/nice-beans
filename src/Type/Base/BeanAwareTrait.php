@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
 trait BeanAwareTrait
 {

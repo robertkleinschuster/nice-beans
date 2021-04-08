@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Niceshops\Bean\Validator;
+namespace Pars\Bean\Validator;
 
 
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanInterface;
 
 class NotEmptyBeanValidator implements BeanValidatorInterface
 {

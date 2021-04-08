@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
 /**
  * Trait BeanConverterAwareTrait
- * @package Niceshops\Bean\Converter
+ * @package Pars\Bean\Converter
  */
 trait BeanConverterAwareTrait
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Loader;
+namespace Pars\Bean\Loader;
 
-use Niceshops\Bean\Converter\ConverterBeanDecorator;
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Converter\ConverterBeanDecorator;
+use Pars\Bean\Type\Base\BeanInterface;
 
 /**
  * Interface BeanFinderLoaderInterface
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 interface BeanLoaderInterface extends \Iterator, \Countable
 {

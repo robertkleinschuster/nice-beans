@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Loader;
+namespace Pars\Bean\Loader;
 
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
- * @package Niceshops\Bean
+ * @package Pars\Bean
  */
-class AbstractBeanLoaderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class AbstractBeanLoaderTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
 {
 
 
@@ -60,12 +60,12 @@ class AbstractBeanLoaderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::execute
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::valid
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::next
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::current
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::key
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::rewind
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::execute
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::valid
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::next
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::current
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::key
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::rewind
      */
     public function testIterator()
     {
@@ -93,7 +93,7 @@ class AbstractBeanLoaderTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Niceshops\Bean\Loader\AbstractBeanLoader::execute
+     * @covers \Pars\Bean\Loader\AbstractBeanLoader::execute
      */
     public function testExecuteException()
     {

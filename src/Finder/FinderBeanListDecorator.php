@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use Niceshops\Bean\Factory\BeanFactoryAwareInterface;
-use Niceshops\Bean\Factory\BeanFactoryAwareTrait;
-use Niceshops\Bean\Loader\BeanLoaderAwareInterface;
-use Niceshops\Bean\Loader\BeanLoaderAwareTrait;
-use Niceshops\Bean\Type\Base\BeanException;
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareInterface;
-use Niceshops\Bean\Type\Base\BeanListAwareTrait;
-use Niceshops\Bean\Type\Base\BeanListException;
-use Niceshops\Bean\Type\Base\BeanListInterface;
+use Pars\Bean\Factory\BeanFactoryAwareInterface;
+use Pars\Bean\Factory\BeanFactoryAwareTrait;
+use Pars\Bean\Loader\BeanLoaderAwareInterface;
+use Pars\Bean\Loader\BeanLoaderAwareTrait;
+use Pars\Bean\Type\Base\BeanException;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListAwareInterface;
+use Pars\Bean\Type\Base\BeanListAwareTrait;
+use Pars\Bean\Type\Base\BeanListException;
+use Pars\Bean\Type\Base\BeanListInterface;
 use Traversable;
 
 /**
  * Class BeanLoaderDecorator
- * @package Niceshops\Bean\Finder
+ * @package Pars\Bean\Finder
  */
 class FinderBeanListDecorator implements
     BeanListInterface,

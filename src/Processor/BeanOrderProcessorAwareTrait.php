@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
 
 trait BeanOrderProcessorAwareTrait

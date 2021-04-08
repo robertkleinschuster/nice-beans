@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
 /**
  * Interface BeanFinderAwareInterface
- * @package Niceshops\Bean\Finder
+ * @package Pars\Bean\Finder
  */
 interface BeanFinderAwareInterface
 {

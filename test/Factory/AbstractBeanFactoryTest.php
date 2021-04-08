@@ -3,21 +3,21 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Factory;
+namespace Pars\Bean\Factory;
 
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Option\OptionAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Option\OptionAwareInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
- * @package Niceshops\Bean
+ * @package Pars\Bean
  */
-class AbstractBeanFactoryTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class AbstractBeanFactoryTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
 {
 
 

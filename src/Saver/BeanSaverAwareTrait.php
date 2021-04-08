@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Saver;
+namespace Pars\Bean\Saver;
 
 /**
  * Trait BeanSaverAwareTrait
- * @package Niceshops\Bean\Saver
+ * @package Pars\Bean\Saver
  */
 trait BeanSaverAwareTrait
 {

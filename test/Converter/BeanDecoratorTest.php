@@ -3,24 +3,24 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
-use Niceshops\Bean\Type\Base\AbstractBaseBean;
-use Niceshops\Bean\Type\Base\BeanAwareInterface;
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\AbstractBaseBean;
+use Pars\Bean\Type\Base\BeanAwareInterface;
+use Pars\Bean\Type\Base\BeanInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
- * @package Niceshops\Bean
- * @uses \Niceshops\Bean\Converter\BeanConverterAwareTrait
- * @uses \Niceshops\Bean\Converter\AbstractBeanConverter
+ * @package Pars\Bean
+ * @uses \Pars\Bean\Converter\BeanConverterAwareTrait
+ * @uses \Pars\Bean\Converter\AbstractBeanConverter
  */
-class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class BeanDecoratorTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
 {
 
 
@@ -72,7 +72,7 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @coversDefaultClass \Niceshops\Bean\Converter\ConverterBeanDecorator
+     * @coversDefaultClass \Pars\Bean\Converter\ConverterBeanDecorator
      */
     public function testTestClassExists()
     {
@@ -96,12 +96,12 @@ class BeanDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::set
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::get
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::exists
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::unset
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::reset
-     * @covers       \Niceshops\Bean\Converter\ConverterBeanDecorator::type
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::set
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::get
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::exists
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::unset
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::reset
+     * @covers       \Pars\Bean\Converter\ConverterBeanDecorator::type
      * @dataProvider dataProvider_CallBeanMethod
      * @param string $method
      * @param array $params

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanInterface;
 
 /**
  * Interface BeanConverterInterface
- * @package Niceshops\Bean\Converter
+ * @package Pars\Bean\Converter
  */
 interface BeanConverterInterface
 {

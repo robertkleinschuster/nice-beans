@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
 use Ds\Vector;
 use Traversable;
 
 /**
  * Class AbstractBeanList
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 abstract class AbstractBaseBeanList implements BeanListInterface
 {

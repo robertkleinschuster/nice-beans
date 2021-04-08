@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
-use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanInterface;
 
 class DefaultMetaFieldHandler implements MetaFieldHandlerInterface
 {

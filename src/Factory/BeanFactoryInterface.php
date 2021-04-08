@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Factory;
+namespace Pars\Bean\Factory;
 
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListInterface;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListInterface;
 
 /**
  * Interface BeanFactoryInterface
- * @package Niceshops\Bean\BeanFactory
+ * @package Pars\Bean\BeanFactory
  */
 interface BeanFactoryInterface
 {

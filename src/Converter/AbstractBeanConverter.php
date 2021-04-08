@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Converter;
+namespace Pars\Bean\Converter;
 
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Core\Attribute\AttributeAwareInterface;
-use Niceshops\Core\Attribute\AttributeAwareTrait;
-use Niceshops\Core\Option\OptionAwareInterface;
-use Niceshops\Core\Option\OptionAwareTrait;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Patterns\Attribute\AttributeAwareInterface;
+use Pars\Patterns\Attribute\AttributeAwareTrait;
+use Pars\Patterns\Option\OptionAwareInterface;
+use Pars\Patterns\Option\OptionAwareTrait;
 
 /**
  * Class AbstractBeanConverter
- * @package Niceshops\Bean\Converter
+ * @package Pars\Bean\Converter
  */
 abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAwareInterface, AttributeAwareInterface
 {

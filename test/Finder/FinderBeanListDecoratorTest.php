@@ -3,23 +3,23 @@
 declare(strict_types=1);
 
 /**
- * @see       https://github.com/niceshops/nice-beans for the canonical source repository
- * @license   https://github.com/niceshops/nice-beans/blob/master/LICENSE BSD 3-Clause License
+ * @see       https://github.com/pars/pars-beans for the canonical source repository
+ * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
-use Niceshops\Bean\Factory\AbstractBeanFactory;
-use Niceshops\Bean\Loader\AbstractBeanLoader;
-use Niceshops\Bean\Type\Base\AbstractBaseBean;
-use Niceshops\Bean\Type\Base\AbstractBaseBeanList;
+use Pars\Bean\Factory\AbstractBeanFactory;
+use Pars\Bean\Loader\AbstractBeanLoader;
+use Pars\Bean\Type\Base\AbstractBaseBean;
+use Pars\Bean\Type\Base\AbstractBaseBeanList;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class DefaultTestCaseTest
- * @package Niceshops\Bean
+ * @package Pars\Bean
  */
-class FinderBeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCase
+class FinderBeanListDecoratorTest extends \Pars\Patterns\PHPUnit\DefaultTestCase
 {
 
 
@@ -79,7 +79,7 @@ class FinderBeanListDecoratorTest extends \Niceshops\Core\PHPUnit\DefaultTestCas
     /**
      * @group unit
      * @small
-     * @covers \Niceshops\Bean\Finder\FinderBeanListDecorator::getIterator
+     * @covers \Pars\Bean\Finder\FinderBeanListDecorator::getIterator
      */
     public function testIterator()
     {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
 
 class BeanIterator extends \IteratorIterator

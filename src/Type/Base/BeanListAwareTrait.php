@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Type\Base;
+namespace Pars\Bean\Type\Base;
 
 /**
  * Trait BeanListAwareTrait
- * @package Niceshops\Bean\BeanList
+ * @package Pars\Bean\BeanList
  */
 trait BeanListAwareTrait
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Saver;
+namespace Pars\Bean\Saver;
 
 /**
  * Interface BeanSaverAwareInterface
- * @package Niceshops\Bean\Saver
+ * @package Pars\Bean\Saver
  */
 interface BeanSaverAwareInterface
 {

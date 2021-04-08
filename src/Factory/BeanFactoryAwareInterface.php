@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Factory;
+namespace Pars\Bean\Factory;
 
 /**
  * Interface BeanFactoryAwareInterface
- * @package Niceshops\Bean\Factory
+ * @package Pars\Bean\Factory
  */
 interface BeanFactoryAwareInterface
 {

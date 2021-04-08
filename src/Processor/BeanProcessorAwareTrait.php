@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Processor;
+namespace Pars\Bean\Processor;
 
 /**
  * Trait BeanProcessorAwareTrait
- * @package Niceshops\Bean\Processor
+ * @package Pars\Bean\Processor
  */
 trait BeanProcessorAwareTrait
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Niceshops\Bean\Finder;
+namespace Pars\Bean\Finder;
 
-use Niceshops\Bean\Type\Base\BeanInterface;
-use Niceshops\Bean\Type\Base\BeanListInterface;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListInterface;
 
 /**
  * Interface BeanFinderInterface
- * @package Niceshops\Library\Core
+ * @package Pars\Library\Patterns
  */
 interface BeanFinderInterface
 {

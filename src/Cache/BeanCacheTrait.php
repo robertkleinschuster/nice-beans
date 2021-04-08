@@ -1,6 +1,6 @@
 <?php
 
-namespace Niceshops\Bean\Cache;
+namespace Pars\Bean\Cache;
 
 
 trait BeanCacheTrait
