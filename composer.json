@@ -1,5 +1,5 @@
 {
-    "name": "robertkleinschuster/nice-beans",
+    "name": "pars/pars-beans",
     "description": "JavaBeans Implementierung für PHP",
     "license" : "BSD-3-Clause",
     "require": {
