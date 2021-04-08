@@ -1,5 +1,6 @@
 # pars-beans
-[TODO] write component description
+[![Build Status](https://travis-ci.com/pars-framework/pars-beans.svg?branch=master)](https://travis-ci.com/pars-framework/pars-beans)
+[![Coverage Status](https://coveralls.io/repos/github/pars-framework/pars-beans/badge.svg?branch=master)](https://coveralls.io/github/pars-framework/pars-beans?branch=master)
 
 ## Installation
 Run the following to install this library:
