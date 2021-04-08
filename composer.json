@@ -22,6 +22,11 @@
             "Niceshops\\Bean\\": "test/"
         }
     },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "classmap-authoritative": true
+    },
     "scripts": {
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
