@@ -7,8 +7,9 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Loader;
+namespace ParsTest\Bean\Loader;
 
+use Pars\Bean\Loader\AbstractBeanLoader;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -60,12 +61,12 @@ class AbstractBeanLoaderTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::execute
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::valid
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::next
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::current
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::key
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::rewind
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::execute
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::valid
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::next
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::current
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::key
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::rewind
      */
     public function testIterator()
     {
@@ -93,7 +94,7 @@ class AbstractBeanLoaderTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Pars\Bean\Loader\AbstractBeanLoader::execute
+     * @covers \ParsTest\Bean\Loader\AbstractBeanLoader::execute
      */
     public function testExecuteException()
     {

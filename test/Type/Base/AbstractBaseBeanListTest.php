@@ -7,9 +7,13 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Type\Base;
+namespace ParsTest\Bean\Type\Base;
 
 use Pars\Bean\PHPUnit\DefaultTestCase;
+use Pars\Bean\Type\Base\AbstractBaseBean;
+use Pars\Bean\Type\Base\AbstractBaseBeanList;
+use Pars\Bean\Type\Base\BeanInterface;
+use Pars\Bean\Type\Base\BeanListInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -21,7 +25,7 @@ class AbstractBaseBeanListTest extends DefaultTestCase
 
 
     /**
-     * @var AbstractBaseBeanList|MockObject
+     * @var \Pars\Bean\Type\Base\AbstractBaseBeanList|MockObject
      */
     protected $object;
 

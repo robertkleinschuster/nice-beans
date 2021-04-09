@@ -7,9 +7,13 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Type\Base;
+namespace ParsTest\Bean\Type\Base;
 
 use Pars\Bean\PHPUnit\DefaultTestCase;
+use Pars\Bean\Type\Base\AbstractBaseBean;
+use Pars\Bean\Type\Base\AbstractBaseBeanList;
+use Pars\Bean\Type\Base\BeanException;
+use Pars\Bean\Type\Base\BeanInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -60,7 +64,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::type
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::type
      */
     public function testGetDataType()
     {
@@ -75,7 +79,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::type
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::type
      */
     public function testGetDataType_isString()
     {
@@ -92,7 +96,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::get
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::get
      */
     public function testGetData_NameNotFound()
     {
@@ -110,7 +114,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::get
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::get
      * @throws BeanException
      */
     public function testGetData_NameFoundButNoValue()
@@ -127,7 +131,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::get
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::get
      * @throws BeanException
      */
     public function testGetData_ValueFound()
@@ -144,7 +148,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::exists
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::exists
      * @throws BeanException
      */
     public function testHasData_isTrue()
@@ -161,7 +165,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::exists
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::exists
      * @throws BeanException
      */
     public function testHasData_isFalse()
@@ -177,7 +181,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::unset
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::unset
      * @throws BeanException
      */
     public function testRemoveData_DataFound()
@@ -198,7 +202,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::reset
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::reset
      */
     public function testResetData()
     {
@@ -216,7 +220,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::reset
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::reset
      */
     public function testInitialized()
     {
@@ -237,7 +241,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::toArray
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray()
     {
@@ -253,7 +257,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::toArray
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::toArray
      */
     public function testToArray_butNoData()
     {
@@ -272,7 +276,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::type
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::type
      */
     public function testType()
     {
@@ -289,7 +293,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
      * @group  unit
      * @small
      *
-     * @covers \Pars\Bean\Type\Base\AbstractBaseBean::reset
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::reset
      */
     public function testSerialize()
     {

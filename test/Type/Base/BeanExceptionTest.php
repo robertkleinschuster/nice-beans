@@ -7,8 +7,9 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Type\Base;
+namespace ParsTest\Bean\Type\Base;
 
+use Pars\Bean\Type\Base\BeanException;
 use Pars\Bean\PHPUnit\DefaultTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 

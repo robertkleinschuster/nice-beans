@@ -7,8 +7,10 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Factory;
+namespace ParsTest\Bean\Factory;
 
+use Pars\Bean\Factory\AbstractBeanFactory;
+use Pars\Bean\Factory\BeanFactoryInterface;
 use Pars\Pattern\Attribute\AttributeAwareInterface;
 use Pars\Pattern\Option\OptionAwareInterface;
 use PHPUnit\Framework\MockObject\MockObject;

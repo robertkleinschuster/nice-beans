@@ -7,12 +7,14 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Finder;
+namespace ParsTest\Bean\Finder;
 
-use Pars\Bean\Factory\AbstractBeanFactory;
 use Pars\Bean\Loader\AbstractBeanLoader;
 use Pars\Bean\Type\Base\AbstractBaseBean;
 use Pars\Bean\Type\Base\AbstractBaseBeanList;
+use Pars\Bean\Factory\AbstractBeanFactory;
+use Pars\Bean\Finder\AbstractBeanFinder;
+use Pars\Bean\Finder\FinderBeanListDecorator;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -79,7 +81,7 @@ class FinderBeanListDecoratorTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @covers \Pars\Bean\Finder\FinderBeanListDecorator::getIterator
+     * @covers \ParsTest\Bean\Finder\FinderBeanListDecorator::getIterator
      */
     public function testIterator()
     {

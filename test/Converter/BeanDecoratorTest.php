@@ -7,8 +7,12 @@ declare(strict_types=1);
  * @license   https://github.com/pars/pars-beans/blob/master/LICENSE BSD 3-Clause License
  */
 
-namespace Pars\Bean\Converter;
+namespace ParsTest\Bean\Converter;
 
+use Pars\Bean\Converter\AbstractBeanConverter;
+use Pars\Bean\Converter\BeanConverterAwareInterface;
+use Pars\Bean\Converter\BeanConverterInterface;
+use Pars\Bean\Converter\ConverterBeanDecorator;
 use Pars\Bean\Type\Base\AbstractBaseBean;
 use Pars\Bean\Type\Base\BeanAwareInterface;
 use Pars\Bean\Type\Base\BeanInterface;
@@ -17,8 +21,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class DefaultTestCaseTest
  * @package Pars\Bean
- * @uses \Pars\Bean\Converter\BeanConverterAwareTrait
- * @uses \Pars\Bean\Converter\AbstractBeanConverter
+ * @uses \ParsTest\Bean\Converter\BeanConverterAwareTrait
+ * @uses \ParsTest\Bean\Converter\AbstractBeanConverter
  */
 class BeanDecoratorTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
 {
@@ -72,7 +76,7 @@ class BeanDecoratorTest extends \Pars\Pattern\PHPUnit\DefaultTestCase
     /**
      * @group unit
      * @small
-     * @coversDefaultClass \Pars\Bean\Converter\ConverterBeanDecorator
+     * @coversDefaultClass ConverterBeanDecorator
      */
     public function testTestClassExists()
     {
