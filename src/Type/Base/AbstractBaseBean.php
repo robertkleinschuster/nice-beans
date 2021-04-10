@@ -58,13 +58,13 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     private function validateDataName(string $name): bool
     {
-        if ($this->cache('valid', $name) == null) {
-            $valid = !(strpos($name, '*') !== false ||
+        static $valid = [];
+        if (!isset($valid[static::class . $name])) {
+            $valid[static::class . $name] = !(strpos($name, '*') !== false ||
                 strpos($name, '\\') !== false ||
                 strpos($name, 'phpunit') !== false);
-            $this->cache('valid', $name, $valid);
         }
-        return $this->cache('valid', $name);
+        return $valid[static::class . $name];
     }
 
 
@@ -72,13 +72,9 @@ abstract class AbstractBaseBean implements BeanInterface
      * @param string $name
      *
      * @return mixed
-     * @throws BeanException
      */
     public function get(string $name)
     {
-        if (!$this->exists($name)) {
-            $this->throwDataNotFoundException($name);
-        }
         return $this->{$name};
     }
 
@@ -89,10 +85,8 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function unset(string $name): self
     {
-        if ($this->exists($name)) {
-            unset($this->{$name});
-            $this->clearCache();
-        }
+        unset($this->{$name});
+        $this->clearCache();
         return $this;
     }
 
@@ -138,42 +132,36 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function exists(string $name): bool
     {
-        if (null === $this->cache('exists', $name)) {
-            $ret = $this->getReflectionObject()->hasProperty($name);
-            $this->cache('exists', $name, $ret);
+        static $exists = [];
+        if (!isset($exists[static::class . $name])) {
+            $exists[static::class . $name] = $this->getReflectionObject()->hasProperty($name);
         }
-        return $this->cache('exists', $name);
+        return $exists[static::class . $name];
     }
 
     /**
      * @param string $name
      * @return bool
-     * @throws BeanException
      */
     public function isset(string $name): bool
     {
-        if (!$this->exists($name)) {
-            $this->throwDataNotFoundException($name);
-        }
         return isset($this->{$name});
     }
 
     /**
      * @param string $name
      * @return bool
-     * @throws BeanException
      */
     public function empty(string $name): bool
     {
-        if (!$this->exists($name)) {
-            $this->throwDataNotFoundException($name);
-        }
-        if ($this->cache('empty', $name) === null) {
-            $this->cache('empty', $name, empty($this->{$name}));
-        }
-        return $this->cache('empty', $name);
+        return empty($this->{$name});
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function initialized(string $name): bool
     {
         if (null === $this->cache('initialized', $name)) {
@@ -195,7 +183,8 @@ abstract class AbstractBaseBean implements BeanInterface
         if ($this->cache('toArray', $recuresive) === null) {
             $data = [];
             if ($recuresive) {
-                foreach ($this as $name => $value) {
+                $iterator = $this->getIterator();
+                foreach ($iterator as $name => $value) {
                     if ($this->validateDataName($name)) {
                         if ($value instanceof BeanInterface) {
                             $data[$name] = $value->toArray($recuresive);
@@ -259,7 +248,8 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function type(string $name, ?string $type = null): string
     {
-        if ($this->cache('type', $name) === null) {
+        static $type = [];
+        if (!isset($type[static::class . $name])) {
             if ($this->exists($name)) {
                 $obj = $this->getReflectionObject();
                 $prop = $obj->getProperty($name);
@@ -271,9 +261,9 @@ abstract class AbstractBaseBean implements BeanInterface
             } else {
                 $dataType = self::DATA_TYPE_UNKNOWN;
             }
-            $this->cache('type', $name, $this->normalizeDataType($dataType));
+            $type[static::class . $name] = $this->normalizeDataType($dataType);
         }
-        return $this->cache('type', $name);
+        return $type[static::class . $name];
     }
 
     protected function getReflectionObject(): \ReflectionObject
@@ -291,61 +281,55 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     protected function normalizeDataType(string $dataType): string
     {
-        $dataType = trim($dataType);
-        switch (strtolower($dataType)) {
-            case self::DATA_TYPE_BOOL:
-            case "boolean":
-                $dataType = self::DATA_TYPE_BOOL;
-                break;
-
-            case self::DATA_TYPE_INT:
-            case "integer":
-                $dataType = self::DATA_TYPE_INT;
-                break;
-
-            case self::DATA_TYPE_FLOAT:
-            case "double":
-                $dataType = self::DATA_TYPE_FLOAT;
-                break;
-
-            case self::DATA_TYPE_STRING:
-            case "string":
-                $dataType = self::DATA_TYPE_STRING;
-                break;
-
-            case self::DATA_TYPE_ARRAY:
-            case "array":
-                $dataType = self::DATA_TYPE_ARRAY;
-                break;
-
-            case self::DATA_TYPE_OBJECT:
-            case "object":
-                $dataType = self::DATA_TYPE_OBJECT;
-                break;
-
-            case self::DATA_TYPE_RESOURCE:
-            case "resource":
-                $dataType = self::DATA_TYPE_RESOURCE;
-                break;
-
-            case self::DATA_TYPE_RESOURCE_CLOSED:
-            case "resource (closed)":
-                $dataType = self::DATA_TYPE_RESOURCE_CLOSED;
-                break;
-
-            case self::DATA_TYPE_NULL:
-            case "NULL":
-                $dataType = self::DATA_TYPE_NULL;
-                break;
-
-            case "unknown type":
-                $dataType = self::DATA_TYPE_UNKNOWN;
-                break;
+        static $name = [];
+        if (!isset($name[$dataType])) {
+            switch (strtolower(trim($dataType))) {
+                case self::DATA_TYPE_BOOL:
+                case "boolean":
+                    $result = self::DATA_TYPE_BOOL;
+                    break;
+                case self::DATA_TYPE_INT:
+                case "integer":
+                    $result = self::DATA_TYPE_INT;
+                    break;
+                case self::DATA_TYPE_FLOAT:
+                case "double":
+                    $result = self::DATA_TYPE_FLOAT;
+                    break;
+                case self::DATA_TYPE_STRING:
+                case "string":
+                    $result = self::DATA_TYPE_STRING;
+                    break;
+                case self::DATA_TYPE_ARRAY:
+                case "array":
+                    $result = self::DATA_TYPE_ARRAY;
+                    break;
+                case self::DATA_TYPE_OBJECT:
+                case "object":
+                    $result = self::DATA_TYPE_OBJECT;
+                    break;
+                case self::DATA_TYPE_RESOURCE:
+                case "resource":
+                    $result = self::DATA_TYPE_RESOURCE;
+                    break;
+                case self::DATA_TYPE_RESOURCE_CLOSED:
+                case "resource (closed)":
+                    $result = self::DATA_TYPE_RESOURCE_CLOSED;
+                    break;
+                case self::DATA_TYPE_NULL:
+                case "NULL":
+                    $result = self::DATA_TYPE_NULL;
+                    break;
+                case "unknown type":
+                    $result = self::DATA_TYPE_UNKNOWN;
+                    break;
+                default:
+                    $result = $dataType;
+            }
+            $name[$dataType] = $result;
         }
-
-        return $dataType;
+        return $name[$dataType];
     }
-
 
     /**
      * @param string $offset
@@ -355,7 +339,7 @@ abstract class AbstractBaseBean implements BeanInterface
      */
     public function offsetExists($offset): bool
     {
-        return $this->exists($offset) && null !== $this->get($offset);
+        return $this->exists($offset) && $this->isset($offset);
     }
 
 

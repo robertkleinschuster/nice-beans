@@ -91,6 +91,21 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->assertSame(BeanInterface::DATA_TYPE_STRING, $this->invokeMethod($this->object, "type", $name));
     }
 
+    /**
+     * @group  unit
+     * @small
+     *
+     * @covers \ParsTest\Bean\Type\Base\AbstractBaseBean::type
+     */
+    public function testGetDataType_isDateTime()
+    {
+        $this->object = new class() extends AbstractBaseBean {
+            public ?\DateTime $date = null;
+        };
+        $name = "date";
+        $this->object->set($name, new \DateTime());
+        $this->assertSame(\DateTime::class, $this->invokeMethod($this->object, "type", $name));
+    }
 
     /**
      * @group  unit
@@ -103,9 +118,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
         $name = "foo";
 
-        $this->expectException(BeanException::class);
-        $this->expectExceptionCode(BeanException::ERROR_CODE_DATA_NOT_FOUND);
-
+        $this->expectError();
         $this->object->get($name);
     }
 
@@ -170,10 +183,9 @@ class AbstractBaseBeanTest extends DefaultTestCase
      */
     public function testHasData_isFalse()
     {
-        $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
-        $name = "foo";
+        $object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
 
-        $this->assertFalse($this->object->exists($name));
+        $this->assertFalse($object->exists('footest'));
     }
 
 
@@ -193,7 +205,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object->unset($name);
         $this->assertEquals('bat', $this->object->get('baz'));
 
-        $this->expectException(BeanException::class);
+        $this->expectError();
         $this->object->get($name);
     }
 
@@ -210,8 +222,7 @@ class AbstractBaseBeanTest extends DefaultTestCase
         $this->object = $this->getMockBuilder(AbstractBaseBean::class)->disableOriginalConstructor()->getMockForAbstractClass();
         $this->object->fromArray($arrData);
         $this->object->reset();
-
-        $this->expectException(BeanException::class);
+        $this->expectError();
         $this->object->get('foo');
     }
 

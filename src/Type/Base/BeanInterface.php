@@ -115,4 +115,5 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
      * @return array
      */
     public function values(): array;
+
 }

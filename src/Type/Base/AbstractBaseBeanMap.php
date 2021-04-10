@@ -4,34 +4,34 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Type\Base;
 
-use Ds\Vector;
+use Ds\Map;
 use Traversable;
 
 /**
  * Class AbstractBeanList
  * @package Pars\Library\Patterns
  */
-abstract class AbstractBaseBeanList implements BeanListInterface
+abstract class AbstractBaseBeanMap implements BeanMapInterface
 {
     private const ARRAY_KEY_CLASS = '__class';
 
     /**
-     * @var Vector
+     * @var Map
      */
-    private Vector $vector;
+    private Map $map;
 
     /**
      * AbstractBaseBeanList constructor.
-     * @param array|Vector $data
+     * @param array|Map $data
      */
     public function __construct($data = null)
     {
-        if ($data instanceof Vector) {
-            $this->vector = $data;
+        if ($data instanceof Map) {
+            $this->map = $data;
         } elseif (is_array($data)) {
             $this->fromArray($data);
         } else {
-            $this->vector = new Vector();
+            $this->map = new Map();
         }
     }
 
@@ -40,7 +40,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function clear(): self
     {
-        $this->vector->clear();
+        $this->map->clear();
         return $this;
     }
 
@@ -49,7 +49,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function count(): int
     {
-        return $this->vector->count();
+        return $this->map->count();
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function isEmpty(): bool
     {
-        return $this->vector->isEmpty();
+        return $this->map->isEmpty();
     }
 
     /**
@@ -83,10 +83,47 @@ abstract class AbstractBaseBeanList implements BeanListInterface
             }
             return $data;
         } else {
-            $data = $this->vector->toArray();
+            $data = $this->map->toArray();
             $data[self::ARRAY_KEY_CLASS] = static::class;
             return $data;
         }
+    }
+
+    /**
+     * @param string $key
+     * @param BeanInterface $value
+     * @return $this
+     */
+    public function put(string $key, BeanInterface $value): self
+    {
+        $this->map->put($key, $value);
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function hasKey(string $key): bool
+    {
+        return $this->map->hasKey($key);
+    }
+
+    /**
+     * @param BeanInterface $value
+     * @return bool
+     */
+    public function hasValue(BeanInterface $value): bool
+    {
+        return $this->map->hasValue($value);
+    }
+
+    /**
+     * @return array
+     */
+    public function keys(): array
+    {
+        return $this->map->keys()->toArray();
     }
 
     /**
@@ -98,14 +135,14 @@ abstract class AbstractBaseBeanList implements BeanListInterface
     {
         $d = [];
         unset($data[self::ARRAY_KEY_CLASS]);
-        foreach ($data as $datum) {
+        foreach ($data as $key => $datum) {
             if ($datum instanceof BeanInterface) {
-                $d[] = $datum;
+                $d[$key] = $datum;
             } elseif (is_array($datum) && isset($datum[self::ARRAY_KEY_CLASS])) {
-                $d[] = AbstractBaseBean::createFromArray($datum);
+                $d[$key] = AbstractBaseBean::createFromArray($datum);
             }
         }
-        $this->vector = new Vector($d);
+        $this->map = new Map($d);
         return $this;
     }
 
@@ -128,7 +165,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function getIterator()
     {
-        return $this->vector->getIterator(); # new BeanIterator();
+        return $this->map->getIterator(); # new BeanIterator();
     }
 
     /**
@@ -137,7 +174,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetExists($offset): bool
     {
-        return $this->vector->offsetExists($offset);
+        return $this->map->offsetExists($offset);
     }
 
     /**
@@ -146,7 +183,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetGet($offset)
     {
-        return $this->vector->offsetGet($offset);
+        return $this->map->offsetGet($offset);
     }
 
     /**
@@ -156,7 +193,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetSet($offset, $value): self
     {
-        $this->vector->offsetSet($offset, $value);
+        $this->map->offsetSet($offset, $value);
         return $this;
     }
 
@@ -166,7 +203,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetUnset($offset): self
     {
-        $this->vector->offsetUnset($offset);
+        $this->map->offsetUnset($offset);
         return $this;
     }
 
@@ -175,7 +212,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function allocate(int $capacity): self
     {
-        $this->vector->allocate($capacity);
+        $this->map->allocate($capacity);
         return $this;
     }
 
@@ -184,7 +221,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function apply(callable $callback): self
     {
-        $this->vector->apply($callback);
+        $this->map->apply($callback);
         return $this;
     }
 
@@ -193,16 +230,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function capacity(): int
     {
-        return $this->vector->capacity();
-    }
-
-    /**
-     * @param mixed ...$values
-     * @return bool
-     */
-    public function contains(...$values): bool
-    {
-        return $this->vector->contains(...$values);
+        return $this->map->capacity();
     }
 
     /**
@@ -211,61 +239,34 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function filter(callable $callback = null): self
     {
-        return new static($this->vector->filter($callback));
+        return new static($this->map->filter($callback));
     }
 
-    /**
-     * @param mixed $value
-     * @return bool|int|void
-     */
-    public function find($value)
-    {
-        return $this->vector->find($value);
-    }
 
     /**
      * @return mixed
      */
     public function first()
     {
-        return $this->vector->first();
+        return $this->map->first();
     }
 
     /**
-     * @param int $index
+     * @param int $key
      * @return mixed|void
      */
-    public function get(int $index)
+    public function get(int $key)
     {
-        return $this->vector->get($index);
+        return $this->map->get($key);
     }
 
-    /**
-     * @param int $index
-     * @param mixed ...$values
-     * @return self
-     */
-    public function insert(int $index, ...$values): self
-    {
-        $this->vector->insert($index, ...$values);
-        return $this;
-    }
-
-    /**
-     * @param string|null $glue
-     * @return string
-     */
-    public function join(string $glue = null): string
-    {
-        return $this->vector->join($glue);
-    }
 
     /**
      * @return mixed
      */
     public function last()
     {
-        return $this->vector->last();
+        return $this->map->last();
     }
 
     /**
@@ -274,7 +275,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function map(callable $callback): self
     {
-        return new static($this->vector->map($callback));
+        return new static($this->map->map($callback));
     }
 
     /**
@@ -283,26 +284,8 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function merge($values): self
     {
-        return new static($this->vector->merge($values));
+        return new static($this->map->merge($values));
     }
-
-    /**
-     * @return BeanInterface
-     */
-    public function pop()
-    {
-        return $this->vector->pop();
-    }
-
-    /**
-     * @param BeanInterface ...$values
-     */
-    public function push(...$values): self
-    {
-        $this->vector->push(...$values);
-        return $this;
-    }
-
     /**
      * @param callable $callback
      * @param null $initial
@@ -310,16 +293,16 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function reduce(callable $callback, $initial = null)
     {
-        return $this->vector->reduce($callback, $initial);
+        return $this->map->reduce($callback, $initial);
     }
 
     /**
-     * @param int $index
+     * @param int $key
      * @return self
      */
-    public function remove(int $index): self
+    public function remove(int $key): self
     {
-        $this->vector->remove($index);
+        $this->map->remove($key);
         return $this;
     }
 
@@ -328,7 +311,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function reverse(): self
     {
-        $this->vector->reverse();
+        $this->map->reverse();
         return $this;
     }
 
@@ -337,45 +320,18 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function reversed(): self
     {
-        return new static($this->vector->reversed());
+        return new static($this->map->reversed());
     }
 
-    /**
-     * @param int $rotations
-     */
-    public function rotate(int $rotations): self
-    {
-        $this->vector->rotate($rotations);
-        return $this;
-    }
 
     /**
-     * @param int $index
-     * @param mixed $value
-     * @return $this
-     */
-    public function set(int $index, $value): self
-    {
-        $this->vector->set($index, $value);
-        return $this;
-    }
-
-    /**
-     * @return BeanInterface|null
-     */
-    public function shift()
-    {
-        return $this->vector->shift();
-    }
-
-    /**
-     * @param int $index
+     * @param int $offset
      * @param int|null $length
      * @return self
      */
-    public function slice(int $index, int $length = null): self
+    public function slice(int $offset, int $length = null): self
     {
-        return new static($this->vector->slice($index, $length));
+        return new static($this->map->slice($offset, $length));
     }
 
     /**
@@ -384,7 +340,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function sort(callable $comparator = null): self
     {
-        $this->vector->sort($comparator);
+        $this->map->sort($comparator);
         return $this;
     }
 
@@ -394,27 +350,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function sorted(callable $comparator = null): self
     {
-        return new static($this->vector->sorted($comparator));
-    }
-
-    /**
-     * @deprecated
-     * @return float|int|void
-     * @throws BeanListException
-     */
-    public function sum()
-    {
-        throw new BeanListException('Unsupported operation.');
-    }
-
-    /**
-     * @param mixed ...$values
-     * @return $this
-     */
-    public function unshift(...$values): self
-    {
-        $this->vector->unshift(...$values);
-        return $this;
+        return new static($this->map->sorted($comparator));
     }
 
     /**
@@ -438,6 +374,9 @@ abstract class AbstractBaseBeanList implements BeanListInterface
 
     public function __clone()
     {
-        $this->vector = clone $this->vector;
+        $this->map = clone $this->map;
     }
+
+
+
 }

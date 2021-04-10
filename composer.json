@@ -6,6 +6,7 @@
         "php": ">=7.2.0",
         "ext-json": "*",
         "pars/pars-patterns": "dev-master",
+        "myclabs/deep-copy": "^1.10",
         "php-ds/php-ds": "^1.3"
     },
     "require-dev": {
