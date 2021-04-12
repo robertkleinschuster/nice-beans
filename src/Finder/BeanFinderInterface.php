@@ -54,10 +54,25 @@ interface BeanFinderInterface
     public function filter(array $data_Map, string $mode = self::FILTER_MODE_AND);
 
     /**
+     * @param string $key
+     * @param $value
+     * @param string $mode
+     * @return mixed
+     */
+    public function filterValue(string $key, $value, string $mode = self::FILTER_MODE_AND);
+
+    /**
      * @param array $data_Map
      * @return mixed
      */
     public function exclude(array $data_Map);
+
+    /**
+     * @param string $key
+     * @param $value
+     * @return mixed
+     */
+    public function excludeValue(string $key, $value);
 
     /**
      * @param BeanFinderInterface $beanFinder

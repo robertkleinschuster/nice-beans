@@ -7,9 +7,20 @@ namespace Pars\Bean\Validator;
 use Pars\Bean\Processor\BeanProcessorInterface;
 use Pars\Bean\Type\Base\BeanInterface;
 
-class NotEmptyBeanValidator implements BeanValidatorInterface
+class CallbackBeanValidator implements BeanValidatorInterface
 {
-    public const CODE = 'not_empty';
+    protected string $name;
+    protected $callback;
+
+    /**
+     * CallbackBeanValidator constructor.
+     * @param string $name
+     */
+    public function __construct(string $name, callable $callback)
+    {
+        $this->name = $name;
+        $this->callback = $callback;
+    }
 
     /**
      * @param BeanProcessorInterface $processor
@@ -18,7 +29,7 @@ class NotEmptyBeanValidator implements BeanValidatorInterface
      */
     public function validate(BeanProcessorInterface $processor, BeanInterface $bean): bool
     {
-        return $bean->count() > 0;
+        return ($this->callback)($bean, $processor) === true;
     }
 
     /**
@@ -26,6 +37,7 @@ class NotEmptyBeanValidator implements BeanValidatorInterface
      */
     public function code(): string
     {
-        return self::CODE;
+        return $this->name;
     }
+
 }

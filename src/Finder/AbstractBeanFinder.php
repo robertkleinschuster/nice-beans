@@ -241,6 +241,20 @@ abstract class AbstractBeanFinder implements
     }
 
     /**
+     * @param string $key
+     * @param $value
+     * @param string $mode
+     * @return $this
+     */
+    public function filterValue(string $key, $value, string $mode = self::FILTER_MODE_AND)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->filter([$key => $value], $mode);
+        }
+        return $this;
+    }
+
+    /**
      * @param array $data_Map
      * @return $this|mixed
      */
@@ -248,6 +262,19 @@ abstract class AbstractBeanFinder implements
     {
         if ($this->hasBeanLoader()) {
             $this->getBeanLoader()->exclude($data_Map);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     * @return $this
+     */
+    public function excludeValue(string $key, $value)
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->exclude([$key => $value]);
         }
         return $this;
     }

@@ -4,6 +4,7 @@
 namespace Pars\Bean\Validator;
 
 
+use Pars\Bean\Processor\BeanProcessorInterface;
 use Pars\Bean\Type\Base\BeanInterface;
 
 class FieldNotEmptyBeanValidator implements BeanValidatorInterface
@@ -19,12 +20,19 @@ class FieldNotEmptyBeanValidator implements BeanValidatorInterface
         $this->field = $field;
     }
 
-
-    public function validate(BeanInterface $bean): bool
+    /**
+     * @param BeanProcessorInterface $processor
+     * @param BeanInterface $bean
+     * @return bool
+     */
+    public function validate(BeanProcessorInterface $processor, BeanInterface $bean): bool
     {
         return !$bean->empty($this->field);
     }
 
+    /**
+     * @return string
+     */
     public function code(): string
     {
         return 'not_empty_' . $this->field;

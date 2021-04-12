@@ -256,7 +256,7 @@ abstract class AbstractBeanProcessor implements
     {
         $result = [];
         foreach ($this->saveValidators as $saveValidator) {
-            $result[] = $saveValidator->validate($bean);
+            $result[] = $saveValidator->validate($this, $bean);
         }
         return !in_array(false, $result);
     }
@@ -269,7 +269,7 @@ abstract class AbstractBeanProcessor implements
     {
         $result = [];
         foreach ($this->deleteValidators as $deleteValidator) {
-            $result[] = $deleteValidator->validate($bean);
+            $result[] = $deleteValidator->validate($this, $bean);
         }
         return !in_array(false, $result);
     }
