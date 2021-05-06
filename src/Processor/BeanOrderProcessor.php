@@ -97,7 +97,10 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
                 }
                 $finder->filter([$orderField => $reorder_List]);
                 $beanList = $finder->getBeanList();
-                if ($newOrder > 0 && $newOrder <= $maxOrder) {
+                if ($newOrder > $maxOrder) {
+                    $newOrder = $maxOrder;
+                }
+                if ($newOrder > 0) {
                     foreach ($beanList as $previousBean) {
                         if ($currentOrder < $newOrder) {
                             $previousBean->set($orderField, $previousBean->get($orderField) - 1);
