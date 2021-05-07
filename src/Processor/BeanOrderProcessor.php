@@ -10,6 +10,7 @@ use Pars\Bean\Finder\BeanFinderAwareTrait;
 use Pars\Bean\Finder\BeanFinderInterface;
 use Pars\Bean\Type\Base\BeanInterface;
 use Pars\Bean\Type\Base\BeanListAwareInterface;
+use Pars\Bean\Type\Base\BeanListInterface;
 
 class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAwareInterface
 {
@@ -31,7 +32,8 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
         BeanFinderInterface $finder,
         string $orderField,
         ?string $orderReferenceField = null
-    ) {
+    )
+    {
         $this->orderField = $orderField;
         $this->orderReferenceField = $orderReferenceField;
         $this->setBeanProcessor($processor);
@@ -42,7 +44,7 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
     /**
      * @return string
      */
-    protected function getOrderField(): string
+    public function getOrderField(): string
     {
         return $this->orderField;
     }
@@ -64,10 +66,11 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
         BeanInterface $bean,
         int $steps,
         $orderReferenceValue = null
-    ) {
+    )
+    {
         $finder = $this->getBeanFinder();
         $orderField = $this->getOrderField();
-        $orderReferenceField  = $this->getOrderReferenceField();
+        $orderReferenceField = $this->getOrderReferenceField();
         $processor = $this->getBeanProcessor();
         if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
@@ -122,9 +125,11 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
                     $processor->setBeanList($beanList);
                 }
             }
-            $processor->save();
+            return $processor->save();
         }
+        return null;
     }
+
     /**
      * @param BeanInterface $bean
      * @param null $orderReferenceValue
@@ -132,10 +137,11 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
     public function delete(
         BeanInterface $bean,
         $orderReferenceValue = null
-    ) {
+    )
+    {
         $finder = $this->getBeanFinder();
         $orderField = $this->getOrderField();
-        $orderReferenceField  = $this->getOrderReferenceField();
+        $orderReferenceField = $this->getOrderReferenceField();
         $processor = $this->getBeanProcessor();
         if ($bean->exists($orderField)) {
             if ($finder instanceof BeanFactoryAwareInterface) {
@@ -178,8 +184,26 @@ class BeanOrderProcessor implements BeanProcessorAwareInterface, BeanFinderAware
                     $processor->setBeanList($beanList);
                 }
             }
-            $processor->save();
+            return $processor->save();
         }
+        return null;
+    }
+
+    /**
+     * @param BeanListInterface $beanList
+     */
+    public function repair(BeanListInterface $beanList)
+    {
+        $beanListSave = $this->getBeanFinder()->getBeanFactory()->getEmptyBeanList();
+        foreach ($beanList as $key => $item) {
+            $item->set($this->getOrderField(), $key + 1);
+            $beanListSave->push($item);
+        }
+        $processor = $this->getBeanProcessor();
+        if ($processor instanceof BeanListAwareInterface) {
+            $processor->setBeanList($beanListSave);
+        }
+        return $processor->save();
     }
 
 }
