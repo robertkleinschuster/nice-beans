@@ -248,10 +248,7 @@ abstract class AbstractBeanFinder implements
      */
     public function filterValue(string $key, $value, string $mode = self::FILTER_MODE_AND)
     {
-        if ($this->hasBeanLoader()) {
-            $this->getBeanLoader()->filter([$key => $value], $mode);
-        }
-        return $this;
+        return $this->filter([$key => $value], $mode);
     }
 
     /**
@@ -273,10 +270,7 @@ abstract class AbstractBeanFinder implements
      */
     public function excludeValue(string $key, $value)
     {
-        if ($this->hasBeanLoader()) {
-            $this->getBeanLoader()->exclude([$key => $value]);
-        }
-        return $this;
+        return $this->exclude([$key => $value]);
     }
 
     /**
