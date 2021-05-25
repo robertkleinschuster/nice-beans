@@ -100,14 +100,14 @@ abstract class AbstractBeanFinder implements
      */
     public function getBeanListDecorator(): FinderBeanListDecorator
     {
-        $this->initLinkedFinder();
+        $this->handleLinkedFinder();
         return new FinderBeanListDecorator($this);
     }
 
     /**
      *
      */
-    public function initLinkedFinder()
+    public function handleLinkedFinder()
     {
         if ($this->hasLinkedFinder()) {
             foreach ($this->getLinkedFinderList() as $link) {
