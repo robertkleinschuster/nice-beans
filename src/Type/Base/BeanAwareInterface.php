@@ -6,13 +6,13 @@ namespace Pars\Bean\Type\Base;
 
 interface BeanAwareInterface
 {
-    public function getBean(): BeanInterface;
+    public function getBean(): ?BeanInterface;
     /**
      * @param BeanInterface $bean
      *
      * @return $this
      */
-    public function setBean(BeanInterface $bean);
+    public function setBean(?BeanInterface $bean);
 
     /**
      * @return bool

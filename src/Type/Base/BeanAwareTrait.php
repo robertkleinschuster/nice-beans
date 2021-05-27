@@ -15,7 +15,7 @@ trait BeanAwareTrait
     /**
     * @return BeanInterface
     */
-    public function getBean(): BeanInterface
+    public function getBean(): ?BeanInterface
     {
         return $this->bean;
     }
@@ -25,7 +25,7 @@ trait BeanAwareTrait
     *
     * @return $this
     */
-    public function setBean(BeanInterface $bean)
+    public function setBean(?BeanInterface $bean)
     {
         $this->bean = $bean;
         return $this;
