@@ -22,7 +22,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
     /**
      * @var array
      */
-    private array $rawDataMao = [];
+    private array $rawDataMap = [];
 
     /**
      * @param BeanInterface $bean
@@ -31,7 +31,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function convert(BeanInterface $bean, array $rawData = []): ConverterBeanDecorator
     {
-        $this->rawDataMao = $rawData;
+        $this->rawDataMap = $rawData;
         return new ConverterBeanDecorator($bean, $this);
     }
 
@@ -41,7 +41,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function getRawData(string $name)
     {
-        return $this->rawDataMao[$name];
+        return $this->rawDataMap[$name];
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function issetRawData(string $name): bool
     {
-        return isset($this->rawDataMao[$name]);
+        return isset($this->rawDataMap[$name]);
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function emptyRawData(string $name): bool
     {
-        return empty($this->rawDataMao[$name]);
+        return empty($this->rawDataMap[$name]);
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function setRawData(string $name, $value): self
     {
-        $this->rawDataMao[$name] = $value;
+        $this->rawDataMap[$name] = $value;
         return $this;
     }
 
@@ -88,7 +88,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function unsetRawData(string $name)
     {
-        unset($this->rawDataMao[$name]);
+        unset($this->rawDataMap[$name]);
     }
 
     /**
@@ -96,7 +96,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function resetRawData()
     {
-        $this->rawDataMao = [];
+        $this->rawDataMap = [];
     }
 
     /**
@@ -104,7 +104,7 @@ abstract class AbstractBeanConverter implements BeanConverterInterface, OptionAw
      */
     public function getRawDataMap(): array
     {
-        return $this->rawDataMao;
+        return $this->rawDataMap;
     }
 
 }

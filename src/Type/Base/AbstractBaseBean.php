@@ -246,7 +246,7 @@ abstract class AbstractBaseBean implements BeanInterface
      * @return null|string
      * @throws BeanException
      */
-    public function type(string $name, ?string $type = null): string
+    public function type(string $name): string
     {
         static $type = [];
         if (!isset($type[static::class . $name])) {

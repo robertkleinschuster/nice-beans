@@ -83,8 +83,8 @@ interface BeanInterface extends IteratorAggregate, ArrayAccess, Countable, \Json
     public function reset(): self;
 
     /**
-     * @param $name
-     * @return mixed
+     * @param string $name
+     * @return string
      */
     public function type(string $name): string;
 
