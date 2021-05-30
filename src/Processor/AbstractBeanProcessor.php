@@ -23,11 +23,7 @@ use Pars\Pattern\Option\OptionAwareTrait;
  * @package Pars\Bean\BeanProcessor
  */
 abstract class AbstractBeanProcessor implements
-    BeanProcessorInterface,
-    BeanSaverAwareInterface,
-    BeanListAwareInterface,
-    OptionAwareInterface,
-    AttributeAwareInterface
+    BeanProcessorInterface
 {
     use BeanSaverAwareTrait;
     use BeanListAwareTrait;

@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Finder;
 
+use Pars\Bean\Factory\BeanFactoryAwareInterface;
+use Pars\Bean\Loader\BeanLoaderAwareInterface;
 use Pars\Bean\Type\Base\BeanInterface;
 use Pars\Bean\Type\Base\BeanListInterface;
+use Pars\Pattern\Attribute\AttributeAwareInterface;
+use Pars\Pattern\Option\OptionAwareInterface;
 
 /**
  * Interface BeanFinderInterface
  * @package Pars\Library\Patterns
  */
-interface BeanFinderInterface
+interface BeanFinderInterface extends  BeanLoaderAwareInterface,
+    BeanFactoryAwareInterface,
+    OptionAwareInterface,
+    AttributeAwareInterface
 {
 
     public const ORDER_MODE_ASC = 'asc';

@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Processor;
 
+use Pars\Bean\Saver\BeanSaverAwareInterface;
+use Pars\Bean\Type\Base\BeanListAwareInterface;
 use Pars\Bean\Validator\BeanValidatorInterface;
+use Pars\Pattern\Attribute\AttributeAwareInterface;
+use Pars\Pattern\Option\OptionAwareInterface;
 
 /**
  * Interface ProcessorInterface
  * @package Pars\Library\Patterns
  */
-interface BeanProcessorInterface
+interface BeanProcessorInterface extends BeanSaverAwareInterface,
+    BeanListAwareInterface,
+    OptionAwareInterface,
+    AttributeAwareInterface
 {
 
     /**
