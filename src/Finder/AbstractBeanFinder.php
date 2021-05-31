@@ -34,6 +34,7 @@ abstract class AbstractBeanFinder implements
      * @var BeanFinderLink[]
      */
     private $beanFinderLink_List = [];
+    private $decorator = null;
 
     /**
      * AbstractBeanFinderFactory constructor.
@@ -96,8 +97,21 @@ abstract class AbstractBeanFinder implements
      */
     public function getBeanListDecorator(): FinderBeanListDecorator
     {
+       if (null === $this->decorator) {
+           $this->initBeanListDecorator();
+       }
+       return $this->decorator;
+    }
+
+    /**
+     * @return self
+     * @throws BeanException
+     */
+    public function initBeanListDecorator()
+    {
         $this->handleLinkedFinder();
-        return new FinderBeanListDecorator($this);
+        $this->decorator = new FinderBeanListDecorator($this);
+        return $this;
     }
 
     /**
@@ -190,7 +204,7 @@ abstract class AbstractBeanFinder implements
      * @param int $offset
      * @return $this
      */
-    public function limit(int $limit, int $offset)
+    public function limit(int $limit, int $offset = 0)
     {
         if ($this->hasBeanLoader()) {
             $this->getBeanLoader()->limit($limit, $offset);

@@ -28,7 +28,7 @@ interface BeanLoaderInterface extends \Iterator, \Countable
      * @param int $offset
      * @return $this
      */
-    public function limit(int $limit, int $offset);
+    public function limit(int $limit, int $offset = 0);
 
     /**
      * @param string $search
