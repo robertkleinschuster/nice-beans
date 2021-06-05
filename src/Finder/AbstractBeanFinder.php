@@ -291,5 +291,11 @@ abstract class AbstractBeanFinder implements
         $this->setBeanLoader(clone $this->getBeanLoader());
     }
 
+    public function lock()
+    {
+        if ($this->hasBeanLoader()) {
+            $this->getBeanLoader()->lock();
+        }
+    }
 
 }

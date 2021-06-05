@@ -142,4 +142,6 @@ abstract class AbstractBeanLoader implements
             return $bean->fromArray($data);
         }
     }
+
+    abstract public function lock();
 }
