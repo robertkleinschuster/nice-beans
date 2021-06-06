@@ -71,14 +71,13 @@ abstract class AbstractBeanFactory implements BeanFactoryInterface, OptionAwareI
         return new $class();
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
-    abstract protected function getBeanClass(array $data): string;
+    protected function getBeanClass(array $data): string
+    {
+        return str_replace('Factory', '', static::class);
+    }
 
-    /**
-     * @return string
-     */
-    abstract protected function getBeanListClass(): string;
+    protected function getBeanListClass(): string
+    {
+        return str_replace('Factory', 'List', static::class);
+    }
 }

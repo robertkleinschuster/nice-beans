@@ -262,6 +262,17 @@ abstract class AbstractBeanFinder implements
     }
 
     /**
+     * @param FilterExpression $expression
+     * @param string $mode
+     * @return $this|mixed
+     */
+    public function filterExpression(FilterExpression $expression, string $mode = self::FILTER_MODE_AND)
+    {
+        return $this->filter([$expression], $mode);
+    }
+
+
+    /**
      * @param array $data_Map
      * @return $this|mixed
      */

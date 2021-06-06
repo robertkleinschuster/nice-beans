@@ -69,6 +69,13 @@ interface BeanFinderInterface extends  BeanLoaderAwareInterface,
     public function filterValue(string $key, $value, string $mode = self::FILTER_MODE_AND);
 
     /**
+     * @param FilterExpression $expression
+     * @param string $mode
+     * @return mixed
+     */
+    public function filterExpression(FilterExpression $expression, string $mode = self::FILTER_MODE_AND);
+
+    /**
      * @param array $data_Map
      * @return mixed
      */
