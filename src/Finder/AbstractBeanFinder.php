@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Pars\Bean\Finder;
 
-use Pars\Bean\Factory\BeanFactoryAwareInterface;
 use Pars\Bean\Factory\BeanFactoryAwareTrait;
 use Pars\Bean\Factory\BeanFactoryInterface;
-use Pars\Bean\Loader\BeanLoaderAwareInterface;
 use Pars\Bean\Loader\BeanLoaderAwareTrait;
 use Pars\Bean\Loader\BeanLoaderInterface;
 use Pars\Bean\Type\Base\BeanException;
 use Pars\Bean\Type\Base\BeanInterface;
 use Pars\Bean\Type\Base\BeanListInterface;
-use Pars\Pattern\Attribute\AttributeAwareInterface;
 use Pars\Pattern\Attribute\AttributeAwareTrait;
-use Pars\Pattern\Option\OptionAwareInterface;
 use Pars\Pattern\Option\OptionAwareTrait;
 
 /**
@@ -70,7 +66,8 @@ abstract class AbstractBeanFinder implements
         string $field,
         string $linkFieldSelf,
         string $linkFieldRemote
-    ): BeanFinderInterface {
+    ): BeanFinderInterface
+    {
         $this->beanFinderLink_List[] = new BeanFinderLink($beanFinder, $field, $linkFieldSelf, $linkFieldRemote);
         return $this;
     }
@@ -97,21 +94,8 @@ abstract class AbstractBeanFinder implements
      */
     public function getBeanListDecorator(): FinderBeanListDecorator
     {
-       if (null === $this->decorator) {
-           $this->initBeanListDecorator();
-       }
-       return $this->decorator;
-    }
-
-    /**
-     * @return self
-     * @throws BeanException
-     */
-    public function initBeanListDecorator()
-    {
         $this->handleLinkedFinder();
-        $this->decorator = new FinderBeanListDecorator($this);
-        return $this;
+        return new FinderBeanListDecorator($this);
     }
 
     /**
@@ -226,7 +210,7 @@ abstract class AbstractBeanFinder implements
     }
 
     /**
-     * @param  array $field_List
+     * @param array $field_List
      * @return $this|mixed
      */
     public function order(array $field_List)
