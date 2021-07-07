@@ -137,7 +137,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetExists($offset): bool
     {
-        return $this->vector->offsetExists($offset);
+        return $this->vector->offsetExists((int) $offset);
     }
 
     /**
@@ -146,7 +146,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetGet($offset)
     {
-        return $this->vector->offsetGet($offset);
+        return $this->vector->offsetGet((int) $offset);
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetSet($offset, $value): self
     {
-        $this->vector->offsetSet($offset, $value);
+        $this->vector->offsetSet((int) $offset, $value);
         return $this;
     }
 
@@ -166,7 +166,7 @@ abstract class AbstractBaseBeanList implements BeanListInterface
      */
     public function offsetUnset($offset): self
     {
-        $this->vector->offsetUnset($offset);
+        $this->vector->offsetUnset((int) $offset);
         return $this;
     }
 
